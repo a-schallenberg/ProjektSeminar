@@ -1,8 +1,8 @@
-public class Netz {
+public class Network {
 	Neuron[] inputLayer, outputLayer;
 	Neuron[][] hiddenLayers;
 
-	public Netz(int numInUnit, int numOutUnit, int... numHidUnit) {
+	public Network(int numInUnit, int numOutUnit, int... numHidUnit) {
 		inputLayer = new Neuron[numInUnit];
 		outputLayer = new Neuron[numOutUnit];
 		hiddenLayers = new Neuron[numHidUnit.length][];
