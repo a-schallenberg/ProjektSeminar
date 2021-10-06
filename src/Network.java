@@ -1,4 +1,4 @@
-public class Network {
+public class Network implements INetwork{
 	Neuron[] inputLayer, outputLayer;
 	Neuron[][] hiddenLayers;
 
@@ -29,6 +29,7 @@ public class Network {
 		}
 	}
 
+	@Override
 	public double[] compute(double[] input) {
 		double[] inputResult = new double[inputLayer.length];
 		double[] outputResult = new double[outputLayer.length];
