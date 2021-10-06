@@ -30,16 +30,18 @@ public class Neuron {
 	private double fireSigmoid(double[] input) {
 		double sum = 0;
 		for(int i = 0; i < (Math.min(input.length, weights.length)); i++)
-			sum += weights[i] * input[i] + bias;
+			sum += weights[i] * input[i];
 
+		sum += bias;
 		return Util.sigmoid(sum);
 	}
 
 	private double fireSemiLinear(double[] input) {
 		double sum = 0;
 		for(int i = 0; i < (Math.min(input.length, weights.length)); i++)
-			sum += weights[i] * input[i] + bias;
+			sum += weights[i] * input[i];
 
+		sum += bias;
 		return Util.semiLinear(sum);
 	}
 }
