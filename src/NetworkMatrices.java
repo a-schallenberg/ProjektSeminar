@@ -6,6 +6,12 @@ public class NetworkMatrices implements INetwork{
 	double[][][] weights;
 	double[][] biases;
 
+	public NetworkMatrices(int numInUnit, int numOutUnit, double[][][] weights, int... numHidUnit) {
+		this(numInUnit, numOutUnit, numHidUnit);
+		if(numHidUnit.length != weights.length - 1) {throw new IllegalArgumentException("Illegal weight matrices");}
+		this.weights = weights;
+	}
+
 	/**
 	 * Constructor that declare and initialize weights with random numbers between -0.5 and 0.5 and biases with 0.
 	 * @param numInUnit The number of neurons of the input layer.
@@ -40,8 +46,8 @@ public class NetworkMatrices implements INetwork{
 		double[][] layers = new double[biases.length + 1][];
 		layers[0] = input;
 
-		for(int i = 0; i < biases.length; i++)
-			layers[1] = Util.sigmoid(Util.addVectors(biases[i], Util.mulMatrixVector(weights[i], biases[i])));
+		for(int i = 0; i < layers.length - 1; i++)
+			layers[i + 1] = Util.sigmoid(Util.addVectors(biases[i], Util.mulMatrixVector(weights[i], layers[i])));
 
 		return layers[layers.length - 1];
 	}

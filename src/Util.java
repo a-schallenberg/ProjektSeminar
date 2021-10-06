@@ -120,4 +120,13 @@ public class Util {
 
 		return x;
 	}
+
+	public static double[] oneVector(int dim) {
+		double[] vec = new double[dim];
+
+		for(int i = 0; i < dim; i++)
+			vec[i] = 1d;
+
+		return vec;
+	}
 }

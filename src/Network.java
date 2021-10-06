@@ -2,6 +2,32 @@ public class Network implements INetwork{
 	Neuron[] inputLayer, outputLayer;
 	Neuron[][] hiddenLayers;
 
+	public Network(int numInUnit, int numOutUnit, double[][][] weights, int... numHidUnit) {
+		if(numHidUnit.length != weights.length - 1) {throw new IllegalArgumentException("Illegal weight matrices");}
+
+		inputLayer = new Neuron[numInUnit];
+		outputLayer = new Neuron[numOutUnit];
+		hiddenLayers = new Neuron[numHidUnit.length][];
+
+		for(int i = 0; i < numInUnit; i++)
+			inputLayer[i] = new Neuron(hiddenLayers.length == 0 ? outputLayer: hiddenLayers[0]);
+
+		for(int i = 0; i < hiddenLayers.length; i++) {
+			hiddenLayers[i] = new Neuron[numHidUnit[i]];
+
+			for(int j = 0; j < numHidUnit[i]; j++) {
+				if(i + 1  < hiddenLayers.length)
+					hiddenLayers[i][j] = new Neuron(hiddenLayers[i + 1]);
+				else
+					hiddenLayers[i][j] = new Neuron(outputLayer);
+			}
+		}
+
+		for(int i = 0; i < numOutUnit; i++) {
+			outputLayer[i] = new Neuron(null);
+		}
+	}
+
 	public Network(int numInUnit, int numOutUnit, int... numHidUnit) {
 		inputLayer = new Neuron[numInUnit];
 		outputLayer = new Neuron[numOutUnit];

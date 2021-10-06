@@ -6,6 +6,11 @@ public class Neuron {
 	private Neuron[] sendToArray;
 
 
+	public Neuron(Neuron[] sendToArray, double[] weights) {
+		this.sendToArray = sendToArray;
+		this.weights = weights;
+	}
+
  	public Neuron(Neuron[] sendToArray) {
 		this.sendToArray = sendToArray;
 	}
