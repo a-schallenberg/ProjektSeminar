@@ -6,4 +6,6 @@ public interface INetwork {
 	 * @return The output vector.
 	 */
 	double[] compute(double[] input);
+
+	void train(double[][] inputVectors, double[][] labels, int repetitions, double learnRate);
 }

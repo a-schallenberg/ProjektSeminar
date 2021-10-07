@@ -54,6 +54,28 @@ public class Util {
 		return result;
 	}
 
+	public static double[] mulConstantVector(double constant, double[] vector) {
+		double[] result = new double[vector.length];
+
+		for(int i = 0; i < vector.length; i++)
+			result[i] = constant * vector[i];
+
+		return result;
+	}
+
+	public static double[][] mulVectorMatrix(double[] vector, double[][] matrix) {
+		if(matrix.length != 1 || matrix[0].length != vector.length)
+			throw new ArithmeticException("Cannot multiply arguments");
+
+		double[][] result = new double[vector.length][matrix[0].length];
+
+		for (int row = 0; row < vector.length; row++)
+			for (int column = 0; column < matrix[0].length; column++)
+				result[row][column] = vector[row] * matrix[0][column];
+
+			return result;
+	}
+
 	public static double[] addVectors(double[] vec1, double[] vec2) {
 		if(vec1.length != vec2.length)
 			throw new ArithmeticException("Cannot add vectors with different dimensions");
@@ -66,6 +88,39 @@ public class Util {
 		return result;
 	}
 
+	public static double[] subVectors(double[] vec1, double[] vec2) {
+		if(vec1.length != vec2.length)
+			throw new ArithmeticException("Cannot subtract vectors with different dimensions");
+
+		double[] result = new double[vec1.length];
+
+		for(int i = 0; i < vec1.length; i++)
+			result[i] = vec1[i] - vec2[i];
+
+		return result;
+	}
+
+	public static double[][] transposeVector(double[] vec) {
+		double[][] result = new double[1][vec.length];
+
+		for(int i = 0; i < vec.length; i++)
+			result[0][i] = vec[i];
+
+		return result;
+	}
+
+	public static double[][] addMatrices(double[][] matrix1, double[][] matrix2) {
+		if(matrix1.length != matrix2.length || matrix1[0].length != matrix2[0].length)
+			throw new ArithmeticException("Cannot add a " + matrix1.length + "x" + matrix1[0].length + " matrix and a " + matrix2.length + "x" + matrix2[0].length + " matrix");
+
+		double[][] result = new double[matrix1.length][matrix1[0].length];
+
+		for(int row = 0; row < matrix1.length; row++)
+			for(int column = 0; column < matrix1[0].length; column++)
+				result[row][column] = matrix1[row][column] + matrix2[row][column];
+
+		return result;
+	}
 
 	/**
 	 * Multiplies two matrices and returns the result.
@@ -128,5 +183,14 @@ public class Util {
 			vec[i] = 1d;
 
 		return vec;
+	}
+
+	public static double[] learnFunction(double[] vec) {
+		double[] result = new double[vec.length];
+
+		for(int i = 0; i < vec.length; i++)
+			result[i] = vec[i] * (1 - vec[i]);
+
+		return result;
 	}
 }

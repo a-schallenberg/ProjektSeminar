@@ -73,4 +73,9 @@ public class Network implements INetwork{
 
 		return outputResult;
 	}
+
+	@Override
+	public void train(double[][] inputVectors, double[][] labels, int repetitions, double learnRate) {
+
+	}
 }

@@ -43,12 +43,36 @@ public class NetworkMatrices implements INetwork{
 	 */
 	@Override
 	public double[] compute(double[] input) {
+		double[][] layers = forwardPropagation(input);
+		return layers[layers.length - 1];
+	}
+
+	@Override
+	public void train(double[][] inputVectors, double[][] labels, int repetitions, double learnRate) {
+		for(int i = 0; i < repetitions; i++) {
+			for(int j = 0; j < inputVectors.length; j++) {
+				double[][] layers = forwardPropagation(inputVectors[j]);
+			}
+		}
+	}
+
+	private double[][] forwardPropagation(double[] input) {
 		double[][] layers = new double[biases.length + 1][];
 		layers[0] = input;
 
 		for(int i = 0; i < layers.length - 1; i++)
-			layers[i + 1] = Util.sigmoid(Util.addVectors(biases[i], Util.mulMatrixVector(weights[i], layers[i])));
+			layers[i + 1] = Util.sigmoid(Util.addVectors(biases[i], Util.mulMatrixVector(weights[i], layers[i]))); // sigma propagation rule
 
-		return layers[layers.length - 1];
+		return layers;
+	}
+
+	private void backpropagation(double[][] layers, double[] label, int learnRate) {
+		double[] delta = Util.subVectors(layers[0], label);
+		for(int i = layers.length - 1; i >= 0; i--) {
+			double[] deltaLearn = Util.mulConstantVector(-learnRate, delta);
+			weights[i] = Util.addMatrices(weights[i], Util.mulVectorMatrix(deltaLearn, Util.transposeVector(layers[i])));
+			biases[i] = Util.addVectors(biases[i], deltaLearn);
+			//TODO delta, but does not work, so look for another method for back propagation
+		}
 	}
 }
