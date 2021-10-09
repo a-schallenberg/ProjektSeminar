@@ -23,12 +23,12 @@ public class NetworkMatrices implements INetwork{
 		boolean twoLayers = numHidUnit.length == 0;
 
 		weights = new double[numHidUnit.length + 1][][];
-		weights[0] = Util.randomMatrix(numInUnit, twoLayers ? numOutUnit : numHidUnit[0]);
+		weights[0] = Util.random(numInUnit, twoLayers ? numOutUnit : numHidUnit[0]);
 		if(!twoLayers)
-			weights[weights.length - 1] = Util.randomMatrix(numHidUnit[numHidUnit.length - 1], numOutUnit);
+			weights[weights.length - 1] = Util.random(numHidUnit[numHidUnit.length - 1], numOutUnit);
 
 		for(int i = 1; i < weights.length - 1; i++)
-			weights[i] = Util.randomMatrix(numHidUnit[i-1], numHidUnit[i]);
+			weights[i] = Util.random(numHidUnit[i-1], numHidUnit[i]);
 
 		biases = new double[numHidUnit.length + 1][];
 		biases[biases.length - 1] = new double[numOutUnit];
@@ -61,17 +61,17 @@ public class NetworkMatrices implements INetwork{
 		layers[0] = input;
 
 		for(int i = 0; i < layers.length - 1; i++)
-			layers[i + 1] = Util.sigmoid(Util.addVectors(biases[i], Util.mulMatrixVector(weights[i], layers[i]))); // sigma propagation rule
+			layers[i + 1] = Util.sigmoid(Util.add(biases[i], Util.mul(weights[i], layers[i]))); // sigma propagation rule
 
 		return layers;
 	}
 
 	private void backpropagation(double[][] layers, double[] label, int learnRate) {
-		double[] delta = Util.subVectors(layers[0], label);
+		double[] delta = Util.sub(layers[0], label);
 		for(int i = layers.length - 1; i >= 0; i--) {
-			double[] deltaLearn = Util.mulConstantVector(-learnRate, delta);
-			weights[i] = Util.addMatrices(weights[i], Util.mulVectorMatrix(deltaLearn, Util.transposeVector(layers[i])));
-			biases[i] = Util.addVectors(biases[i], deltaLearn);
+			double[] deltaLearn = Util.mul(-learnRate, delta);
+			weights[i] = Util.add(weights[i], Util.mul(deltaLearn, Util.transpose(layers[i])));
+			biases[i] = Util.add(biases[i], deltaLearn);
 			//TODO delta, but does not work, so look for another method for back propagation
 		}
 	}
