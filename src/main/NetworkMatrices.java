@@ -1,9 +1,11 @@
+package main;
+
 import java.util.Arrays;
 
 /**
- * Neuronal Network that does not compute the output with {@link Neuron} but with matrices and vectors.
+ * Neuronal main.Network that does not compute the output with {@link Neuron} but with matrices and vectors.
  */
-public class NetworkMatrices implements INetwork{
+public class NetworkMatrices implements INetwork {
 	double[][][] weights;
 	double[][] biases;
 

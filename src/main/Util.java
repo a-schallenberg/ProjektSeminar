@@ -1,3 +1,5 @@
+package main;
+
 import java.util.Random;
 
 import static java.lang.String.format;
@@ -95,6 +97,38 @@ public class Util {
 				matrix[row][column] = (random.nextDouble() * (max - min) + min);
 
 		return matrix;
+	}
+
+	/**
+	 * Creates a new matrix with random double values in the interval [-0.5, 0.5).
+	 * @param rows Number of rows of the matrix.
+	 * @param columns Number of columns of the matrix.
+	 * @return The matrix filled with the random generated values.
+	 * @throws NegativeArraySizeException If rows or columns are negative.
+	 */
+	public static double[][][] random(int rows, int columns, int depth) {
+		return random(rows, columns, depth, -0.5, 0.5);
+	}
+
+	/**
+	 * Creates a new matrix with random double values.
+	 * @param rows Number of rows of the matrix.
+	 * @param columns Number of columns of the matrix.
+	 * @param min The minimal value of the random values in the matrix (inclusive).
+	 * @param max The maximal value of the random values in the matrix (exclusive).
+	 * @return The matrix filled with the random generated values.
+	 * @throws NegativeArraySizeException If rows or columns are negative.
+	 */
+	public static double[][][] random(int rows, int columns, int depth, double min, double max) {
+		double[][][] cube = new double[rows][columns][depth];
+		Random random = new Random();
+
+		for(int row = 0; row < rows; row++)
+			for(int column = 0; column < columns; column++)
+				for(int dep = 0; dep < depth; dep++)
+					cube[row][column][dep] = (random.nextDouble() * (max - min) + min);
+
+		return cube;
 	}
 
 	/**
@@ -405,5 +439,14 @@ public class Util {
 			result[i] = sgn(vec[i], offsets[i]);
 
 		return result;
+	}
+
+	public static int argmax(double[] array) {
+		int maxIndex = 0;
+		for(int i = 0; i < array.length; i++)
+			if(array[maxIndex] < array[i])
+				maxIndex = i;
+
+		return maxIndex;
 	}
 }

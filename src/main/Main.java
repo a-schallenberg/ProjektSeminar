@@ -1,10 +1,12 @@
+package main;
+
 public class Main {
 
 	public static void main(String[] args) {
 //		double[][] matrix = new double[][]{{1, 2}};
 //		double[] vec = new double[] {1, 1};
 //
-//		System.out.println(Arrays.toString(Util.mul(matrix, vec)));
+//		System.out.println(Arrays.toString(main.Util.mul(matrix, vec)));
 
 		NetworkMatrices network = new NetworkMatrices(2, 1, 4);
 
