@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 /**
  * Neuronal Network that does not compute the output with {@link Neuron} but with matrices and vectors.
@@ -23,12 +24,12 @@ public class NetworkMatrices implements INetwork{
 		boolean twoLayers = numHidUnit.length == 0;
 
 		weights = new double[numHidUnit.length + 1][][];
-		weights[0] = Util.random(numInUnit, twoLayers ? numOutUnit : numHidUnit[0]);
+		weights[0] = Util.random(twoLayers ? numOutUnit : numHidUnit[0], numInUnit);
 		if(!twoLayers)
-			weights[weights.length - 1] = Util.random(numHidUnit[numHidUnit.length - 1], numOutUnit);
+			weights[weights.length - 1] = Util.random(numOutUnit, numHidUnit[numHidUnit.length - 1]);
 
 		for(int i = 1; i < weights.length - 1; i++)
-			weights[i] = Util.random(numHidUnit[i-1], numHidUnit[i]);
+			weights[i] = Util.random(numHidUnit[i], numHidUnit[i - 1]);
 
 		biases = new double[numHidUnit.length + 1][];
 		biases[biases.length - 1] = new double[numOutUnit];
@@ -50,9 +51,14 @@ public class NetworkMatrices implements INetwork{
 	@Override
 	public void train(double[][] inputVectors, double[][] labels, int repetitions, double learnRate) {
 		for(int i = 0; i < repetitions; i++) {
+			System.out.println(i +  ". repetition");
 			for(int j = 0; j < inputVectors.length; j++) {
 				double[][] layers = forwardPropagation(inputVectors[j]);
+				System.out.println("Input: " + Arrays.toString(layers[0]));
+				System.out.println("Output: " + Arrays.toString(layers[layers.length - 1]));
+				backpropagation(layers, labels[j], learnRate);
 			}
+			System.out.println();
 		}
 	}
 
@@ -66,13 +72,13 @@ public class NetworkMatrices implements INetwork{
 		return layers;
 	}
 
-	private void backpropagation(double[][] layers, double[] label, int learnRate) {
-		double[] delta = Util.sub(layers[0], label);
-		for(int i = layers.length - 1; i >= 0; i--) {
+	private void backpropagation(double[][] layers, double[] label, double learnRate) {
+		double[] delta = Util.mul(2, Util.sub(layers[layers.length - 1], label));
+		for(int i = layers.length - 2; i >= 0; i--) {
 			double[] deltaLearn = Util.mul(-learnRate, delta);
 			weights[i] = Util.add(weights[i], Util.mul(deltaLearn, Util.transpose(layers[i])));
 			biases[i] = Util.add(biases[i], deltaLearn);
-			//TODO delta, but does not work, so look for another method for back propagation
+			delta = Util.mul(Util.mul(Util.transpose(weights[i]), delta), Util.dSigmoid(layers[i]));
 		}
 	}
 }

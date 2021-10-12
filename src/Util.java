@@ -1,5 +1,7 @@
 import java.util.Random;
 
+import static java.lang.String.format;
+
 public class Util {
 
 	/**
@@ -89,7 +91,7 @@ public class Util {
 		Random random = new Random();
 
 		for(int row = 0; row < rows; row++)
-			for(int column = 0; column < columns; columns++)
+			for(int column = 0; column < columns; column++)
 				matrix[row][column] = (random.nextDouble() * (max - min) + min);
 
 		return matrix;
@@ -141,7 +143,7 @@ public class Util {
 	 */
 	public static double[] mul(double[][] matrix, double[] vec) {
 		if(matrix[0].length != vec.length)
-			throw new ArithmeticException("Matrix and vector do not match");
+			throw new ArithmeticException(format("Matrix (%dx%d) and vector (%d) do not match", matrix.length, matrix[0].length, vec.length));
 
 		double[] result = new double[matrix.length];
 
@@ -165,8 +167,8 @@ public class Util {
 	 * @throws IndexOutOfBoundsException If the matrix is empty.
 	 */
 	public static double[][] mul(double[] vec, double[][] matrix) {
-		if(matrix.length != 1 || matrix[0].length != vec.length)
-			throw new ArithmeticException("Cannot multiply arguments");
+		if(matrix.length != 1)
+			throw new ArithmeticException(format("Cannot multiply vector (%d) with matrix (%dx%d)", vec.length, matrix.length, matrix[0].length));
 
 		double[][] result = new double[vec.length][matrix[0].length];
 
@@ -233,7 +235,7 @@ public class Util {
 	 */
 	public static double[] add(double[] vec1, double[] vec2) {
 		if(vec1.length != vec2.length)
-			throw new ArithmeticException("Cannot add vectors with different dimensions");
+			throw new ArithmeticException(format("Cannot add vectors (%d and %d) with different dimensions", vec1.length, vec2.length));
 
 		double[] result = new double[vec1.length];
 
