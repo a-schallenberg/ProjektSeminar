@@ -1,22 +1,18 @@
-package main.old;
+package main.seminar;
 
 import main.Util;
 
 import java.util.Arrays;
 
-public class NeuronOld {
+public class Neuron {
 	private double[] weights;
 	private double bias = 1;
-	private NeuronOld[] sendToArray;
+	private Neuron[] sendToArray;
 
 
-	public NeuronOld(NeuronOld[] sendToArray, double[] weights) {
+	public Neuron(Neuron[] sendToArray, double[] weights) {
 		this.sendToArray = sendToArray;
 		this.weights = weights;
-	}
-
- 	public NeuronOld(NeuronOld[] sendToArray) {
-		this.sendToArray = sendToArray;
 	}
 
 	public double fire(double[] input) {

@@ -1,5 +1,7 @@
 package main;
 
+import main.algebraoriented.PyNetwork;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -8,7 +10,7 @@ public class Main {
 //
 //		System.out.println(Arrays.toString(main.Util.mul(matrix, vec)));
 
-		NetworkMatrices network = new NetworkMatrices(2, 1, 4);
+		PyNetwork network = new PyNetwork(2, 1, 4);
 
 		double[][] input = new double[][] {{1, 1}, {1, 0}, {0, 1}, {0, 0}};
 		double[][] labels = new double[][] {{0}, {1}, {1}, {0}};

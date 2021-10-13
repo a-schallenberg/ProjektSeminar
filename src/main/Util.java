@@ -344,6 +344,14 @@ public class Util {
 		return matrix[0];
 	}
 
+	// TODO JavaDoc
+	public static double abs(double[] vec) {
+		double sum = 0d;
+		for(double d: vec) sum += d*d;
+
+		return Math.sqrt(sum);
+	}
+
 	/**
 	 * The sigmoid function or logistic function which produces a value between zero and one.
 	 * @param x A real value.

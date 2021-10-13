@@ -1,15 +1,19 @@
-package main;
+package main.algebraoriented;
+
+import main.INetwork;
+import main.Util;
+import main.objectoriented.JNeuron;
 
 import java.util.Arrays;
 
 /**
- * Neuronal main.Network that does not compute the output with {@link Neuron} but with matrices and vectors.
+ * Neuronal main.objectoriented.Network that does not compute the output with {@link JNeuron} but with matrices and vectors.
  */
-public class NetworkMatrices implements INetwork {
+public class PyNetwork implements INetwork {
 	double[][][] weights;
 	double[][] biases;
 
-	public NetworkMatrices(int numInUnit, int numOutUnit, double[][][] weights, int... numHidUnit) {
+	public PyNetwork(int numInUnit, int numOutUnit, double[][][] weights, int... numHidUnit) {
 		this(numInUnit, numOutUnit, numHidUnit);
 		if(numHidUnit.length != weights.length - 1) {throw new IllegalArgumentException("Illegal weight matrices");}
 		this.weights = weights;
@@ -22,7 +26,7 @@ public class NetworkMatrices implements INetwork {
 	 * @param numHidUnit The numbers of neurons in the hidden layers. The number of values after the first two parameters
 	 *                   represents the number of hidden layers.
 	 */
-	public NetworkMatrices(int numInUnit, int numOutUnit, int... numHidUnit) {
+	public PyNetwork(int numInUnit, int numOutUnit, int... numHidUnit) {
 		boolean twoLayers = numHidUnit.length == 0;
 
 		weights = new double[numHidUnit.length + 1][][];
