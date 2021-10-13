@@ -344,7 +344,11 @@ public class Util {
 		return matrix[0];
 	}
 
-	// TODO JavaDoc
+	/**
+	 * Calculates the absolute value of vector vec.
+	 * @param vec Vector.
+	 * @return The absolute of vec.
+	 */
 	public static double abs(double[] vec) {
 		double sum = 0d;
 		for(double d: vec) sum += d*d;
