@@ -54,6 +54,22 @@ public class PyNetwork implements INetwork {
 		return layers[layers.length - 1];
 	}
 
+//	@Override
+//	public void train(double[][] input, double[][] labels, int repetitions, double learnRate) {
+//		for(int i = 0; i < repetitions; i++) {
+//			double cost = 0d;
+//			int correct = 0;
+//			System.out.println(i +  ". repetition");
+//			for(int j = 0; j < input.length; j++) {
+//				double[][] layers = forwardPropagation(input[j]);
+//				cost += cost(layers[layers.length - 1], labels[j]);
+//				correct += correct(layers[layers.length - 1], labels[j]) ? 1 : 0;
+//				backpropagation(layers, labels[j], learnRate);
+//			}
+//			System.out.printf("Cost: %f\nCorrect: %d of %d\n\n", cost, correct, input.length);
+//		}
+//	}
+
 	@Override
 	public void train(double[][] inputVectors, double[][] labels, int repetitions, double learnRate) {
 		for(int i = 0; i < repetitions; i++) {
@@ -61,7 +77,9 @@ public class PyNetwork implements INetwork {
 			for(int j = 0; j < inputVectors.length; j++) {
 				double[][] layers = forwardPropagation(inputVectors[j]);
 				System.out.println("Input: " + Arrays.toString(layers[0]));
-				System.out.println("Output: " + Arrays.toString(layers[layers.length - 1]));
+				System.out.println("Output: " + Util.argmax(layers[layers.length - 1]));
+				//System.out.println("Output: " + Arrays.toString(layers[layers.length - 1]));
+				System.out.println("Label: " + Arrays.toString(labels[j]));
 				backpropagation(layers, labels[j], learnRate);
 			}
 			System.out.println();
@@ -78,6 +96,7 @@ public class PyNetwork implements INetwork {
 		return layers;
 	}
 
+	//FIXME Test failed
 	private void backpropagation(double[][] layers, double[] label, double learnRate) {
 		double[] delta = Util.mul(2, Util.sub(layers[layers.length - 1], label));
 		for(int i = layers.length - 2; i >= 0; i--) {
@@ -86,5 +105,19 @@ public class PyNetwork implements INetwork {
 			biases[i] = Util.add(biases[i], deltaLearn);
 			delta = Util.mul(Util.mul(Util.transpose(weights[i]), delta), Util.dSigmoid(layers[i]));
 		}
+	}
+
+	private double cost(double[] output, double[] label) {
+		double sum = 0d;
+		for(int i = 0; i < output.length; i++) {
+			double diff = output[i] - label[i];
+			sum += diff * diff;
+		}
+
+		return sum;
+	}
+
+	private boolean correct(double[] output, double[] label) {
+		return Util.argmax(output) == Util.argmax(label);
 	}
 }
