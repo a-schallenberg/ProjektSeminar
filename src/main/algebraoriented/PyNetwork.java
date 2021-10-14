@@ -54,37 +54,37 @@ public class PyNetwork implements INetwork {
 		return layers[layers.length - 1];
 	}
 
-//	@Override
-//	public void train(double[][] input, double[][] labels, int repetitions, double learnRate) {
-//		for(int i = 0; i < repetitions; i++) {
-//			double cost = 0d;
-//			int correct = 0;
-//			System.out.println(i +  ". repetition");
-//			for(int j = 0; j < input.length; j++) {
-//				double[][] layers = forwardPropagation(input[j]);
-//				cost += cost(layers[layers.length - 1], labels[j]);
-//				correct += correct(layers[layers.length - 1], labels[j]) ? 1 : 0;
-//				backpropagation(layers, labels[j], learnRate);
-//			}
-//			System.out.printf("Cost: %f\nCorrect: %d of %d\n\n", cost, correct, input.length);
-//		}
-//	}
-
 	@Override
-	public void train(double[][] inputVectors, double[][] labels, int repetitions, double learnRate) {
+	public void train(double[][] input, double[][] labels, int repetitions, double learnRate) {
 		for(int i = 0; i < repetitions; i++) {
-			System.out.println(i +  ". repetition");
-			for(int j = 0; j < inputVectors.length; j++) {
-				double[][] layers = forwardPropagation(inputVectors[j]);
-				System.out.println("Input: " + Arrays.toString(layers[0]));
-				System.out.println("Output: " + Util.argmax(layers[layers.length - 1]));
-				//System.out.println("Output: " + Arrays.toString(layers[layers.length - 1]));
-				System.out.println("Label: " + Arrays.toString(labels[j]));
+			double cost = 0d;
+			int correct = 0;
+			System.out.println(i + 1 + ". repetition:");
+			for(int j = 0; j < input.length; j++) {
+				double[][] layers = forwardPropagation(input[j]);
+				cost += cost(layers[layers.length - 1], labels[j]);
+				correct += correct(layers[layers.length - 1], labels[j]) ? 1 : 0;
 				backpropagation(layers, labels[j], learnRate);
 			}
-			System.out.println();
+			System.out.printf("Cost: %f\nCorrect: %f%% \n\n", cost, correct/ (double) input.length * 100);
 		}
 	}
+
+//	@Override
+//	public void train(double[][] inputVectors, double[][] labels, int repetitions, double learnRate) {
+//		for(int i = 0; i < repetitions; i++) {
+//			System.out.println(i +  ". repetition");
+//			for(int j = 0; j < inputVectors.length; j++) {
+//				double[][] layers = forwardPropagation(inputVectors[j]);
+//				System.out.println("Input: " + Arrays.toString(layers[0]));
+//				System.out.println("Output: " + Util.argmax(layers[layers.length - 1]));
+//				//System.out.println("Output: " + Arrays.toString(layers[layers.length - 1]));
+//				System.out.println("Label: " + Arrays.toString(labels[j]));
+//				backpropagation(layers, labels[j], learnRate);
+//			}
+//			System.out.println();
+//		}
+//	}
 
 	private double[][] forwardPropagation(double[] input) {
 		double[][] layers = new double[biases.length + 1][];

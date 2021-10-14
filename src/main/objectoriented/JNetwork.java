@@ -4,10 +4,13 @@ import main.AFunctions;
 import main.INetwork;
 import main.Util;
 
+import java.util.Arrays;
+
 public class JNetwork implements INetwork {
 	private final AFunctions function;
 	JNeuron[] outputLayer;
 	JNeuron[][] hiddenLayers;
+	JNeuron[][] layers;
 
 	public JNetwork(double[][][] weights, int numInUnit, int numOutUnit, int... numHidUnit) {
 		this(AFunctions.SIGMOID, weights, numInUnit, numOutUnit, numHidUnit);
@@ -32,6 +35,13 @@ public class JNetwork implements INetwork {
 		// Output layer
 		for(int i = 0; i < numOutUnit; i++)
 			outputLayer[i] = new JNeuron(weights[weights.length - 1][i]);
+
+		layers = new JNeuron[hiddenLayers.length + 1][];
+
+		for(int i = 0; i < layers.length - 1; i++)
+			layers[i] = hiddenLayers[i];
+
+		layers[layers.length - 1] = outputLayer;
 	}
 
 	public JNetwork(int numInUnit, int numOutUnit, int... numHidUnit) {
@@ -93,11 +103,37 @@ public class JNetwork implements INetwork {
 		// Hidden layers
 		for(int i = 0; i < hiddenLayers.length; i++)
 			for(int j = 0; j < hiddenLayers[i].length; j++)
-				hidden[i][j] = hiddenLayers[i][j].fire(j == 0 ? input : hidden[i - 1], function);
+				hidden[i][j] = hiddenLayers[i][j].fire(i == 0 ? input : hidden[i - 1], function);
 
 		// Output layer
 		for(int i = 0; i < outputLayer.length; i++)
 			output[i] = outputLayer[i].fire(hiddenLayers.length == 0 ? input : hidden[hidden.length - 1], function);
+	}
+
+	private void backpropagation(double[][] results, double[] label, double learnRate) {
+		double[] delta = new double[Util.maxLength(results)];
+		for(int i = 0; i < delta.length; i++)
+			delta[i] = 2 * (results[results.length - 1][i] - label[i]);
+
+		backpropagation(delta, results.length - 1, layers, results, learnRate);
+	}
+
+	private void backpropagation(double[] delta, int index, JNeuron[][] layers, double[][] results, double learnRate) {
+		if(index < 0) return;
+
+		for(int i = 0; i < layers[index].length; i++) {
+			double df = function.derivative(layers[index][i].z);
+			double w = Arrays.stream(layers[index][i].weights).sum();
+			double deltaI = delta[i];
+
+			for(int j = 0; j < layers[index][i].weights.length; j++)
+				layers[index][i].weights[j] += -learnRate * results[index][i] * df * deltaI;
+
+			layers[index][i].bias += -learnRate * df * deltaI;
+			delta[i] = w * df * deltaI;
+		}
+
+		backpropagation(delta, index - 1, layers, results, learnRate);
 	}
 
 	private void backpropagation(double[] output, double[][] hidden, double[] label, double learnRate) {
@@ -113,15 +149,18 @@ public class JNetwork implements INetwork {
 			outputLayer[i].bias += deltaLearn;
 		}
 
-		for(int i = hiddenLayers.length - 2; i >= 0; i--)
-			for(int j = 0; j < hiddenLayers[i].length; j++) {
-				delta[j + 1][i] = Util.abs(Util.mul(delta[j][i], hiddenLayers[i][j].weights)) * function.derivative(hidden[i][j]);
-				double deltaLearn = -learnRate * delta[j + 1][i];
+		for(int i = hiddenLayers.length - 2; i >= 0; i--) {
+			int size = hiddenLayers[i].length;
+			delta[i + 1] = new double[size];
+			for(int j = 0; j < size; j++) {
+				delta[i + 1][j] = Util.abs(Util.mul(delta[i][j], hiddenLayers[i][j].weights)) * function.derivative(hidden[i][j]);
+				double deltaLearn = -learnRate * delta[i + 1][j];
 				for(int k = 0; k < hiddenLayers[i][j].weights.length; k++)
 					hiddenLayers[i][j].weights[k] += deltaLearn * hidden[i][j];
 
 				hiddenLayers[i][j].bias += deltaLearn;
 			}
+		}
 	}
 
 	private double cost(double[] output, double[] label) {

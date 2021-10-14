@@ -1,5 +1,6 @@
 package main;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import static java.lang.String.format;
@@ -460,5 +461,20 @@ public class Util {
 				maxIndex = i;
 
 		return maxIndex;
+	}
+
+	/**
+	 * Calculates the maximal length in arrays.
+	 * @param matrix Array of the arrays.
+	 * @return The maximal length of arrays in the array.
+	 */
+	public static int maxLength(double[][] matrix) {
+		int max = matrix[0].length;
+
+		for(double[] array: matrix)
+			if(max < array.length)
+				max = array.length;
+
+		return max;
 	}
 }
