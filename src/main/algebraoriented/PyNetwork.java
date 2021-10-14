@@ -2,21 +2,30 @@ package main.algebraoriented;
 
 import main.INetwork;
 import main.Util;
+import main.afunctions.AFunction;
+import main.afunctions.SigmoidFunction;
 import main.objectoriented.JNeuron;
-
-import java.util.Arrays;
 
 /**
  * Neuronal main.objectoriented.Network that does not compute the output with {@link JNeuron} but with matrices and vectors.
  */
 public class PyNetwork implements INetwork {
-	double[][][] weights;
-	double[][] biases;
+	private final AFunction function;
+	private double[][][] weights;
+	private double[][] biases;
 
 	public PyNetwork(int numInUnit, int numOutUnit, double[][][] weights, int... numHidUnit) {
-		this(numInUnit, numOutUnit, numHidUnit);
+		this(new SigmoidFunction(), weights, numInUnit, numOutUnit, numHidUnit);
+	}
+
+	public PyNetwork(AFunction function, double[][][] weights, int numInUnit, int numOutUnit, int... numHidUnit) {
+		this(function, numInUnit, numOutUnit, numHidUnit);
 		if(numHidUnit.length != weights.length - 1) {throw new IllegalArgumentException("Illegal weight matrices");}
 		this.weights = weights;
+	}
+
+	public PyNetwork(int numInUnit, int numOutUnit, int... numHidUnit) {
+		this(new SigmoidFunction(), numInUnit, numOutUnit, numHidUnit);
 	}
 
 	/**
@@ -26,7 +35,9 @@ public class PyNetwork implements INetwork {
 	 * @param numHidUnit The numbers of neurons in the hidden layers. The number of values after the first two parameters
 	 *                   represents the number of hidden layers.
 	 */
-	public PyNetwork(int numInUnit, int numOutUnit, int... numHidUnit) {
+	public PyNetwork(AFunction function, int numInUnit, int numOutUnit, int... numHidUnit) {
+		this.function = function;
+
 		boolean twoLayers = numHidUnit.length == 0;
 
 		weights = new double[numHidUnit.length + 1][][];
@@ -70,40 +81,23 @@ public class PyNetwork implements INetwork {
 		}
 	}
 
-//	@Override
-//	public void train(double[][] inputVectors, double[][] labels, int repetitions, double learnRate) {
-//		for(int i = 0; i < repetitions; i++) {
-//			System.out.println(i +  ". repetition");
-//			for(int j = 0; j < inputVectors.length; j++) {
-//				double[][] layers = forwardPropagation(inputVectors[j]);
-//				System.out.println("Input: " + Arrays.toString(layers[0]));
-//				System.out.println("Output: " + Util.argmax(layers[layers.length - 1]));
-//				//System.out.println("Output: " + Arrays.toString(layers[layers.length - 1]));
-//				System.out.println("Label: " + Arrays.toString(labels[j]));
-//				backpropagation(layers, labels[j], learnRate);
-//			}
-//			System.out.println();
-//		}
-//	}
-
 	private double[][] forwardPropagation(double[] input) {
 		double[][] layers = new double[biases.length + 1][];
 		layers[0] = input;
 
 		for(int i = 0; i < layers.length - 1; i++)
-			layers[i + 1] = Util.sigmoid(Util.add(biases[i], Util.mul(weights[i], layers[i]))); // sigma propagation rule
+			layers[i + 1] = function.function(Util.add(biases[i], Util.mul(weights[i], layers[i]))); // sigma propagation rule
 
 		return layers;
 	}
 
-	//FIXME Test failed
 	private void backpropagation(double[][] layers, double[] label, double learnRate) {
 		double[] delta = Util.mul(2, Util.sub(layers[layers.length - 1], label));
 		for(int i = layers.length - 2; i >= 0; i--) {
 			double[] deltaLearn = Util.mul(-learnRate, delta);
 			weights[i] = Util.add(weights[i], Util.mul(deltaLearn, Util.transpose(layers[i])));
 			biases[i] = Util.add(biases[i], deltaLearn);
-			delta = Util.mul(Util.mul(Util.transpose(weights[i]), delta), Util.dSigmoid(layers[i]));
+			delta = Util.mul(Util.mul(Util.transpose(weights[i]), delta), function.derivative(layers[i]));
 		}
 	}
 

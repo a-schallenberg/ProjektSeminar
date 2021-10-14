@@ -1,113 +1,103 @@
 package main.objectoriented;
 
-import main.AFunctions;
 import main.INetwork;
 import main.Util;
+import main.afunctions.AFunction;
+import main.afunctions.SigmoidFunction;
 
 import java.util.Arrays;
 
 public class JNetwork implements INetwork {
-	private final AFunctions function;
-	JNeuron[] outputLayer;
-	JNeuron[][] hiddenLayers;
-	JNeuron[][] layers;
+	private final AFunction function;
+	private final JNeuron[][] layers;
+	private final int inputSize;
 
-	public JNetwork(double[][][] weights, int numInUnit, int numOutUnit, int... numHidUnit) {
-		this(AFunctions.SIGMOID, weights, numInUnit, numOutUnit, numHidUnit);
+	public JNetwork(double[][][] weights) {
+		this(new SigmoidFunction(), weights);
 	}
 
-	public JNetwork(AFunctions function, double[][][] weights, int numInUnit, int numOutUnit, int... numHidUnit) {
-		if(numHidUnit.length != weights.length - 1) throw new IllegalArgumentException("Illegal weight matrices");
-
+	/**
+	 *
+	 * @param function activation or output function
+	 * @param weights weights.length <=> Number of layers (without input layer).
+	 *                weights[i].length <=> Number of Units in Layer i.
+	 *                weights[i][j].length = weights[i-1].length.
+	 *                weights[i][j] <=> Incoming weights of Unit j of Layer i.
+	 *                weights[0][0] = weights[0][j] <=> size of each input vector.
+	 */
+	public JNetwork(AFunction function, double[][][] weights) {
 		this.function = function;
 
-		outputLayer = new JNeuron[numOutUnit];
-		hiddenLayers = new JNeuron[numHidUnit.length][];
+		inputSize = weights[0][0].length;
+		layers = new JNeuron[weights.length][];
 
-		// Hidden layers
-		for(int i = 0; i < hiddenLayers.length; i++) {
-			hiddenLayers[i] = new JNeuron[numHidUnit[i]];
+		for(int i = 0; i < layers.length; i++) {
+			layers[i] = new JNeuron[weights[i].length];
+			int prevSize = i > 0 ? weights[i-1].length: inputSize;
 
-			for(int j = 0; j < numHidUnit[i]; j++)
-				hiddenLayers[i][j] = new JNeuron(weights[i][j]);
+			for(int j = 0; j < weights[i].length; j++) {
+				if(weights[i][j].length != prevSize)
+					throw new IllegalArgumentException("weights are invalid");
+
+				layers[i][j] = new JNeuron(weights[i][j]);
+			}
 		}
-
-		// Output layer
-		for(int i = 0; i < numOutUnit; i++)
-			outputLayer[i] = new JNeuron(weights[weights.length - 1][i]);
-
-		layers = new JNeuron[hiddenLayers.length + 1][];
-
-		for(int i = 0; i < layers.length - 1; i++)
-			layers[i] = hiddenLayers[i];
-
-		layers[layers.length - 1] = outputLayer;
 	}
 
-	public JNetwork(int numInUnit, int numOutUnit, int... numHidUnit) {
-		this(AFunctions.SIGMOID, numInUnit, numOutUnit, numHidUnit);
+	public JNetwork(int... numLayerUnits) {
+		this(new SigmoidFunction(), numLayerUnits);
 	}
 
-	public JNetwork(AFunctions function, int numInUnit, int numOutUnit, int... numHidUnit) {
+	private JNetwork(AFunction function, int... numLayerUnits) {
+		if(numLayerUnits.length < 2)
+			throw  new IllegalArgumentException("Network need at least an input layer and an output layer (at least two integer arguments required)");
+
 		this.function = function;
+		inputSize = numLayerUnits[0];
+		layers = new JNeuron[numLayerUnits.length - 1][];
 
-		outputLayer = new JNeuron[numOutUnit];
-		hiddenLayers = new JNeuron[numHidUnit.length][];
+		for(int i = 0; i < layers.length; i++) {
+			layers[i] = new JNeuron[numLayerUnits[i+1]];
 
-		// Hidden layers
-		for(int i = 0; i < hiddenLayers.length; i++) {
-			hiddenLayers[i] = new JNeuron[numHidUnit[i]];
-
-			for(int j = 0; j < numHidUnit[i]; j++)
-				hiddenLayers[i][j] = new JNeuron(Util.random(i == 0 ? numInUnit : numHidUnit[i - 1]));
+			for(int j = 0; j < numLayerUnits[i+1]; j++)
+				layers[i][j] = new JNeuron(Util.random(numLayerUnits[i]));
 		}
-
-		// Output layer
-		for(int i = 0; i < numOutUnit; i++)
-			outputLayer[i] = new JNeuron(Util.random(numHidUnit.length == 0 ? numInUnit : numHidUnit[numHidUnit.length - 1]));
 	}
 
 	@Override
 	public double[] compute(double[] input) {
-		double[] output = new double[outputLayer.length];
-		double[][] hidden = new double[hiddenLayers.length][];
+		double[][] results = new double[layers.length][];
 
-		forwardPropagation(input, hidden, output);
+		forwardPropagation(input, results);
 
-		return output;
+		return results[results.length - 1];
 	}
 
 	@Override
 	public void train(double[][] input, double[][] labels, int repetitions, double learnRate){
-		double[] output = new double[outputLayer.length];
-		double[][] hidden = new double[hiddenLayers.length][];
+		double[][] results = new double[layers.length][];
 
 		for(int i = 0; i < repetitions; i++) {
 			double cost = 0d;
 			int correct = 0;
 			System.out.println("Repetition " + i);
 			for(int j = 0; j < input.length; j++) {
-				forwardPropagation(input[j], hidden, output);
-				cost += cost(output, labels[j]);
-				correct += correct(output, labels[j]) ? 1 : 0;
-				backpropagation(output, hidden, labels[j], learnRate);
+				forwardPropagation(input[j], results);
+				cost += cost(results[results.length - 1], labels[j]);
+				correct += correct(results[results.length - 1], labels[j]) ? 1 : 0;
+				backpropagation(results, labels[j], learnRate);
 			}
 			System.out.printf("Cost: %f\nCorrect: %d of %d\n\n", cost, correct, input.length);
 		}
 	}
 
-	private void forwardPropagation(double[] input, double[][] hidden, double[] output) {
-		for(int i = 0; i < hiddenLayers.length; i++) // Initialize second layer of hidden matrix.
-			hidden[i] = new double[hiddenLayers[i].length];
+	private void forwardPropagation(double[] input, double[][] results) {
+		for(int i = 0; i < layers.length; i++)          // Initialize second layer of hidden matrix.
+			results[i] = new double[layers[i].length];
 
-		// Hidden layers
-		for(int i = 0; i < hiddenLayers.length; i++)
-			for(int j = 0; j < hiddenLayers[i].length; j++)
-				hidden[i][j] = hiddenLayers[i][j].fire(i == 0 ? input : hidden[i - 1], function);
-
-		// Output layer
-		for(int i = 0; i < outputLayer.length; i++)
-			output[i] = outputLayer[i].fire(hiddenLayers.length == 0 ? input : hidden[hidden.length - 1], function);
+		for(int i = 0; i < layers.length; i++)
+			for(int j = 0; j < layers[i].length; j++)
+				results[i][j] = layers[i][j].fire(i == 0 ? input : results[i - 1], function);
 	}
 
 	private void backpropagation(double[][] results, double[] label, double learnRate) {
@@ -136,33 +126,6 @@ public class JNetwork implements INetwork {
 		backpropagation(delta, index - 1, layers, results, learnRate);
 	}
 
-	private void backpropagation(double[] output, double[][] hidden, double[] label, double learnRate) {
-		double[][] delta = new double[hiddenLayers.length + 1][];
-		delta[0] = new double[output.length];
-		for(int i = 0; i < outputLayer.length; i++) {
-			delta[0][i] = 2 * (output[i] - label[i]);
-			double deltaLearn = -learnRate * delta[0][i];
-
-			for(int j = 0; j < outputLayer[i].weights.length; j++)
-				outputLayer[i].weights[j] += deltaLearn * output[i];
-
-			outputLayer[i].bias += deltaLearn;
-		}
-
-		for(int i = hiddenLayers.length - 2; i >= 0; i--) {
-			int size = hiddenLayers[i].length;
-			delta[i + 1] = new double[size];
-			for(int j = 0; j < size; j++) {
-				delta[i + 1][j] = Util.abs(Util.mul(delta[i][j], hiddenLayers[i][j].weights)) * function.derivative(hidden[i][j]);
-				double deltaLearn = -learnRate * delta[i + 1][j];
-				for(int k = 0; k < hiddenLayers[i][j].weights.length; k++)
-					hiddenLayers[i][j].weights[k] += deltaLearn * hidden[i][j];
-
-				hiddenLayers[i][j].bias += deltaLearn;
-			}
-		}
-	}
-
 	private double cost(double[] output, double[] label) {
 		double sum = 0d;
 		for(int i = 0; i < output.length; i++) {
@@ -175,5 +138,18 @@ public class JNetwork implements INetwork {
 
 	private boolean correct(double[] output, double[] label) {
 		return Util.argmax(output) == Util.argmax(label);
+	}
+
+	private double[][][] weights(int[] numLayerUnits) {
+
+		double[][][] weights = new double[numLayerUnits.length - 1][][];
+		for(int i = 0; i < weights.length; i++) {
+			weights[i] = new double[numLayerUnits[i + 1]][];
+
+			for(int j = 0; j < weights[i].length; j++)
+				weights[i][j] = Util.random(numLayerUnits[i]);
+		}
+
+		return weights;
 	}
 }

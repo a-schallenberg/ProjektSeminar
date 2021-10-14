@@ -1,6 +1,6 @@
 package main.objectoriented;
 
-import main.AFunctions;
+import main.afunctions.AFunction;
 
 public class JNeuron {
 	public double[] weights;
@@ -11,9 +11,9 @@ public class JNeuron {
 		this.weights = weights;
 	}
 
-	public double fire(double[] input, AFunctions function) {
+	public double fire(double[] input, AFunction function) {
 		z = sum(input) + bias;
-		return function.function(z); //FIXME bias for sgn function
+		return function.function(z);
 	}
 
 	public double sum(double[] input) {
