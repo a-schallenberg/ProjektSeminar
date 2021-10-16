@@ -7,7 +7,7 @@ import main.objectoriented.JNetwork;
 public class Main {
 
 	public static void main(String[] args) {
-		testJOR();
+		testJXOR();
 	}
 
 	private static void testPyXOR() {
@@ -21,7 +21,7 @@ public class Main {
 		JNetwork network = new JNetwork(2, 3, 1);
 		double[][] input = new double[][] {{1, 1}, {1, 0}, {0, 1}, {0, 0}};
 		double[][] labels = new double[][] {{0}, {1}, {1}, {0}};
-		network.train(input, labels, 10, 0.01);
+		network.train(input, labels, 10000000, 0.01);
 	}
 
 	private static void testPyMnist() {

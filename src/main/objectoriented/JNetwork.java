@@ -126,7 +126,7 @@ public class JNetwork implements INetwork {
 	}
 
 	private void forwardPropagation(double[] input, double[][] results) {
-		for(int i = 0; i < layers.length; i++)          // Initialize second layer of hidden matrix.
+		for(int i = 0; i < layers.length; i++)          // Initializes second layer of hidden matrix.
 			results[i] = new double[layers[i].length];
 
 		for(int i = 0; i < layers.length; i++)
@@ -151,10 +151,10 @@ public class JNetwork implements INetwork {
 			double deltaI = delta[i];
 
 			for(int j = 0; j < layers[index][i].weights.length; j++)
-				layers[index][i].weights[j] += -learnRate * results[index][i] * df * deltaI;
+				layers[index][i].weights[j] += -learnRate * deltaI * df * results[index][i] ;
 
-			layers[index][i].bias += -learnRate * df * deltaI;
-			delta[i] = w * df * deltaI;                                 // FIXME Lernprozess funktioniert nur ohne hidden layers. Delta?
+			layers[index][i].bias += -learnRate * deltaI * df;
+			delta[i] = deltaI * df * w;                                 // FIXME Lernprozess funktioniert nur ohne hidden layers. Delta?
 		}
 
 		backpropagation(delta, index - 1, layers, results, learnRate);
