@@ -117,7 +117,7 @@ public class JNetwork implements INetwork {
 				forwardPropagation(input[j], results);
 				cost += cost(results[results.length - 1], labels[j]);
 				correct += correct(results[results.length - 1], labels[j]) ? 1 : 0;
-				backpropagation(results, labels[j], learnRate);
+				backpropagationTest(results, labels[j], learnRate);
 			}
 			System.out.printf("Cost: %f\nCorrect: %f%% \n\n", cost, correct/ (double) input.length * 100);
 		}
@@ -134,15 +134,37 @@ public class JNetwork implements INetwork {
 				results[i][j] = layers[i][j].fire(i == 0 ? input : results[i - 1], function);
 	}
 
-	private void backpropagation(double[][] results, double[] label, double learnRate) {
-		double[] delta = new double[Util.maxLength(results)];
-		for(int i = 0; i < label.length; i++)
-			delta[i] = 2 * (results[results.length - 1][i] - label[i]);
+	private void backpropagationTest(double[][] results, double[] label, double learnRate) {
+		double[] outResults = results[results.length - 1];
+		double[][] deltas = new double[layers.length][];
+		deltas[deltas.length - 1] = new double[outResults.length];
 
-		backpropagation(delta, results.length - 1, layers, results, learnRate);
+		for(int i = 0; i < outResults.length; i++)
+			deltas[deltas.length - 1][i] = 2 * (outResults[i] - label[i]);
+
+		for(int i = layers.length - 1; i >= 0; i--) { // Iterates over all layers without the output layer
+			if(i != 0) deltas[i - 1] = new double[layers[i - 1].length];
+
+			for(int j = 0; j < results[i].length; j++) {
+				double[] del = layers[i][j].backpropagation(results[i][j], deltas[i][j], learnRate, function);
+
+				if(i != 0) Util.add(deltas[i - 1], del);
+			}
+
+			if(i != 0) deltas[i-1] = Util.mul(1d/deltas[i-1].length, deltas[i-1]);
+		}
+
 	}
 
-	private void backpropagation(double[] delta, int index, JNeuron[][] layers, double[][] results, double learnRate) {
+	private void backpropagation(double[][] results, double[] label, double learnRate) {
+		double[] delta = new double[Util.maxLength(results)];
+			for(int i = 0; i < label.length; i++)
+				delta[i] = 2 *  (results[results.length - 1][i] - label[i]);
+
+		backpropagation(delta, results.length - 1, results, learnRate);
+	}
+
+	private void backpropagation(double[] delta, int index, double[][] results, double learnRate) {
 		if(index < 0) return;
 
 		for(int i = 0; i < layers[index].length; i++) {
@@ -151,13 +173,13 @@ public class JNetwork implements INetwork {
 			double deltaI = delta[i];
 
 			for(int j = 0; j < layers[index][i].weights.length; j++)
-				layers[index][i].weights[j] += -learnRate * deltaI * df * results[index][i] ;
+				layers[index][i].weights[j] += -learnRate * deltaI * df * results[index][i];
 
 			layers[index][i].bias += -learnRate * deltaI * df;
 			delta[i] = deltaI * df * w;                                 // FIXME Lernprozess funktioniert nur ohne hidden layers. Delta?
 		}
 
-		backpropagation(delta, index - 1, layers, results, learnRate);
+		backpropagation(delta, index - 1, results, learnRate);
 	}
 
 	private double cost(double[] output, double[] label) {

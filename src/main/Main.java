@@ -7,7 +7,7 @@ import main.objectoriented.JNetwork;
 public class Main {
 
 	public static void main(String[] args) {
-		testJXOR();
+		testJMnist();
 	}
 
 	private static void testPyXOR() {

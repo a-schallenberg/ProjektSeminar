@@ -1,5 +1,6 @@
 package main.objectoriented;
 
+import main.Util;
 import main.afunctions.AFunction;
 
 public class JNeuron {
@@ -12,15 +13,20 @@ public class JNeuron {
 	}
 
 	public double fire(double[] input, AFunction function) {
-		z = sum(input) + bias;
+		z = Util.sum(Util.mul(weights, input)) + bias;
 		return function.function(z);
 	}
 
-	public double sum(double[] input) {
-		double sum = 0;
-		for(int i = 0; i < (Math.min(input.length, weights.length)); i++)
-			sum += weights[i] * input[i];
+	public double[] backpropagation(double result, double delta, double learnRate, AFunction function) {
+		double df = function.derivative(z);
+		double[] deltas = new double[weights.length];
 
-		return sum;
+		bias += -learnRate * delta * df;
+		for(int i = 0; i < weights.length; i++) {
+			weights[i] += -learnRate * delta * df * result;
+			deltas[i] = delta * df * weights[i];
+		}
+
+		return deltas;
 	}
 }

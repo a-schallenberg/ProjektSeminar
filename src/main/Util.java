@@ -148,20 +148,20 @@ public class Util {
 	}
 
 	/**
-	 * Multiplies all values of the first vector with the corresponding value of the second vector.
-	 * @param vec1 The first vector to be multiplied with the second vector. The vector is not affected by the multiplication.
-	 * @param vec2 The second vector to be multiplied with the first vector. The vector is not affected by the multiplication.
-	 * @return A copy of the first vector in the argument list in which each value is multiplied by the corresponding value of the second vector.
-	 * @throws NullPointerException If one of the vectors is null.
-	 * @throws ArithmeticException If the dimensions of the vectors are not equal.
+	 * Multiplies all values of the first array with the corresponding value of the second array.
+	 * @param array1 The first array to be multiplied with the second array. The array is not affected by the multiplication.
+	 * @param array2 The second array to be multiplied with the first array. The array is not affected by the multiplication.
+	 * @return A copy of the first array in the argument list in which each value is multiplied by the corresponding value of the second array.
+	 * @throws NullPointerException If one of the arrays is null.
+	 * @throws ArithmeticException If the dimensions of the arrays are not equal.
 	 */
-	public static double[] mul(double[] vec1, double[] vec2) {
-		if(vec1.length != vec2.length)
-			throw new ArithmeticException("Vectors do not match");
+	public static double[] mul(double[] array1, double[] array2) {
+		if(array1.length != array2.length)
+			throw new ArithmeticException("Arrays do not match");
 
-		double[] result = new double[vec1.length];
-		for(int i = 0; i < vec1.length; i++)
-			result[i] = vec1[i] * vec2[i];
+		double[] result = new double[array1.length];
+		for(int i = 0; i < array1.length; i++)
+			result[i] = array1[i] * array2[i];
 
 		return result;
 	}
@@ -475,5 +475,17 @@ public class Util {
 				max = array.length;
 
 		return max;
+	}
+
+	/**
+	 * Sums an array up.
+	 * @param array The array that is summed up.
+	 * @return the sum of all contents of the array.
+	 */
+	public static double sum(double[] array) {
+		double sum = 0;
+		for(double d : array) sum += d;
+
+		return sum;
 	}
 }
