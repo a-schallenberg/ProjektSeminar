@@ -3,11 +3,14 @@ package main;
 import main.algebraoriented.PyNetwork;
 import main.mnist.Mnist;
 import main.objectoriented.JNetwork;
+import main.seminar.Network;
 
 public class Main {
 
 	public static void main(String[] args) {
 		testJMnist();
+
+		new Network(1,1, 5, 8, 4, 2);
 	}
 
 	private static void testPyXOR() {
