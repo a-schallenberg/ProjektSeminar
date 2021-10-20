@@ -169,7 +169,7 @@ public class JNetwork implements INetwork {
 
 		for(int i = 0; i < layers[index].length; i++) {
 			double df = function.derivative(layers[index][i].z);
-			double w = Arrays.stream(layers[index][i].weights).sum();
+			double w = Arrays.stream(layers[index][i].weights).sum(); // Maybe wrong idea
 			double deltaI = delta[i];
 
 			for(int j = 0; j < layers[index][i].weights.length; j++)
