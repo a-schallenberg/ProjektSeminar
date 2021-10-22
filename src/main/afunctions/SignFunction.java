@@ -16,4 +16,9 @@ public class SignFunction implements AFunction{
 	public double derivative(double x) {
 		return 0d;
 	}
+
+	@Override
+	public String toString() {
+		return "Sign";
+	}
 }

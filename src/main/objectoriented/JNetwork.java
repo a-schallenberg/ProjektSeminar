@@ -196,16 +196,27 @@ public class JNetwork implements INetwork {
 		return Util.argmax(output) == Util.argmax(label);
 	}
 
-	private double[][][] weights(int[] numLayerUnits) {
+	@Override
+	public String toString() {
+		StringBuilder string = new StringBuilder();
 
-		double[][][] weights = new double[numLayerUnits.length - 1][][];
-		for(int i = 0; i < weights.length; i++) {
-			weights[i] = new double[numLayerUnits[i + 1]][];
+		string.append("O   ".repeat(Math.max(0, inputSize)));
 
-			for(int j = 0; j < weights[i].length; j++)
-				weights[i][j] = Util.random(numLayerUnits[i]);
+		string.append("B");
+		for(JNeuron[] layer : layers) {
+			string.append("\n   |   ");
+			for(int j = 0; j < layer.length; j++) {
+				if(j != 0) string.append(", \n   |   ");
+				string.append(layer[j].toString());
+			}
+
+			string.append("\n   |   Sigmoid\n");
+
+			string.append("O   ".repeat(layer.length));
+
+			string.append("B");
 		}
 
-		return weights;
+		return "Network{\n" + string + "\n}";
 	}
 }

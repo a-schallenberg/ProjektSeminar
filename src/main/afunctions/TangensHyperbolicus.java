@@ -11,4 +11,9 @@ public class TangensHyperbolicus implements AFunction{
 		double tanh = Math.tanh(x);
 		return 1 - tanh * tanh;
 	}
+
+	@Override
+	public String toString() {
+		return "Tanh";
+	}
 }

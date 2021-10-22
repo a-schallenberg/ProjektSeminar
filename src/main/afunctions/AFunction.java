@@ -23,4 +23,7 @@ public interface AFunction {
 
 		return result;
 	}
+
+
+	String toString();
 }

@@ -24,4 +24,9 @@ public class SigmoidFunction implements AFunction{
 
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return "Sigmoid";
+	}
 }
