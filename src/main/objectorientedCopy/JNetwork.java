@@ -1,4 +1,4 @@
-package main.objectoriented;
+package main.objectorientedCopy;
 
 import main.INetwork;
 import main.Util;
@@ -103,10 +103,8 @@ public class JNetwork implements INetwork {
 		for(int i = 0; i < layers.length; i++) {
 			layers[i] = new JNeuron[numLayerUnits[i+1]];
 
-			for(int j = 0; j < numLayerUnits[i+1]; j++) {
+			for(int j = 0; j < numLayerUnits[i+1]; j++)
 				layers[i][j] = func.apply(i, j);
-				if(i > 0) layers[i][j].prevLayer = layers[i-1]; //initialize prevLayers
-			}
 		}
 	}
 
@@ -147,7 +145,6 @@ public class JNetwork implements INetwork {
 		System.out.println("Start training");
 		long start = System.currentTimeMillis();
 
-		double costOld = 0d;
 		for(int i = 0; i < repetitions; i++) {
 			double cost = 0d;
 			int correct = 0;
@@ -157,12 +154,10 @@ public class JNetwork implements INetwork {
 				cost += cost(results[results.length - 1], labels[j]);
 				correct += correct(results[results.length - 1], labels[j]) ? 1 : 0;
 				backpropagationTest(results, labels[j], learnRate);
-				//System.out.println(Arrays.toString(labels[j]) + ", " + Arrays.toString(results[results.length - 1]));
+				System.out.println(Arrays.toString(labels[j]) + ", " + Arrays.toString(results[results.length - 1]));
 				//System.out.printf("Expected: %d, Actual: %d \n", Util.argmax(labels[j]), Util.argmax(results[results.length - 1]));
 			}
-			//System.out.println(this);
-			System.out.printf("Cost: %f\nCost difference: %f\nCorrect: %f%% \n\n", cost, cost - costOld, correct/ (double) input.length * 100);
-			costOld = cost;
+			System.out.printf("Cost: %f\nCorrect: %f%% \n\n", cost, correct/ (double) input.length * 100);
 		}
 
 		System.out.println("Finished training in " + (System.currentTimeMillis() - start) + "ms");
@@ -180,32 +175,25 @@ public class JNetwork implements INetwork {
 	}
 
 	private void backpropagationTest(double[][] results, double[] label, double learnRate) {
-		JNeuron[] outLayer = layers[layers.length - 1];
+		double[] outResults = results[results.length - 1];
+		double[][] deltas = new double[layers.length][];
+		deltas[deltas.length - 1] = new double[outResults.length];
 
-		for(int i = 0; i < outLayer.length; i++)
-			 outLayer[i].backpropagation((outLayer[i].a - label[i]), learnRate);
+		for(int i = 0; i < outResults.length; i++)
+			deltas[deltas.length - 1][i] = 2 * (outResults[i] - label[i]);
+
+		for(int i = layers.length - 1; i >= 0; i--) { // Iterates over all layers without the output layer
+			if(i != 0) deltas[i-1] = new double[layers[i - 1].length];
+
+			for(int j = 0; j < results[i].length; j++) {
+				double[] del = layers[i][j].backpropagation(results[i][j], deltas[i][j], learnRate);
+
+				if(i != 0) deltas[i-1] = Util.add(deltas[i-1], del);
+			}
+
+			if(i != 0) deltas[i-1] = Util.mul(1d/deltas[i-1].length, deltas[i-1]);
+		}
 	}
-
-//	private void backpropagationTest(double[][] results, double[] label, double learnRate) {
-//		double[] outResults = results[results.length - 1];
-//		double[][] deltas = new double[layers.length][];
-//		deltas[deltas.length - 1] = new double[outResults.length];
-//
-//		for(int i = 0; i < outResults.length; i++)
-//			deltas[deltas.length - 1][i] = 2 * (outResults[i] - label[i]);
-//
-//		for(int i = layers.length - 1; i >= 0; i--) { // Iterates over all layers without the output layer
-//			if(i != 0) deltas[i-1] = new double[layers[i - 1].length];
-//
-//			for(int j = 0; j < results[i].length; j++) {
-//				double[] del = layers[i][j].backpropagation(results[i][j], deltas[i][j], learnRate);
-//
-//				if(i != 0) deltas[i-1] = Util.add(deltas[i-1], del);
-//			}
-//
-//			if(i != 0) deltas[i-1] = Util.mul(1d/deltas[i-1].length, deltas[i-1]);
-//		}
-//	}
 
 //	private void backpropagation(double[][] results, double[] label, double learnRate) {
 //		double[] delta = new double[Util.maxLength(results)];
@@ -240,42 +228,10 @@ public class JNetwork implements INetwork {
 			sum += diff * diff;
 		}
 
-		return sum/2;
+		return sum;
 	}
 
 	private boolean correct(double[] output, double[] label) {
 		return Util.argmax(output) == Util.argmax(label);
-	}
-
-	@Override
-	public String toString() {
-		String string = "";
-
-		for(int i = 0; i < inputSize; i++)
-			string += "O   ";
-
-		string += "B";
-		for(int i = 0; i < layers.length; i++) {
-			string += "\n   |   ";
-			for(int j = 0; j < layers[i].length; j++) {
-				if(j != 0) string += ", \n   |   ";
-				string += layers[i][j].toString();
-			}
-
-			string += "\n   |   ";
-
-			for(int j = 0; j < layers[i].length; j++) {
-				string += (j != 0 ? ", " : "") + layers[i][j].function;
-			}
-
-			string += "\n";
-
-			for(int j = 0; j < layers[i].length; j++)
-				string += "O   ";
-
-			string += "B";
-		}
-
-		return "Network{\n" + string + "\n}";
 	}
 }

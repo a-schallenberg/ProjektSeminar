@@ -3,9 +3,12 @@ package main.objectoriented;
 import main.Util;
 import main.afunctions.ActivationFunction;
 
+import java.util.Arrays;
+
 public class JNeuron {
 	public double[] weights;
-	public double bias, z;
+	public double bias, z, a;
+	public JNeuron[] prevLayer;
 	public final ActivationFunction function;
 
 	public JNeuron(int weightDim, ActivationFunction function) {
@@ -20,19 +23,26 @@ public class JNeuron {
 
 	public double fire(double[] input) {
 		z = Util.sum(Util.mul(weights, input)) + bias;
-		return function.function(z);
+		a = function.function(z);
+		return a;
 	}
 
-	public double[] backpropagation(double result, double delta, double learnRate) {
+	public void backpropagation(double delta, double learnRate) {
 		double df = function.derivative(z);
-		double[] deltas = new double[weights.length];
 
-		bias += -learnRate * delta * df;
-		for(int i = 0; i < weights.length; i++) {
-			weights[i] += -learnRate * delta * df * result;
-			deltas[i] = delta * df * weights[i];
-		}
+		for(int i = 0; i < weights.length; i++)
+			weights[i] += -learnRate * delta * a;
 
-		return deltas;
+		bias += -learnRate * delta;
+		for(int i = 0; prevLayer != null && i < prevLayer.length; i++)
+			prevLayer[i].backpropagation(delta * df * weights[i], learnRate);
+	}
+
+	@Override
+	public String toString() {
+		return "Neuron{" +
+				"weights=" + Arrays.toString(weights) +
+				", bias=" + bias +
+				'}';
 	}
 }
