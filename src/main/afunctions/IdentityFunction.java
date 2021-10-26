@@ -11,4 +11,9 @@ public class IdentityFunction implements ActivationFunction {
 	public double derivative(double x) {
 		return 1;
 	}
+
+	@Override
+	public String toString() {
+		return "Identity";
+	}
 }

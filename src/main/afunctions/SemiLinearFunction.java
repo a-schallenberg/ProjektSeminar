@@ -23,4 +23,9 @@ public class SemiLinearFunction implements ActivationFunction {
 	public double derivative(double x) {
 		return (x < upperLimit && x > lowerLimit) ? 1d : 0d;
 	}
+
+	@Override
+	public String toString() {
+		return "Semi-Linear";
+	}
 }

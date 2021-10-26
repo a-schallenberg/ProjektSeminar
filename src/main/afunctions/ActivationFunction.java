@@ -25,4 +25,7 @@ public interface ActivationFunction {
 
 		return result;
 	}
+
+
+	String toString();
 }
