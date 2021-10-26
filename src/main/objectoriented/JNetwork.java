@@ -120,16 +120,27 @@ public class JNetwork implements INetwork {
 
 	@Override
 	public double[] compute(double[] input) {
-		double[][] results = new double[layers.length][];
+		if(input.length != inputSize) // Exception check
+			throw new IllegalArgumentException("invalid input vector dimension");
 
-		forwardPropagation(input, results);
-
+		double[][] results = forwardPropagation(input, new double[layers.length][]);
 		return results[results.length - 1];
 	}
 
 	@Override
 	public void train(double[][] input, double[][] labels, int repetitions, double learnRate){
 		double[][] results = new double[layers.length][];
+
+		{ // Exception check
+			for(double[] in : input)
+				if(in.length != inputSize)
+					throw new IllegalArgumentException("invalid input vector dimension");
+
+			int outputLength = layers[layers.length - 1].length;
+			for(double[] lab : labels)
+				if(lab.length != outputLength)
+					throw new IllegalArgumentException("invalid label vector dimension");
+		}
 
 		System.out.println("Start training");
 		long start = System.currentTimeMillis();
@@ -150,13 +161,15 @@ public class JNetwork implements INetwork {
 		System.out.println("Finished training in " + (System.currentTimeMillis() - start) + "ms");
 	}
 
-	private void forwardPropagation(double[] input, double[][] results) {
+	private double[][] forwardPropagation(double[] input, double[][] results) {
 		for(int i = 0; i < layers.length; i++)          // Initializes second layer of hidden matrix.
 			results[i] = new double[layers[i].length];
 
 		for(int i = 0; i < layers.length; i++)
 			for(int j = 0; j < layers[i].length; j++)
 				results[i][j] = layers[i][j].fire(i == 0 ? input : results[i - 1]);
+
+		return results;
 	}
 
 	private void backpropagationTest(double[][] results, double[] label, double learnRate) {
