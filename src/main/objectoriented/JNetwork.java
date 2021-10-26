@@ -2,59 +2,14 @@ package main.objectoriented;
 
 import main.INetwork;
 import main.Util;
-import main.afunctions.AFunction;
-import main.afunctions.SigmoidFunction;
+import main.afunctions.ActivationFunction;
 
 import java.util.Arrays;
+import java.util.function.BiFunction;
 
 public class JNetwork implements INetwork {
-	private final AFunction function;
-	private final JNeuron[][] layers;
-	private final int inputSize;
-
-	/**
-	 * Creates a neural network which works with {@link JNeuron}s.
-	 * @param weights weights.length <=> Number of layers (without input layer).
-	 *                weights[i].length <=> Number of Units in Layer i.
-	 *                weights[i][j] <=> Incoming weights of Unit j of Layer i.
-	 *                weights[0][0] <=> size of each input vector.
-	 *                Condition 1: weights[i][j].length == weights[i-1].length.
-	 *                Condition 2: weights[0][0] == weights[0][j], for every j in range.
-	 * @throws  IllegalArgumentException Whether one of the condition of argument weights is false.
-	 */
-	public JNetwork(double[][][] weights) {
-		this(new SigmoidFunction(), weights);
-	}
-
-	/**
-	 * Creates a neural network which works with {@link JNeuron}s.
-	 * @param function activation or output function which will be used in the network.
-	 * @param weights weights.length <=> Number of layers (without input layer).
-	 *                weights[i].length <=> Number of Units in Layer i.
-	 *                weights[i][j] <=> Incoming weights of Unit j of Layer i.
-	 *                weights[0][0] <=> size of each input vector.
-	 *                Condition 1: weights[i][j].length == weights[i-1].length.
-	 *                Condition 2: weights[0][0] == weights[0][j], for every j in range.
-	 * @throws  IllegalArgumentException Whether one of the condition of argument weights is false.
-	 */
-	public JNetwork(AFunction function, double[][][] weights) {
-		this.function = function;
-
-		inputSize = weights[0][0].length;
-		layers = new JNeuron[weights.length][];
-
-		for(int i = 0; i < layers.length; i++) {
-			layers[i] = new JNeuron[weights[i].length];
-			int prevSize = i > 0 ? weights[i-1].length: inputSize;
-
-			for(int j = 0; j < weights[i].length; j++) {
-				if(weights[i][j].length != prevSize)
-					throw new IllegalArgumentException("weights are invalid");
-
-				layers[i][j] = new JNeuron(weights[i][j]);
-			}
-		}
-	}
+	private JNeuron[][] layers;
+	private int inputSize;
 
 	/**
 	 * Creates a neural network which works with {@link JNeuron}s.
@@ -65,7 +20,21 @@ public class JNetwork implements INetwork {
 	 * @throws IllegalArgumentException Whether the argument's length is less than two, because the network needs at least an input layer and an output layer.
 	 */
 	public JNetwork(int... numLayerUnits) {
-		this(new SigmoidFunction(), numLayerUnits);
+		this(ActivationFunction.DEFAULT_FUNCTION, numLayerUnits);
+	}
+
+	/**
+	 * Creates a neural network which works with {@link JNeuron}s.
+	 * @param weights weights.length <=> Number of layers (without input layer).
+	 *                weights[i].length <=> Number of Units in Layer i.
+	 *                weights[i][j] <=> Incoming weights of Unit j of Layer i.
+	 *                weights[0][0] <=> size of each input vector.
+	 *                Condition 1: weights[i][j].length == weights[i-1].length.
+	 *                Condition 2: weights[0][0] == weights[0][j], for every j in range.
+	 * @throws  IllegalArgumentException Whether one of the condition of argument weights is false.
+	 */
+	public JNetwork(double[][][] weights, double[][] biases) {
+		this(ActivationFunction.DEFAULT_FUNCTION, weights, biases);
 	}
 
 	/**
@@ -77,20 +46,76 @@ public class JNetwork implements INetwork {
 	 *                      Last layer <=> output layer
 	 * @throws IllegalArgumentException Whether the argument's length is less than two, because the network needs at least an input layer and an output layer.
 	 */
-	private JNetwork(AFunction function, int... numLayerUnits) {
+	private JNetwork(ActivationFunction function, int... numLayerUnits) {
+		init(numLayerUnits, (i, j) -> new JNeuron(numLayerUnits[i], function));
+	}
+
+	/**
+	 * Creates a neural network which works with {@link JNeuron}s.
+	 * @param function activation or output function which will be used in the network.
+	 * @param weights weights.length <=> Number of layers (without input layer).
+	 *                weights[i].length <=> Number of Units in Layer i.
+	 *                weights[i][j] <=> Incoming weights of Unit j of Layer i.
+	 *                weights[0][0] <=> size of each input vector.
+	 *                Condition 1: weights[i][j].length == weights[i-1].length.
+	 *                Condition 2: weights[0][0] == weights[0][j], for every j in range.
+	 * @throws  IllegalArgumentException Whether one of the condition of argument weights is false.
+	 */
+	public JNetwork(ActivationFunction function, double[][][] weights, double[][] biases) {
+		init(weightsToNumbers(weights), (i, j) -> new JNeuron(weights[i][j], biases[i][j], function));
+	}
+
+	/**
+	 * Creates a neural network which works with {@link JNeuron}s.
+	 * @param functions activation or output function which will be used in the network.
+	 * @param numLayerUnits numLayerUnits.length <=> Number of layers.
+	 *                      numLayerUnits[i] <=> Number of units in layer i.
+	 *                      First layer <=> input layer
+	 *                      Last layer <=> output layer
+	 * @throws IllegalArgumentException Whether the argument's length is less than two, because the network needs at least an input layer and an output layer.
+	 */
+	private JNetwork(ActivationFunction[][] functions, int... numLayerUnits) {
+		init(numLayerUnits, (i, j) -> new JNeuron(numLayerUnits[i], functions[i][j]));
+	}
+
+	/**
+	 * Creates a neural network which works with {@link JNeuron}s.
+	 * @param functions activation or output function which will be used in the network.
+	 * @param weights weights.length <=> Number of layers (without input layer).
+	 *                weights[i].length <=> Number of Units in Layer i.
+	 *                weights[i][j] <=> Incoming weights of Unit j of Layer i.
+	 *                weights[0][0] <=> size of each input vector.
+	 *                Condition 1: weights[i][j].length == weights[i-1].length.
+	 *                Condition 2: weights[0][0] == weights[0][j], for every j in range.
+	 * @throws  IllegalArgumentException Whether one of the condition of argument weights is false.
+	 */
+	public JNetwork(ActivationFunction[][] functions, double[][][] weights, double[][] biases) {
+		init(weightsToNumbers(weights), (i, j) -> new JNeuron(weights[i][j], biases[i][j], functions[i][j]));
+	}
+
+	private void init(int[] numLayerUnits, BiFunction<Integer, Integer, JNeuron> func) {
 		if(numLayerUnits.length < 2)
 			throw  new IllegalArgumentException("Network need at least an input layer and an output layer (at least two integer arguments required)");
 
-		this.function = function;
 		inputSize = numLayerUnits[0];
 		layers = new JNeuron[numLayerUnits.length - 1][];
 
 		for(int i = 0; i < layers.length; i++) {
-			layers[i] = new JNeuron[numLayerUnits[i+1]];
+			layers[i] = new JNeuron[numLayerUnits[i]];
 
-			for(int j = 0; j < numLayerUnits[i+1]; j++)
-				layers[i][j] = new JNeuron(Util.random(numLayerUnits[i]));
+			for(int j = 0; j < numLayerUnits[i]; j++)
+				layers[i][j] = func.apply(i, j);
 		}
+	}
+
+	private int[] weightsToNumbers(double[][][] weights) {
+		int[] result = new int[weights.length + 1];
+		result[0] = weights[0][0].length;
+
+		for(int i = 1; i < result.length; i++)
+			result[i] = weights[i-1].length;
+
+		return result;
 	}
 
 	@Override
@@ -131,7 +156,7 @@ public class JNetwork implements INetwork {
 
 		for(int i = 0; i < layers.length; i++)
 			for(int j = 0; j < layers[i].length; j++)
-				results[i][j] = layers[i][j].fire(i == 0 ? input : results[i - 1], function);
+				results[i][j] = layers[i][j].fire(i == 0 ? input : results[i - 1]);
 	}
 
 	private void backpropagationTest(double[][] results, double[] label, double learnRate) {
@@ -146,14 +171,13 @@ public class JNetwork implements INetwork {
 			if(i != 0) deltas[i - 1] = new double[layers[i - 1].length];
 
 			for(int j = 0; j < results[i].length; j++) {
-				double[] del = layers[i][j].backpropagation(results[i][j], deltas[i][j], learnRate, function);
+				double[] del = layers[i][j].backpropagation(results[i][j], deltas[i][j], learnRate);
 
 				if(i != 0) Util.add(deltas[i - 1], del);
 			}
 
 			if(i != 0) deltas[i-1] = Util.mul(1d/deltas[i-1].length, deltas[i-1]);
 		}
-
 	}
 
 	private void backpropagation(double[][] results, double[] label, double learnRate) {
@@ -168,7 +192,7 @@ public class JNetwork implements INetwork {
 		if(index < 0) return;
 
 		for(int i = 0; i < layers[index].length; i++) {
-			double df = function.derivative(layers[index][i].z);
+			double df = layers[index][i].function.derivative(layers[index][i].z);
 			double w = Arrays.stream(layers[index][i].weights).sum(); // Maybe wrong idea
 			double deltaI = delta[i];
 
@@ -194,18 +218,5 @@ public class JNetwork implements INetwork {
 
 	private boolean correct(double[] output, double[] label) {
 		return Util.argmax(output) == Util.argmax(label);
-	}
-
-	private double[][][] weights(int[] numLayerUnits) {
-
-		double[][][] weights = new double[numLayerUnits.length - 1][][];
-		for(int i = 0; i < weights.length; i++) {
-			weights[i] = new double[numLayerUnits[i + 1]][];
-
-			for(int j = 0; j < weights[i].length; j++)
-				weights[i][j] = Util.random(numLayerUnits[i]);
-		}
-
-		return weights;
 	}
 }

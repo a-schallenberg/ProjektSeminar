@@ -1,6 +1,6 @@
 package main.afunctions;
 
-public class SignFunction implements AFunction{
+public class SignFunction implements ActivationFunction {
 	private double threshold;
 
 	public SignFunction(double threshold) {

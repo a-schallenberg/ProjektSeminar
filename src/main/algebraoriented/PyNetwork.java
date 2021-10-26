@@ -2,7 +2,7 @@ package main.algebraoriented;
 
 import main.INetwork;
 import main.Util;
-import main.afunctions.AFunction;
+import main.afunctions.ActivationFunction;
 import main.afunctions.SigmoidFunction;
 import main.objectoriented.JNeuron;
 
@@ -10,7 +10,7 @@ import main.objectoriented.JNeuron;
  * Neuronal main.objectoriented.Network that does not compute the output with {@link JNeuron} but with matrices and vectors.
  */
 public class PyNetwork implements INetwork {
-	private final AFunction function;
+	private final ActivationFunction function;
 	private double[][][] weights;
 	private double[][] biases;
 
@@ -18,7 +18,7 @@ public class PyNetwork implements INetwork {
 		this(new SigmoidFunction(), weights, numInUnit, numOutUnit, numHidUnit);
 	}
 
-	public PyNetwork(AFunction function, double[][][] weights, int numInUnit, int numOutUnit, int... numHidUnit) {
+	public PyNetwork(ActivationFunction function, double[][][] weights, int numInUnit, int numOutUnit, int... numHidUnit) {
 		this(function, numInUnit, numOutUnit, numHidUnit);
 		if(numHidUnit.length != weights.length - 1) {throw new IllegalArgumentException("Illegal weight matrices");}
 		this.weights = weights;
@@ -35,7 +35,7 @@ public class PyNetwork implements INetwork {
 	 * @param numHidUnit The numbers of neurons in the hidden layers. The number of values after the first two parameters
 	 *                   represents the number of hidden layers.
 	 */
-	public PyNetwork(AFunction function, int numInUnit, int numOutUnit, int... numHidUnit) {
+	public PyNetwork(ActivationFunction function, int numInUnit, int numOutUnit, int... numHidUnit) {
 		this.function = function;
 
 		boolean twoLayers = numHidUnit.length == 0;

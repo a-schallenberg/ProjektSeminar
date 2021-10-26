@@ -1,6 +1,6 @@
 package main.afunctions;
 
-public class SemiLinearFunction implements AFunction{
+public class SemiLinearFunction implements ActivationFunction {
 	private final double lowerLimit, upperLimit;
 
 	public SemiLinearFunction() {

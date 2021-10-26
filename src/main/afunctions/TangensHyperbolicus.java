@@ -1,6 +1,6 @@
 package main.afunctions;
 
-public class TangensHyperbolicus implements AFunction{
+public class TangensHyperbolicus implements ActivationFunction {
 	@Override
 	public double function(double x) {
 		return Math.tanh(x);

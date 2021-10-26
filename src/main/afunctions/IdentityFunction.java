@@ -1,6 +1,6 @@
 package main.afunctions;
 
-public class IdentityFunction implements AFunction{
+public class IdentityFunction implements ActivationFunction {
 
 	@Override
 	public double function(double x) {

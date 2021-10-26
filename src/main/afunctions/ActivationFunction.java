@@ -2,7 +2,9 @@ package main.afunctions;
 
 import java.util.function.Function;
 
-public interface AFunction {
+public interface ActivationFunction {
+	ActivationFunction DEFAULT_FUNCTION = new SigmoidFunction();
+
 	double function(double x);
 
 	default double[] function(double[] d) {

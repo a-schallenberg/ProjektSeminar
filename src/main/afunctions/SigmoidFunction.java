@@ -1,6 +1,6 @@
 package main.afunctions;
 
-public class SigmoidFunction implements AFunction{
+public class SigmoidFunction implements ActivationFunction {
 	@Override
 	public double function(double x) {
 		return 1 / (1 + Math.exp(-x));
