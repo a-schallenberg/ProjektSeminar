@@ -1,5 +1,9 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public interface INetwork {
 
 	/**
@@ -10,4 +14,8 @@ public interface INetwork {
 	double[] compute(double[] input);
 
 	void train(double[][] inputVectors, double[][] labels, int repetitions, double learnRate);
+
+	void fromBuffer(BufferedReader reader) throws IOException;
+
+	void toBuffer(BufferedWriter writer) throws IOException;
 }

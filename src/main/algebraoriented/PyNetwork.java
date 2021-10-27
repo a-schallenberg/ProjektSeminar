@@ -6,6 +6,10 @@ import main.afunctions.ActivationFunction;
 import main.afunctions.SigmoidFunction;
 import main.objectoriented.JNeuron;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 /**
  * Neuronal main.objectoriented.Network that does not compute the output with {@link JNeuron} but with matrices and vectors.
  */
@@ -79,6 +83,16 @@ public class PyNetwork implements INetwork {
 			}
 			System.out.printf("Cost: %f\nCorrect: %f%% \n\n", cost, correct/ (double) input.length * 100);
 		}
+	}
+
+	@Override
+	public void fromBuffer(BufferedReader reader) throws IOException {
+
+	}
+
+	@Override
+	public void toBuffer(BufferedWriter writer) throws IOException {
+
 	}
 
 	private double[][] forwardPropagation(double[] input) {

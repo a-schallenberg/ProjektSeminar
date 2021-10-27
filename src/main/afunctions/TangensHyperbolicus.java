@@ -1,6 +1,8 @@
 package main.afunctions;
 
 public class TangensHyperbolicus implements ActivationFunction {
+	public static final String NAME = "Tanh";
+
 	@Override
 	public double function(double x) {
 		return Math.tanh(x);
@@ -14,6 +16,10 @@ public class TangensHyperbolicus implements ActivationFunction {
 
 	@Override
 	public String toString() {
-		return "Tanh";
+		return NAME;
+	}
+
+	public static ActivationFunction fromString(String string) {
+		return new TangensHyperbolicus();
 	}
 }

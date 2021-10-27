@@ -1,13 +1,12 @@
 package main.objectorientedCopy;
 
-import main.INetwork;
 import main.Util;
 import main.afunctions.ActivationFunction;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
-public class JNetwork implements INetwork {
+public class JNetwork {
 	private JNeuron[][] layers;
 	private int inputSize;
 
@@ -118,7 +117,6 @@ public class JNetwork implements INetwork {
 		return result;
 	}
 
-	@Override
 	public double[] compute(double[] input) {
 		if(input.length != inputSize) // Exception check
 			throw new IllegalArgumentException("invalid input vector dimension");
@@ -127,7 +125,6 @@ public class JNetwork implements INetwork {
 		return results[results.length - 1];
 	}
 
-	@Override
 	public void train(double[][] input, double[][] labels, int repetitions, double learnRate){
 		double[][] results = new double[layers.length][];
 
@@ -161,6 +158,30 @@ public class JNetwork implements INetwork {
 		}
 
 		System.out.println("Finished training in " + (System.currentTimeMillis() - start) + "ms");
+	}
+
+	public double[][][] getWeights() {
+		double[][][] weights = new double[layers.length][][];
+
+		for(int i = 0; i < layers.length; i++) {
+			weights[i] = new double[layers[i].length][];
+			for(int j = 0; j < layers[i].length; j++)
+				weights[i][j] = layers[i][j].weights;
+		}
+
+		return weights;
+	}
+
+	public double[][] getBiases() {
+		double[][] biases = new double[layers.length][];
+
+		for(int i = 0; i < layers.length; i++) {
+			biases[i] = new double[layers[i].length];
+			for(int j = 0; j < layers[i].length; j++)
+				biases[i][j] = layers[i][j].bias;
+		}
+
+		return biases;
 	}
 
 	private double[][] forwardPropagation(double[] input, double[][] results) {

@@ -1,6 +1,7 @@
 package main.afunctions;
 
 public class SigmoidFunction implements ActivationFunction {
+	public static final String NAME = "Sigmoid";
 	private final double xOffset;
 
 	public SigmoidFunction() {
@@ -37,6 +38,11 @@ public class SigmoidFunction implements ActivationFunction {
 
 	@Override
 	public String toString() {
-		return "Sigmoid";
+		return NAME + "(" + xOffset + ")";
+	}
+
+	public static ActivationFunction fromString(String string) {
+		string = string.replace(")", "").split("\\(")[1];
+		return new SigmoidFunction(Double.parseDouble(string));
 	}
 }

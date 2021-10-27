@@ -4,12 +4,22 @@ import main.INetwork;
 import main.Util;
 import main.afunctions.ActivationFunction;
 
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.function.BiFunction;
 
 public class JNetwork implements INetwork {
 	private JNeuron[][] layers;
 	private int inputSize;
+
+	public JNetwork(BufferedReader reader) {
+		try {
+			fromBuffer(reader);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Creates a neural network which works with {@link JNeuron}s.
@@ -168,6 +178,8 @@ public class JNetwork implements INetwork {
 		System.out.println("Finished training in " + (System.currentTimeMillis() - start) + "ms");
 	}
 
+
+
 	private double[][] forwardPropagation(double[] input, double[][] results) {
 		for(int i = 0; i < layers.length; i++)          // Initializes second layer of hidden matrix.
 			results[i] = new double[layers[i].length];
@@ -265,7 +277,7 @@ public class JNetwork implements INetwork {
 			string += "\n   |   ";
 
 			for(int j = 0; j < layers[i].length; j++) {
-				string += (j != 0 ? ", " : "") + layers[i][j].function;
+				string += (j != 0 ? ", " : "") + layers[i][j].getFunction();
 			}
 
 			string += "\n";
@@ -277,5 +289,45 @@ public class JNetwork implements INetwork {
 		}
 
 		return "Network{\n" + string + "\n}";
+	}
+
+	@Override
+	public void fromBuffer(BufferedReader reader) throws IOException {
+		String[] strings = reader.readLine().split(", ");
+		if(strings.length < 2) throw new IOException("Invalid file");
+
+		inputSize = Integer.parseInt(strings[0]);
+
+		layers = new JNeuron[strings.length - 1][];
+		for(int i = 1; i < strings.length; i++)
+			layers[i-1] = new JNeuron[Integer.parseInt(strings[i])];
+
+		int layer = 0, unit = 0;
+		for(String str; (str = reader.readLine()) != null;) {
+			if(str.charAt(0) == '%') {
+				layer++;
+				unit = 0;
+			} else {
+				layers[layer][unit] = JNeuron.fromBuffer(str);
+				unit++;
+			}
+		}
+
+	}
+
+	@Override
+	public void toBuffer(BufferedWriter writer) throws IOException {
+		writer.append(String.valueOf(inputSize));
+
+		for(int i = 0; i < layers.length; i++)
+			writer.append(", ").append(String.valueOf(layers[i].length));
+
+		for(int i = 0; i < layers.length; i++) {
+			if(i != 0) writer.append("\n%");
+			for(int j = 0; j < layers[i].length; j++) {
+				writer.append("\n");
+				layers[i][j].toBuffer(writer);
+			}
+		}
 	}
 }

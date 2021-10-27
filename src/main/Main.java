@@ -7,13 +7,25 @@ import main.algebraoriented.PyNetwork;
 import main.mnist.Mnist;
 import main.objectoriented.JNetwork;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		JNetwork network = new JNetwork(3, 7, 6, 2);
+
+		StorageManager.save("JNetwork", network);
+
+		INetwork network2 = StorageManager.load("JNetwork", JNetwork::new);
+
+		System.out.println(Arrays.toString(network2.compute(new double[]{1, 2, 3})));
+
+		StorageManager.save("INetwork", network2);
+
+
 		//trainJMnist();
-		testJXOR();
+		//testJXOR();
 
 		//testArgmax();
 		//new Network(1,1, 5, 8, 4, 2);
