@@ -148,6 +148,17 @@ public class Util {
 	}
 
 	/**
+	 * Multiplies a vector with a scalar.
+	 * @param scalar The scalar to be multiplied with the vector. The scalar is not affected by the multiplication.
+	 * @param vector The vector to be multiplied with the scalar. The vector is affected by the multiplication.
+	 * @throws NullPointerException If the vector is null.
+	 */
+	public static void mulToVec(double scalar, double[] vector) {
+		for(int i = 0; i < vector.length; i++)
+			vector[i] *= scalar;
+	}
+
+	/**
 	 * Multiplies all values of the first array with the corresponding value of the second array.
 	 * @param array1 The first array to be multiplied with the second array. The array is not affected by the multiplication.
 	 * @param array2 The second array to be multiplied with the first array. The array is not affected by the multiplication.
@@ -280,6 +291,21 @@ public class Util {
 	}
 
 	/**
+	 * Adds two vectors.
+	 * @param vec1 The first vector to which the second vector is added. The vector is affected by the addition.
+	 * @param vec2 The second vector to be added by the first vector. The vector is not affected by the addition.
+	 * @throws NullPointerException If one vector is null.
+	 * @throws ArithmeticException If the dimensions of the two vectors in the argument list are not equal.
+	 */
+	public static void addToVec1(double[] vec1, double[] vec2) {
+		if(vec1.length != vec2.length)
+			throw new ArithmeticException(format("Cannot add vectors (%d and %d) with different dimensions", vec1.length, vec2.length));
+
+		for(int i = 0; i < vec1.length; i++)
+			vec1[i] += vec2[i];
+	}
+
+	/**
 	 * Subtracts two vectors.
 	 * @param vec1 The first vector to which the second vector is subtracted. The vector is not affected by the subtraction.
 	 * @param vec2 The second vector to be subtracted by the first vector. The vector is not affected by the subtraction.
@@ -386,6 +412,10 @@ public class Util {
 		return x <= 0 ? 0 : (x >= 1 ? 1 : x);
 	}
 
+	public static double dSemiLinear(double x) {
+		return x > 0 && x < 1 ? 1 : (x == 0 || x == 1) ? Double.NaN : 0;
+	}
+
 	/**
 	 * The sgn function produces zero or one depending on x and the offset.
 	 * If x is less than the offset the function returns 0.
@@ -395,6 +425,10 @@ public class Util {
 	 */
 	public static int sgn(double x, double offset) {
 		return x < offset ? 0 : 1;
+	}
+
+	public static double dSgn(double x, double offset) {
+		return x == offset ? Double.NaN : 0;
 	}
 
 	/**

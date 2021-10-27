@@ -3,6 +3,7 @@ package main.seminar;
 import main.Util;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * The class {@link Network} allows creating objects from this type. It represents a neural network and works with {@link Neuron}s.
@@ -91,6 +92,23 @@ public class Network {
 			outputResult[i] = outputLayer[i].fire(hiddenLayers.length == 0 ? input : hiddenResults[hiddenResults.length - 1]);
 
 		return outputResult;
+	}
+
+	public void backpropagation(double learnRate, double[] y, double[][] results) {
+		int length = hiddenLayers.length;
+		LinkedList<double[]> list = new LinkedList<>();
+		list.add(new double[outputLayer.length]);
+		for(int i = 0; i < list.get(0).length; i++) {
+			list.get(0)[i] = 2 * (results[results.length - 1][i] - y[i]);
+		}
+		for(int i = length; i >= 0; i--) {
+			list.add(new double[i == 0 ? inLayerLength : hiddenLayers[i-1].length]);
+			for(int j = 0; j < (i == length ? outputLayer.length : hiddenLayers[i].length); j++) {
+				Util.addToVec1(list.get(0), (i == length ? outputLayer[j] : hiddenLayers[i][j]).backpropagation(learnRate, list.get(0)[j], results[i+1][j], results[i]));
+			}
+			Util.mulToVec(1.0/(i == length ? outputLayer.length : hiddenLayers[i].length), list.get(0));
+			list.remove(0);
+		}
 	}
 
 	@Override

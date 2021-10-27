@@ -10,7 +10,7 @@ import java.util.Arrays;
  */
 public class Neuron {
 	private double[] weights;
-	private double bias;
+	private double bias, z;
 
 	/**
 	 * Constructor for {@link Neuron}.
@@ -40,7 +40,8 @@ public class Neuron {
 		 for(int i = 0; i < (Math.min(input.length, weights.length)); i++)
 			 sum += weights[i] * input[i];
 
-		 return bias <= sum ? 1 : 0;
+		 z = sum;
+		 return Util.sgn(sum, bias);
 	}
 
 	/**
@@ -54,6 +55,7 @@ public class Neuron {
 			sum += weights[i] * input[i];
 
 		sum += bias;
+		z = sum;
 		return Util.sigmoid(sum);
 	}
 
@@ -68,8 +70,22 @@ public class Neuron {
 			sum += weights[i] * input[i];
 
 		sum += bias;
+		z = sum;
 		return Util.semiLinear(sum);
 	}
+
+	public double[] backpropagation(double learnrate, double delta, double result, double[] prevResults) {
+		for(int i = 0; i < weights.length; i++) {
+			weights[i] += -learnrate * prevResults[i] * delta;
+		}
+		bias += -learnrate * delta;
+		double[] deltas = new double[weights.length];
+		for(int i = 0; i < deltas.length; i++) {
+			deltas[i] = weights[i] * Util.dSigmoid(z) * delta;
+		}
+		return deltas;
+	}
+
 
 	@Override
 	public String toString() {

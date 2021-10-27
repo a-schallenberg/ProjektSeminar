@@ -191,11 +191,11 @@ public class JNetwork implements INetwork {
 		return results;
 	}
 
-	private void backpropagationTest(double[][] results, double[] label, double learnRate) {
+	private void backpropagationTest(double[][] results, double[] target, double learnRate) {
 		JNeuron[] outLayer = layers[layers.length - 1];
 
 		for(int i = 0; i < outLayer.length; i++)
-			 outLayer[i].backpropagation((outLayer[i].a - label[i]), learnRate);
+			 outLayer[i].backpropagation((outLayer[i].a - target[i]), learnRate);
 	}
 
 //	private void backpropagationTest(double[][] results, double[] label, double learnRate) {

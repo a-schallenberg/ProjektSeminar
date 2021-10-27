@@ -35,7 +35,7 @@ public class JNeuron {
 		double df = function.derivative(z);
 
 		for(int i = 0; i < weights.length; i++)
-			weights[i] += -learnRate * delta * a;
+			weights[i] += -learnRate * delta * a; // nicht a sondern a von der vorherigen layer.
 
 		bias += -learnRate * delta;
 		for(int i = 0; prevLayer != null && i < prevLayer.length; i++)
