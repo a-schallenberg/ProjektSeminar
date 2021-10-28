@@ -31,15 +31,27 @@ public class JNeuron {
 		return a;
 	}
 
-	public void backpropagation(double delta, double learnRate) {
+	public void backpropagationTest(double delta, double learnRate, double[] input) {
 		double df = function.derivative(z);
 
 		for(int i = 0; i < weights.length; i++)
-			weights[i] += -learnRate * delta * a; // nicht a sondern a von der vorherigen layer.
+			weights[i] += -learnRate * delta * (prevLayer == null ? input[i] : prevLayer[i].a);
 
 		bias += -learnRate * delta;
 		for(int i = 0; prevLayer != null && i < prevLayer.length; i++)
-			prevLayer[i].backpropagation(delta * df * weights[i], learnRate);
+			prevLayer[i].backpropagationTest(delta * df * weights[i], learnRate, input);
+	}
+
+	public double[] backpropagation(double learnRate, double delta, double[] prevResults) {
+		for(int i = 0; i < weights.length; i++)
+			weights[i] += -learnRate * prevResults[i] * delta;
+
+		bias += -learnRate * delta;
+		double[] deltas = new double[weights.length];
+		for(int i = 0; i < deltas.length; i++)
+			deltas[i] = weights[i] * function.derivative(z) * delta;
+
+		return deltas;
 	}
 
 	@Override

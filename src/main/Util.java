@@ -168,7 +168,7 @@ public class Util {
 	 */
 	public static double[] mul(double[] array1, double[] array2) {
 		if(array1.length != array2.length)
-			throw new ArithmeticException("Arrays do not match");
+			throw new ArithmeticException("Arrays do not match (" + array1.length + ", " + array2.length + ")");
 
 		double[] result = new double[array1.length];
 		for(int i = 0; i < array1.length; i++)

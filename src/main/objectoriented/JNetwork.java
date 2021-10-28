@@ -7,6 +7,7 @@ import main.afunctions.ActivationFunction;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.function.BiFunction;
 
 public class JNetwork implements INetwork {
@@ -135,13 +136,13 @@ public class JNetwork implements INetwork {
 		if(input.length != inputSize) // Exception check
 			throw new IllegalArgumentException("invalid input vector dimension");
 
-		double[][] results = forwardPropagation(input, new double[layers.length][]);
+		double[][] results = forwardPropagation(input, new double[layers.length + 1][]);
 		return results[results.length - 1];
 	}
 
 	@Override
 	public void train(double[][] input, double[][] labels, int repetitions, double learnRate){
-		double[][] results = new double[layers.length][];
+		double[][] results = new double[layers.length + 1][];
 
 		{ // Exception check
 			for(double[] in : input)
@@ -166,7 +167,8 @@ public class JNetwork implements INetwork {
 				forwardPropagation(input[j], results);
 				cost += cost(results[results.length - 1], labels[j]);
 				correct += correct(results[results.length - 1], labels[j]) ? 1 : 0;
-				backpropagationTest(results, labels[j], learnRate);
+				//backpropagationTest(input[j], labels[j], learnRate);
+				backpropagation(results, labels[j], learnRate);
 				//System.out.println(Arrays.toString(labels[j]) + ", " + Arrays.toString(results[results.length - 1]));
 				//System.out.printf("Expected: %d, Actual: %d \n", Util.argmax(labels[j]), Util.argmax(results[results.length - 1]));
 			}
@@ -178,24 +180,42 @@ public class JNetwork implements INetwork {
 		System.out.println("Finished training in " + (System.currentTimeMillis() - start) + "ms");
 	}
 
-
-
 	private double[][] forwardPropagation(double[] input, double[][] results) {
-		for(int i = 0; i < layers.length; i++)          // Initializes second layer of hidden matrix.
-			results[i] = new double[layers[i].length];
+		for(int i = 1; i < results.length; i++)          // Initializes second layer of hidden matrix.
+			results[i] = new double[layers[i-1].length];
+
+		results[0] = input;
 
 		for(int i = 0; i < layers.length; i++)
 			for(int j = 0; j < layers[i].length; j++)
-				results[i][j] = layers[i][j].fire(i == 0 ? input : results[i - 1]);
+				results[i + 1][j] = layers[i][j].fire(results[i]);
 
 		return results;
 	}
 
-	private void backpropagationTest(double[][] results, double[] target, double learnRate) {
+	private void backpropagationTest(double[] input, double[] target, double learnRate) {
 		JNeuron[] outLayer = layers[layers.length - 1];
 
 		for(int i = 0; i < outLayer.length; i++)
-			 outLayer[i].backpropagation((outLayer[i].a - target[i]), learnRate);
+			 outLayer[i].backpropagationTest((outLayer[i].a - target[i]), learnRate, input);
+	}
+
+	public void backpropagation(double[][] results, double[] target, double learnRate) {
+		int length = layers.length;
+		LinkedList<double[]> list = new LinkedList<>();
+		list.add(new double[layers[layers.length - 1].length]);
+
+		for(int i = 0; i < list.get(0).length; i++)
+			list.get(0)[i] = 2 * (results[results.length - 1][i] - target[i]);
+
+		for(int i = length - 1; i >= 0; i--) {
+			list.add(new double[i == 0 ? inputSize : layers[i-1].length]);
+			for(int j = 0; j < layers[i].length; j++)
+				Util.addToVec1(list.get(1), layers[i][j].backpropagation(learnRate, list.get(0)[j], results[i]));
+
+			//Util.mulToVec(1.0/layers[i].length, list.get(1));
+			list.remove(0);
+		}
 	}
 
 //	private void backpropagationTest(double[][] results, double[] label, double learnRate) {
@@ -252,7 +272,7 @@ public class JNetwork implements INetwork {
 			sum += diff * diff;
 		}
 
-		return sum/2;
+		return sum;
 	}
 
 	private boolean correct(double[] output, double[] label) {

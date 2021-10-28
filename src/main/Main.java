@@ -13,18 +13,18 @@ import java.util.Arrays;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		JNetwork network = new JNetwork(3, 7, 6, 2);
+//		JNetwork network = new JNetwork(3, 7, 6, 2);
+//
+//		StorageManager.save("JNetwork", network);
+//
+//		INetwork network2 = StorageManager.load("JNetwork", JNetwork::new);
+//
+//		System.out.println(Arrays.toString(network2.compute(new double[]{1, 2, 3})));
+//
+//		StorageManager.save("INetwork", network2);
 
-		StorageManager.save("JNetwork", network);
 
-		INetwork network2 = StorageManager.load("JNetwork", JNetwork::new);
-
-		System.out.println(Arrays.toString(network2.compute(new double[]{1, 2, 3})));
-
-		StorageManager.save("INetwork", network2);
-
-
-		//trainJMnist();
+		trainPyXOR();
 		//testJXOR();
 
 		//testArgmax();
@@ -32,10 +32,10 @@ public class Main {
 	}
 
 	private static void trainPyXOR() {
-		PyNetwork network = new PyNetwork(2, 1, 8, 8);
+		PyNetwork network = new PyNetwork(2, 1, 3);
 		double[][] input = new double[][] {{1, 1}, {1, 0}, {0, 1}, {0, 0}};
 		double[][] labels = new double[][] {{0}, {1}, {1}, {0}};
-		network.train(input, labels, 50000, 0.01);
+		network.train(input, labels, 50000, 1);
 	}
 
 	private static void trainJXOR() {
@@ -46,13 +46,13 @@ public class Main {
 	}
 
 	private static void trainPyMnist() {
-		PyNetwork network = new PyNetwork(Mnist.TEST_IMAGES[0].length, 10, 16, 16);
-		network.train(Mnist.TRAIN_IMAGES, Mnist.TRAIN_LABELS, 1000, 0.01);
+		PyNetwork network = new PyNetwork(Mnist.TRAIN_IMAGES[0].length, 10, 16, 16);
+		network.train(Mnist.TRAIN_IMAGES, Mnist.TRAIN_LABELS, 10, 0.01);
 	}
 
 	private static void trainJMnist() {
-		JNetwork network = new JNetwork(Mnist.TEST_IMAGES[0].length, 16, 16, 10);
-		network.train(Mnist.TRAIN_IMAGES, Mnist.TRAIN_LABELS, 1000, 0.01);
+		JNetwork network = new JNetwork(Mnist.TRAIN_IMAGES[0].length, 16, 16, 10);
+		network.train(Mnist.TRAIN_IMAGES, Mnist.TRAIN_LABELS, 10, 0.01);
 	}
 
 	private static void trainJOR() {

@@ -95,7 +95,7 @@ public class Network {
 	}
 
 	public void backpropagation(double learnRate, double[] y, double[][] results) {
-		int length = hiddenLayers.length;
+		int length = hiddenLayers.length; // TODO +1 ?
 		LinkedList<double[]> list = new LinkedList<>();
 		list.add(new double[outputLayer.length]);
 		for(int i = 0; i < list.get(0).length; i++) {
@@ -104,9 +104,9 @@ public class Network {
 		for(int i = length; i >= 0; i--) {
 			list.add(new double[i == 0 ? inLayerLength : hiddenLayers[i-1].length]);
 			for(int j = 0; j < (i == length ? outputLayer.length : hiddenLayers[i].length); j++) {
-				Util.addToVec1(list.get(0), (i == length ? outputLayer[j] : hiddenLayers[i][j]).backpropagation(learnRate, list.get(0)[j], results[i+1][j], results[i]));
+				Util.addToVec1(list.get(0), (i == length ? outputLayer[j] : hiddenLayers[i][j]).backpropagation(learnRate, list.get(0)[j], results[i+1][j], results[i])); // TODO list.get(0) -> list.get(1)
 			}
-			Util.mulToVec(1.0/(i == length ? outputLayer.length : hiddenLayers[i].length), list.get(0));
+			Util.mulToVec(1.0/(i == length ? outputLayer.length : hiddenLayers[i].length), list.get(0)); // Wird diese Zeile gebraucht ? TODO list.get(0) -> list.get(1)
 			list.remove(0);
 		}
 	}

@@ -71,6 +71,9 @@ public class PyNetwork implements INetwork {
 
 	@Override
 	public void train(double[][] input, double[][] labels, int repetitions, double learnRate) {
+		System.out.println("Start training");
+		long start = System.currentTimeMillis();
+
 		for(int i = 0; i < repetitions; i++) {
 			double cost = 0d;
 			int correct = 0;
@@ -83,6 +86,7 @@ public class PyNetwork implements INetwork {
 			}
 			System.out.printf("Cost: %f\nCorrect: %f%% \n\n", cost, correct/ (double) input.length * 100);
 		}
+		System.out.println("Finished training in " + (System.currentTimeMillis() - start) + "ms");
 	}
 
 	@Override

@@ -74,11 +74,11 @@ public class Neuron {
 		return Util.semiLinear(sum);
 	}
 
-	public double[] backpropagation(double learnrate, double delta, double result, double[] prevResults) {
+	public double[] backpropagation(double learnRate, double delta, double result, double[] prevResults) { //TODO result brauchen wir nicht
 		for(int i = 0; i < weights.length; i++) {
-			weights[i] += -learnrate * prevResults[i] * delta;
+			weights[i] += -learnRate * prevResults[i] * delta;
 		}
-		bias += -learnrate * delta;
+		bias += -learnRate * delta;
 		double[] deltas = new double[weights.length];
 		for(int i = 0; i < deltas.length; i++) {
 			deltas[i] = weights[i] * Util.dSigmoid(z) * delta;
