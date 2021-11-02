@@ -2,17 +2,21 @@ package main.seminar;
 
 import main.Util;
 
-import java.util.Arrays;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * The class {@link Network} allows creating objects from this type. It represents a neural network and works with {@link Neuron}s.
  * @author aschal2s, azarkh2s, llegge2s, szhang2s
  */
 public class Network {
-	private final int inLayerLength;
-	private final Neuron[] outputLayer;
-	private final Neuron[][] hiddenLayers;
+	private int inLayerLength;
+	private Neuron[] outputLayer;
+	private Neuron[][] hiddenLayers;
+
+	private Network(){}
 
 	/**
 	 * Constructor of {@link Network}.
@@ -77,24 +81,45 @@ public class Network {
 	 * @throws IllegalArgumentException Whether the input vector's size does not match the input layer size.
 	 */
 	public double[] compute(double[] input) {
+		double[][] results = forwardPropagation(input);
+		return results[results.length - 1];
+	}
+
+	public void train(double[][] input, double learnRate, double[][] y, int iterations) {
+		double[][] results;
+
+		for(int i = 0; i < iterations; i++)
+			for(int j = 0; j < input.length; j++) {
+				results = forwardPropagation(input[j]);
+				backpropagation(learnRate, y[j], results);
+			}
+	}
+
+	private double[][] forwardPropagation(double[] input) {
 		if(input.length != inLayerLength) throw new IllegalArgumentException("Argument's size and input layer's size do not match");
 
-		double[] outputResult = new double[outputLayer.length];
-		double[][] hiddenResults = new double[hiddenLayers.length][];
+		double[][] results = new double[hiddenLayers.length + 1][];
 
 		// Fire all units of hidden layers
-		for(int i = 0; i < hiddenLayers.length; i++)
-			for(int j = 0; j < hiddenLayers[i].length; j++)
-				hiddenResults[i][j] = hiddenLayers[i][j].fire(j == 0 ? input : hiddenResults[i - 1]);
+		for(int i = 0; i < hiddenLayers.length; i++) {
+			int length = hiddenLayers[i].length;
+			results[i] = new double[length];
+
+			for(int j = 0; j < length; j++)
+				results[i][j] = hiddenLayers[i][j].fire(j == 0 ? input : results[i - 1]);
+
+		}
+
+		results[results.length - 1] = new double[outputLayer.length];
 
 		// Fire all units of output layer
 		for(int i = 0; i < outputLayer.length; i++)
-			outputResult[i] = outputLayer[i].fire(hiddenLayers.length == 0 ? input : hiddenResults[hiddenResults.length - 1]);
+			results[results.length - 1][i] = outputLayer[i].fire(hiddenLayers.length == 0 ? input : results[results.length - 2]);
 
-		return outputResult;
+		return results;
 	}
 
-	public void backpropagation(double learnRate, double[] y, double[][] results) {
+	private void backpropagation(double learnRate, double[] y, double[][] results) {
 		int length = hiddenLayers.length; // TODO +1 ?
 		LinkedList<double[]> list = new LinkedList<>();
 		list.add(new double[outputLayer.length]);
@@ -104,9 +129,9 @@ public class Network {
 		for(int i = length; i >= 0; i--) {
 			list.add(new double[i == 0 ? inLayerLength : hiddenLayers[i-1].length]);
 			for(int j = 0; j < (i == length ? outputLayer.length : hiddenLayers[i].length); j++) {
-				Util.addToVec1(list.get(0), (i == length ? outputLayer[j] : hiddenLayers[i][j]).backpropagation(learnRate, list.get(0)[j], results[i+1][j], results[i])); // TODO list.get(0) -> list.get(1)
+				Util.addToVec1(list.get(1), (i == length ? outputLayer[j] : hiddenLayers[i][j]).backpropagation(learnRate, list.get(0)[j], results[i]));
 			}
-			Util.mulToVec(1.0/(i == length ? outputLayer.length : hiddenLayers[i].length), list.get(0)); // Wird diese Zeile gebraucht ? TODO list.get(0) -> list.get(1)
+			Util.mulToVec(1.0/(i == length ? outputLayer.length : hiddenLayers[i].length), list.get(1)); // Wird diese Zeile gebraucht?
 			list.remove(0);
 		}
 	}
@@ -149,16 +174,63 @@ public class Network {
 		return "Network{\n" + string + "\n}";
 	}
 
-	public static void main(String[] args) {
-		double[][][] w = new double[][][]{new double[][]{new double[]{0.5, 0.5}}};
-		double[][] b = new double[][]{new double[]{0.7}};
+	void save(BufferedWriter writer) throws IOException {
+		writer.append(inLayerLength + " " + outputLayer.length + " " + hiddenLayers.length);
 
-		Network network = new Network(2, 1, w, b);
-		System.out.println(network);
-		System.out.println("-------------------------------------------------");
-		System.out.println(Arrays.toString(network.compute(new double[]{0, 0})));
-		System.out.println(Arrays.toString(network.compute(new double[]{0, 1})));
-		System.out.println(Arrays.toString(network.compute(new double[]{1, 0})));
-		System.out.println(Arrays.toString(network.compute(new double[]{1, 1})));
+		for(Neuron[] layer: hiddenLayers)
+			writer.append(" " + layer.length);
+
+		for(Neuron[] layer: hiddenLayers) {
+			writer.append("\n");
+			for(Neuron unit : layer)
+				unit.save(writer);
+		}
+
+		writer.append("\n");
+		for(Neuron unit: outputLayer)
+			unit.save(writer);
+	}
+
+	static Network load(Scanner scanner) {
+		Network network = new Network();
+
+		// Initialize inLayerLength and neuron arrays
+		network.inLayerLength = scanner.nextInt();
+		network.outputLayer = new Neuron[scanner.nextInt()];
+
+		network.hiddenLayers = new Neuron[scanner.nextInt()][];
+		for(int i = 0; i < network.hiddenLayers.length; i++)
+			network.hiddenLayers[i] = new Neuron[scanner.nextInt()];
+
+		// Fill arrays
+		for(int i = 0; i < network.hiddenLayers.length; i++)
+			for(int j = 0; j < network.hiddenLayers[i].length; j++)
+				network.hiddenLayers[i][j] = Neuron.load(scanner);
+
+		for(int i = 0; i < network.outputLayer.length; i++)
+			network.outputLayer[i] = Neuron.load(scanner);
+
+		return network;
+	}
+
+	public static void main(String[] args) throws IOException {
+//		double[][][] w = new double[][][]{new double[][]{new double[]{0.5, 0.5}}};
+//		double[][] b = new double[][]{new double[]{0.7}};
+//
+//		Network network = new Network(2, 1, w, b);
+
+		Network network = new Network(3, 2, 5, 7);
+
+		NetworkHelper.save(network, "Network");
+		Network network1 = NetworkHelper.load("Network");
+
+		NetworkHelper.save(network1, "Network1");
+
+//		System.out.println(network);
+//		System.out.println("-------------------------------------------------");
+//		System.out.println(Arrays.toString(network.compute(new double[]{0, 0})));
+//		System.out.println(Arrays.toString(network.compute(new double[]{0, 1})));
+//		System.out.println(Arrays.toString(network.compute(new double[]{1, 0})));
+//		System.out.println(Arrays.toString(network.compute(new double[]{1, 1})));
 	}
 }

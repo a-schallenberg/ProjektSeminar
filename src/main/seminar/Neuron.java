@@ -2,7 +2,11 @@ package main.seminar;
 
 import main.Util;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * Class for creating objects of type {@link Neuron}. {@link Neuron}s are used by neural {@link Network}s for saving and processing data.
@@ -11,6 +15,8 @@ import java.util.Arrays;
 public class Neuron {
 	private double[] weights;
 	private double bias, z;
+
+	private Neuron(){}
 
 	/**
 	 * Constructor for {@link Neuron}.
@@ -74,7 +80,7 @@ public class Neuron {
 		return Util.semiLinear(sum);
 	}
 
-	public double[] backpropagation(double learnRate, double delta, double result, double[] prevResults) { //TODO result brauchen wir nicht
+	public double[] backpropagation(double learnRate, double delta, double[] prevResults) {
 		for(int i = 0; i < weights.length; i++) {
 			weights[i] += -learnRate * prevResults[i] * delta;
 		}
@@ -93,5 +99,26 @@ public class Neuron {
 				"weights=" + Arrays.toString(weights) +
 				", bias=" + bias +
 				'}';
+	}
+
+	void save(BufferedWriter writer) throws IOException {
+		writer.append("\n" + bias);
+
+		writer.append(" " + weights.length);
+		for(double weight: weights)
+			writer.append(" " + weight);
+
+	}
+
+	static Neuron load(Scanner scanner) {
+		Neuron neuron = new Neuron();
+
+		neuron.bias = scanner.nextDouble();
+
+		neuron.weights = new double[scanner.nextInt()];
+		for(int i = 0; i < neuron.weights.length; i++)
+			neuron.weights[i] = scanner.nextDouble();
+
+		return neuron;
 	}
 }
