@@ -1,6 +1,6 @@
 package main.afunctions;
 
-public class SignFunction implements ActivationFunction {
+public class SignFunction implements OutputFunction {
 	public static final String NAME = "Sign";
 	private double threshold, lowerLimit, upperLimit;
 
@@ -20,16 +20,11 @@ public class SignFunction implements ActivationFunction {
 	}
 
 	@Override
-	public double derivative(double x) {
-		return x == threshold ? Double.NaN: 0d;
-	}
-
-	@Override
 	public String toString() {
 		return NAME + "(" + threshold + " | " + lowerLimit + " | " + upperLimit + ")";
 	}
 
-	public static ActivationFunction fromString(String string) {
+	public static OutputFunction fromString(String string) {
 		string = string.replace(")", "").split("\\(")[1];
 		String[] args = string.split(" \\| ");
 		return new SignFunction(Double.parseDouble(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]));

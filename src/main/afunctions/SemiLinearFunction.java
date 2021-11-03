@@ -1,6 +1,6 @@
 package main.afunctions;
 
-public class SemiLinearFunction implements ActivationFunction {
+public class SemiLinearFunction implements OutputFunction {
 	public static final String NAME = "Semi-Linear";
 
 	private final double lowerLimit, upperLimit;
@@ -22,16 +22,11 @@ public class SemiLinearFunction implements ActivationFunction {
 	}
 
 	@Override
-	public double derivative(double x) {
-		return (x < upperLimit && x > lowerLimit) ? 1d : 0d;
-	}
-
-	@Override
 	public String toString() {
 		return NAME + "(" + lowerLimit + " | " + upperLimit + ")";
 	}
 
-	public static ActivationFunction fromString(String string) {
+	public static OutputFunction fromString(String string) {
 		string = string.replace(")", "").split("\\(")[1];
 		String[] args = string.split(" \\| ");
 		return new SemiLinearFunction(Double.parseDouble(args[0]), Double.parseDouble(args[1]));

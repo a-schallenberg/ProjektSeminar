@@ -291,6 +291,22 @@ public class Util {
 	}
 
 	/**
+	 * Adds all values of an array with another value.
+	 * @param arr The vector to it's values the value is added. The array is not affected by the addition.
+	 * @param val The value that is to be added to all values of the array.
+	 * @return A new array with the corresponding values added to the value.
+	 * @throws NullPointerException If the array is null.
+	 */
+	public static double[] add(double[] arr, double val) {
+		double[] result = new double[arr.length];
+
+		for(int i = 0; i < arr.length; i++)
+			result[i] = arr[i] + val;
+
+		return result;
+	}
+
+	/**
 	 * Adds two vectors.
 	 * @param vec1 The first vector to which the second vector is added. The vector is affected by the addition.
 	 * @param vec2 The second vector to be added by the first vector. The vector is not affected by the addition.

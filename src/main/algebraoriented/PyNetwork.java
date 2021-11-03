@@ -115,13 +115,13 @@ public class PyNetwork implements INetwork {
 			double[] deltaLearn = Util.mul(-learnRate, delta);
 			weights[i] = Util.add(weights[i], Util.mul(deltaLearn, Util.transpose(layers[i])));
 			biases[i] = Util.add(biases[i], deltaLearn);
-			delta = Util.mul(Util.mul(Util.transpose(weights[i]), delta), function.derivative(dSigCase(layers[i])));
+			delta = Util.mul(Util.mul(Util.transpose(weights[i]), delta), function.derivative(layers[i]));
 		}
 	}
 
-	private double[] dSigCase(double[] vec) {
-		return function instanceof SigmoidFunction ? ((SigmoidFunction) function).inverse(vec): vec;
-	}
+//	private double[] dSigCase(double[] vec) {
+//		return function instanceof SigmoidFunction ? ((SigmoidFunction) function).inverse(vec): vec;
+//	}
 
 	private double cost(double[] output, double[] label) {
 		double sum = 0d;

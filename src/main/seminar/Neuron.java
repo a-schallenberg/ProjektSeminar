@@ -5,7 +5,6 @@ import main.Util;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 /**

@@ -1,7 +1,6 @@
 package main;
 
-import main.afunctions.ActivationFunction;
-import main.afunctions.SigmoidFunction;
+import main.afunctions.OutputFunction;
 import main.afunctions.SignFunction;
 import main.algebraoriented.PyNetwork;
 import main.mnist.Mnist;
@@ -24,8 +23,8 @@ public class Main {
 //		StorageManager.save("INetwork", network2);
 
 
-		trainPyXOR();
-		//testJXOR();
+		//trainPyXOR();
+		trainJXOR();
 
 		//testArgmax();
 		//new Network(1,1, 5, 8, 4, 2);
@@ -35,14 +34,14 @@ public class Main {
 		PyNetwork network = new PyNetwork(2, 1, 3);
 		double[][] input = new double[][] {{1, 1}, {1, 0}, {0, 1}, {0, 0}};
 		double[][] labels = new double[][] {{0}, {1}, {1}, {0}};
-		network.train(input, labels, 50000, 1);
+		network.train(input, labels, 50000, 0.1);
 	}
 
 	private static void trainJXOR() {
 		JNetwork network = new JNetwork(2, 3, 1);
 		double[][] input = new double[][] {{1, 1}, {1, 0}, {0, 1}, {0, 0}};
 		double[][] labels = new double[][] {{0}, {1}, {1}, {0}};
-		network.train(input, labels, 10000000, 0.01);
+		network.train(input, labels, 100000, 0.1);
 	}
 
 	private static void trainPyMnist() {
@@ -86,8 +85,7 @@ public class Main {
 	private static void testJXOR() {
 		double[][][] weights = new double[][][]{new double[][]{new double[]{1,1}, new double[]{-1,-1}}, new double[][]{new double[]{1, 1}}};
 		double[][] biases = new double[][]{new double[]{0, 0}, new double[]{0}};
-		//ActivationFunction[][] funcs = new ActivationFunction[][]{new ActivationFunction[]{new SignFunction(0.5, 0, 1), new SignFunction(-1.5, 0, 1)}, new ActivationFunction[]{new SignFunction(1.5, 0, 1)}};
-		ActivationFunction[][] funcs = new ActivationFunction[][]{new ActivationFunction[]{new SigmoidFunction(0.5), new SigmoidFunction(-1.5)}, new ActivationFunction[]{new SigmoidFunction(1.5)}};
+		OutputFunction[][] funcs = {{new SignFunction(0.5, 0, 1), new SignFunction(-1.5, 0, 1)}, {new SignFunction(1.5, 0, 1)}};
 
 		JNetwork network = new JNetwork(funcs, weights, biases);
 		double[][] input = new double[][] {{1, 1}, {1, 0}, {0, 1}, {0, 0}};
