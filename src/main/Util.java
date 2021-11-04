@@ -63,7 +63,7 @@ public class Util {
 		Random random = new Random();
 
 		for(int i = 0; i < dim; i++)
-				vec[i] = (random.nextDouble() * (max - min) + min);
+			vec[i] = (random.nextDouble() * (max - min) + min);
 
 		return vec;
 	}
@@ -413,7 +413,8 @@ public class Util {
 	 * @return The function value at x.
 	 */
 	public static double dSigmoid(double x) {
-		return x * (1 - x);
+		double sx = sigmoid(x);
+		return sx * (1 - sx);
 	}
 
 	/**

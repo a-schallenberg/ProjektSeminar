@@ -17,7 +17,7 @@ public class JNeuron {
 	private JNeuron() {}
 
 	public JNeuron(int weightDim, OutputFunction function) {
-		this(Util.random(weightDim), 1, function);
+		this(Util.random(weightDim), 0, function);
 	}
 
 	public JNeuron(double[] weights, double bias, OutputFunction function) {

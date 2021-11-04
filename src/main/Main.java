@@ -63,8 +63,8 @@ public class Main {
 
 	private static void trainJAND() {
 		JNetwork network = new JNetwork(2, 1);
-		double[][] input = new double[][] {{1, 1}, {1, 0}, {0, 1}, {0, 0}};
-		double[][] labels = new double[][] {{1}, {0}, {0}, {0}};
+		double[][] input = {{1, 1}, {1, 0}, {0, 1}, {0, 0}};
+		double[][] labels = {{1}, {0}, {0}, {0}};
 		network.train(input, labels, 10000, 0.01);
 	}
 

@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.function.Function;
 
 /**
  * Class for creating objects of type {@link Neuron}. {@link Neuron}s are used by neural {@link Network}s for saving and processing data.
@@ -14,16 +15,23 @@ import java.util.Scanner;
 public class Neuron {
 	private double[] weights;
 	private double bias, z;
+	private Function<Double, Double> function, derivative;
 
 	private Neuron(){}
+
+	public Neuron(int weightDim, Function<Double, Double> function, Function<Double, Double> derivative) {
+		this(Util.random(weightDim), 0, function, derivative);
+	}
 
 	/**
 	 * Constructor for {@link Neuron}.
 	 * @param weights Weighting of units in the previous layer for computing a value for this unit.
 	 */
-	public Neuron(double[] weights, double bias) {
+	public Neuron(double[] weights, double bias, Function<Double, Double> function, Function<Double, Double> derivative) {
 		this.weights = weights;
 		this.bias = bias;
+		this.function = function;
+		this.derivative = derivative;
 	}
 
 	/**
@@ -32,51 +40,13 @@ public class Neuron {
 	 * @return The value which is computed by this method.
 	 */
 	public double fire(double[] input) {
-		 return fireSGN(input);
-	}
-
-	/**
-	 * Fires a value for this unit depending on the given input vector, weights and bias via sigma rule. This computation is based on a sign function.
-	 * @param input Input vector which is needed for computing a value.
-	 * @return The value which is computed by this method.
-	 */
-	private int fireSGN(double[] input) {
-		 double sum = 0;
-		 for(int i = 0; i < (Math.min(input.length, weights.length)); i++)
-			 sum += weights[i] * input[i];
-
-		 z = sum;
-		 return Util.sgn(sum, bias);
-	}
-
-	/**
-	 * Fires a value for this unit depending on the given input vector, weights and bias via sigma rule. This computation is based on a sigmoid (or logistic) function.
-	 * @param input Input vector which is needed for computing a value.
-	 * @return The value which is computed by this method.
-	 */
-	private double fireSigmoid(double[] input) {
 		double sum = 0;
 		for(int i = 0; i < (Math.min(input.length, weights.length)); i++)
 			sum += weights[i] * input[i];
 
 		sum += bias;
 		z = sum;
-		return Util.sigmoid(sum);
-	}
-
-	/**
-	 * Fires a value for this unit depending on the given input vector, weights and bias via sigma rule. This computation is based on a semi-linear function.
-	 * @param input Input vector which is needed for computing a value.
-	 * @return The value which is computed by this method.
-	 */
-	private double fireSemiLinear(double[] input) {
-		double sum = 0;
-		for(int i = 0; i < (Math.min(input.length, weights.length)); i++)
-			sum += weights[i] * input[i];
-
-		sum += bias;
-		z = sum;
-		return Util.semiLinear(sum);
+		return function.apply(sum);
 	}
 
 	public double[] backpropagation(double learnRate, double delta, double[] prevResults) {
@@ -86,7 +56,7 @@ public class Neuron {
 		bias += -learnRate * delta;
 		double[] deltas = new double[weights.length];
 		for(int i = 0; i < deltas.length; i++) {
-			deltas[i] = weights[i] * Util.dSigmoid(z) * delta;
+			deltas[i] = weights[i] * derivative.apply(z) * delta;
 		}
 		return deltas;
 	}

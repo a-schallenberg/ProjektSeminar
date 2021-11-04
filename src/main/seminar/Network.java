@@ -4,19 +4,45 @@ import main.Util;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * The class {@link Network} allows creating objects from this type. It represents a neural network and works with {@link Neuron}s.
  * @author aschal2s, azarkh2s, llegge2s, szhang2s
  */
 public class Network {
+	public static final Function<Double, Double> DEFAULT_FUNCTION = x -> 1/(1 + Math.exp(-x));
+	//public static final Function<Double, Double> DEFAULT_DERIVATIVE = x -> x * (1 - x); // nicht ganz richtig
+	public static final Function<Double, Double> DEFAULT_DERIVATIVE = Util::dSigmoid; // nicht ganz richtig
+
 	private int inLayerLength;
 	private Neuron[] outputLayer;
 	private Neuron[][] hiddenLayers;
+	private boolean trainable = true;
 
 	private Network(){}
+
+	public Network(int numInUnit, int numOutUnit, double[][][] weights, double[][] biases, int... numHidUnit) {
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron(weights[i][j], biases[i][j], DEFAULT_FUNCTION, DEFAULT_DERIVATIVE), numHidUnit);
+	}
+
+	public Network(int numInUnit, int numOutUnit, int... numHidUnit) {
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron(((i == 0) ? numInUnit : numHidUnit[i-1]), DEFAULT_FUNCTION, DEFAULT_DERIVATIVE), numHidUnit);
+	}
+
+	public Network(int numInUnit, int numOutUnit, double[][][] weights, double[][] biases, Function<Double, Double> function, Function<Double, Double> derivative, int... numHidUnit) { // int... == int[] mit dem Unterschied: new Network(1, 1, w, 3, 5) statt new Network(1, 1, w, new int[]{3, 5})
+		if(derivative == null) trainable = false;
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron(weights[i][j], biases[i][j], function, (trainable ? derivative : null)), numHidUnit);
+	}
+
+	public Network(int numInUnit, int numOutUnit, Function<Double, Double> function, Function<Double, Double> derivative,  int... numHidUnit) {  // int... == int[] mit dem Unterschied: new Network(1, 1, 3, 5) statt new Network(1, 1, new int[]{3, 5})
+		if(derivative == null) trainable = false;
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron((i == 0) ? numInUnit : numHidUnit[i-1], function, (trainable ? derivative : null)), numHidUnit);
+	}
 
 	/**
 	 * Constructor of {@link Network}.
@@ -27,27 +53,9 @@ public class Network {
 	 * @param numHidUnit Numbers of units of the hidden layers. The number of arguments starting with the fourth argument represents the number of hidden layers. Every integer gives the number of units in the specific layer.
 	 * @throws IllegalArgumentException Whether the weights' matrix' size and the number of layers do not match.
 	 */
-	public Network(int numInUnit, int numOutUnit, double[][][] weights, double[][] biases, int... numHidUnit) { // int... == int[] mit dem Unterschied: new Network(1, 1, w, 3, 5) statt new Network(1, 1, w, new int[]{3, 5})
-		if(numHidUnit.length != weights.length - 1) {throw new IllegalArgumentException("Illegal weight matrices");}
-
-		inLayerLength = numInUnit;
-		outputLayer = new Neuron[numOutUnit];
-		hiddenLayers = new Neuron[numHidUnit.length][];
-
-		// Try and catch for throwing IllegalArgumentException instead of ArrayIndexOutOfBoundsException
-
-		// Initialize hidden layers
-		for(int i = 0; i < hiddenLayers.length; i++) {
-			hiddenLayers[i] = new Neuron[numHidUnit[i]];
-
-			for(int j = 0; j < numHidUnit[i]; j++)
-				hiddenLayers[i][j] = new Neuron(weights[i][j], biases[i][j]);
-		}
-
-		// Initialize output layer
-		for(int i = 0; i < numOutUnit; i++) {
-			outputLayer[i] = new Neuron(weights[weights.length - 1][i], biases[biases.length - 1][i]);
-		}
+	public Network(int numInUnit, int numOutUnit, double[][][] weights, double[][] biases, Function<Double, Double>[][] functions, Function<Double, Double>[][] derivatives, int... numHidUnit) { // int... == int[] mit dem Unterschied: new Network(1, 1, w, 3, 5) statt new Network(1, 1, w, new int[]{3, 5})
+		if(derivatives == null) trainable = false;
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron(weights[i][j], biases[i][j], functions[i][j], (trainable ? derivatives[i][j] : null)), numHidUnit);
 	}
 
 	/**
@@ -56,7 +64,12 @@ public class Network {
 	 * @param numOutUnit Number of units of the output layer
 	 * @param numHidUnit Numbers of units of the hidden layers. The number of arguments starting with the fourth argument represents the number of hidden layers. Every integer gives the number of units in the specific layer.
 	 */
-	public Network(int numInUnit, int numOutUnit, int... numHidUnit) {  // int... == int[] mit dem Unterschied: new Network(1, 1, 3, 5) statt new Network(1, 1, new int[]{3, 5})
+	public Network(int numInUnit, int numOutUnit, Function<Double, Double>[][] functions, Function<Double, Double>[][] derivatives,  int... numHidUnit) {  // int... == int[] mit dem Unterschied: new Network(1, 1, 3, 5) statt new Network(1, 1, new int[]{3, 5})
+		if(derivatives == null) trainable = false;
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron(((i == 0) ? numInUnit : numHidUnit[i-1]), functions[i][j], (trainable ? derivatives[i][j] : null)), numHidUnit);
+	}
+
+	private void init(int numInUnit, int numOutUnit, BiFunction<Integer, Integer, Neuron> func, int... numHidUnit) {
 		inLayerLength = numInUnit;
 		outputLayer = new Neuron[numOutUnit];
 		hiddenLayers = new Neuron[numHidUnit.length][];
@@ -66,12 +79,12 @@ public class Network {
 			hiddenLayers[i] = new Neuron[numHidUnit[i]];
 
 			for(int j = 0; j < numHidUnit[i]; j++)
-				hiddenLayers[i][j] = new Neuron(Util.random(i == 0 ? numInUnit : numHidUnit[i - 1]), 1);
+				hiddenLayers[i][j] = func.apply(i, j);
 		}
 
 		// Initialize output layer
 		for(int i = 0; i < numOutUnit; i++)
-			outputLayer[i] = new Neuron(Util.random(numHidUnit.length == 0 ? numInUnit : numHidUnit[numHidUnit.length - 1]), 1);
+			outputLayer[i] = func.apply(hiddenLayers.length, i);
 	}
 
 	/**
@@ -86,27 +99,42 @@ public class Network {
 	}
 
 	public void train(double[][] input, double learnRate, double[][] y, int iterations) {
+		if(!trainable)
+			throw new UnsupportedOperationException("Network is not trainable");
+
 		double[][] results;
 
-		for(int i = 0; i < iterations; i++)
+		for(int i = 0; i < iterations; i++) {
+			double cost = 0;
 			for(int j = 0; j < input.length; j++) {
 				results = forwardPropagation(input[j]);
+
+				cost += cost(results[results.length - 1], y[j]);
+
+				System.out.println(Arrays.toString(results[results.length - 1]));
+				System.out.println(Arrays.toString(y[j]));
+				System.out.println();
+
 				backpropagation(learnRate, y[j], results);
 			}
+			System.out.println("Cost: " + cost);
+		}
 	}
 
 	private double[][] forwardPropagation(double[] input) {
 		if(input.length != inLayerLength) throw new IllegalArgumentException("Argument's size and input layer's size do not match");
 
-		double[][] results = new double[hiddenLayers.length + 1][];
+		double[][] results = new double[hiddenLayers.length + 2][];
+
+		results[0] = input;
 
 		// Fire all units of hidden layers
 		for(int i = 0; i < hiddenLayers.length; i++) {
 			int length = hiddenLayers[i].length;
-			results[i] = new double[length];
+			results[i + 1] = new double[length];
 
 			for(int j = 0; j < length; j++)
-				results[i][j] = hiddenLayers[i][j].fire(j == 0 ? input : results[i - 1]);
+				results[i + 1][j] = hiddenLayers[i][j].fire(i == 0 ? input : results[i]);
 
 		}
 
@@ -131,9 +159,19 @@ public class Network {
 			for(int j = 0; j < (i == length ? outputLayer.length : hiddenLayers[i].length); j++) {
 				Util.addToVec1(list.get(1), (i == length ? outputLayer[j] : hiddenLayers[i][j]).backpropagation(learnRate, list.get(0)[j], results[i]));
 			}
-			Util.mulToVec(1.0/(i == length ? outputLayer.length : hiddenLayers[i].length), list.get(1)); // Wird diese Zeile gebraucht?
+			//Util.mulToVec(1.0/(i == length ? outputLayer.length : hiddenLayers[i].length), list.get(1)); // Wird diese Zeile gebraucht?
 			list.remove(0);
 		}
+	}
+
+	private double cost(double[] output, double[] y) {
+		double sum = 0;
+		for(int i = 0; i < output.length; i++) {
+			double diff = output[i] - y[i];
+			sum += diff *  diff;
+		}
+
+		return sum;
 	}
 
 	@Override
