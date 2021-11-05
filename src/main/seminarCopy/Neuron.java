@@ -1,4 +1,4 @@
-package main.seminar;
+package main.seminarCopy;
 
 import main.util.Util;
 
@@ -68,6 +68,22 @@ public class Neuron {
 				"weights=" + Arrays.toString(weights) +
 				", bias=" + bias +
 				'}';
+	}
+
+	double[] getWeights() {
+		return  weights;
+	}
+
+	double getBias() {
+		return bias;
+	}
+
+	Function<Double, Double> getFunction() {
+		return function;
+	}
+
+	Function<Double, Double> getDerivative() {
+		return derivative;
 	}
 
 	void save(BufferedWriter writer) throws IOException {

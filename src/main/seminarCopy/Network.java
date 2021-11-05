@@ -1,4 +1,4 @@
-package main.seminar;
+package main.seminarCopy;
 
 import main.util.Util;
 
@@ -213,20 +213,41 @@ public class Network {
 	}
 
 	void save(BufferedWriter writer) throws IOException {
-		writer.append(inLayerLength + " " + outputLayer.length + " " + hiddenLayers.length);
+		writer.append("layers;" + inLayerLength);
 
-		for(Neuron[] layer: hiddenLayers)
-			writer.append(" " + layer.length);
+		Neuron[][] layers = new Neuron[hiddenLayers.length + 1][];
+		for(int i = 0; i < layers.length; i++)
+			layers[i] = (i < hiddenLayers.length) ? hiddenLayers[i] : outputLayer;
 
-		for(Neuron[] layer: hiddenLayers) {
-			writer.append("\n");
-			for(Neuron unit : layer)
-				unit.save(writer);
+
+		for(Neuron[] layer: layers)
+			writer.append(";" + layer.length);
+
+		for(int i = 0; i < layers.length; i++) {
+			Neuron[] layer = layers[i];
+
+			int length = layer.length;
+			double[][] weights = new double[length][];
+			double[] biases = new double[length];
+
+			for(int j = 0; j < length; j++){
+				weights[j] = layer[j].getWeights();
+				biases[j] = layer[j].getBias();
+			}
+
+			double[][] dataMatrix = Util.concat(Util.transpose(weights), biases);
+
+			for(double[] dataVec : dataMatrix) {
+				writer.append("\n");
+				for(int j = 0; j < dataVec.length; j++) {
+					writer.append(dataVec[j] + ";");
+					if(j < dataVec.length - 1) writer.append(" ");
+				}
+			}
+
+			if(i < layers.length - 1)
+			writer.append("\n;;;");
 		}
-
-		writer.append("\n");
-		for(Neuron unit: outputLayer)
-			unit.save(writer);
 	}
 
 	static Network load(Scanner scanner) {
@@ -249,26 +270,5 @@ public class Network {
 			network.outputLayer[i] = Neuron.load(scanner);
 
 		return network;
-	}
-
-	public static void main(String[] args) throws IOException {
-//		double[][][] w = new double[][][]{new double[][]{new double[]{0.5, 0.5}}};
-//		double[][] b = new double[][]{new double[]{0.7}};
-//
-//		Network network = new Network(2, 1, w, b);
-
-		Network network = new Network(3, 2, 5, 7);
-
-		NetworkHelper.save(network, "Network");
-		Network network1 = NetworkHelper.load("Network");
-
-		NetworkHelper.save(network1, "Network1");
-
-//		System.out.println(network);
-//		System.out.println("-------------------------------------------------");
-//		System.out.println(Arrays.toString(network.compute(new double[]{0, 0})));
-//		System.out.println(Arrays.toString(network.compute(new double[]{0, 1})));
-//		System.out.println(Arrays.toString(network.compute(new double[]{1, 0})));
-//		System.out.println(Arrays.toString(network.compute(new double[]{1, 1})));
 	}
 }

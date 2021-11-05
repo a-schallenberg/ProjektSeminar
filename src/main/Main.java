@@ -5,6 +5,7 @@ import main.afunctions.SignFunction;
 import main.algebraoriented.PyNetwork;
 import main.mnist.Mnist;
 import main.objectoriented.JNetwork;
+import main.util.Util;
 
 import java.io.IOException;
 import java.util.Arrays;

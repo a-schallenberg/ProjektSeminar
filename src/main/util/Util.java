@@ -1,4 +1,4 @@
-package main;
+package main.util;
 
 import java.util.Random;
 
@@ -538,5 +538,35 @@ public class Util {
 		for(double d : array) sum += d;
 
 		return sum;
+	}
+
+	/**
+	 * Concats array to matrix.
+	 * @param matrix matrix, in which the array is to be concated.
+	 * @param array Array, which is to be concated.
+	 * @return A new matrix with the array concated.
+	 */
+	public static double[][] concat(double[][] matrix, double[] array) {
+		double[][] result = new double[matrix.length + 1][];
+
+		for(int i = 0; i < result.length; i++)
+			result[i] = (i < matrix.length) ? matrix[i] : array;
+
+		return result;
+	}
+
+	/**
+	 * Concats array to matrix.
+	 * @param matrix matrix, in which the array is to be concated.
+	 * @param array Array, which is to be concated.
+	 * @return A new matrix with the array concated.
+	 */
+	public static <T> T[][] concat(T[][] matrix, T[] array) {
+		T[][] result = (T[][]) new Object[matrix.length + 1][];
+
+		for(int i = 0; i < result.length; i++)
+			result[i] = (i < matrix.length) ? matrix[i] : array;
+
+		return result;
 	}
 }
