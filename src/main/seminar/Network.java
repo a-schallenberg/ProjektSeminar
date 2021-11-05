@@ -17,7 +17,7 @@ import java.util.function.Function;
 public class Network {
 	public static final Function<Double, Double> DEFAULT_FUNCTION = x -> 1/(1 + Math.exp(-x));
 	//public static final Function<Double, Double> DEFAULT_DERIVATIVE = x -> x * (1 - x); // nicht ganz richtig
-	public static final Function<Double, Double> DEFAULT_DERIVATIVE = Util::dSigmoid; // nicht ganz richtig
+	public static final Function<Double, Double> DEFAULT_DERIVATIVE = Util::dSigmoid;
 
 	private int inLayerLength;
 	private Neuron[] outputLayer;

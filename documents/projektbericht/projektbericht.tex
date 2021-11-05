@@ -1,0 +1,65 @@
+\documentclass[paper=A4,pagesize=auto,12pt,headinclude=true,footinclude=true,BCOR=0mm,DIV=calc]{scrartcl}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+% neue deutsche Trennungsregeln, etc
+\usepackage[ngerman]{babel}
+\usepackage[hidelinks]{hyperref}
+\usepackage{setspace}	% \onehalfspaceing
+% Seitenränder
+\usepackage[left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry}
+% 1,5 Zeilenabstand
+\onehalfspacing
+
+\usepackage[scaled]{helvet}
+
+%opening
+\title{Neuronale Netze}
+\author{Alexandra Zarkh, Sui Yin Elisabeth Zhang,\\ Lennart Leggewie, Alexander Schallenberg}
+
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	\null
+	\vskip 2em%
+	\begin{center}%
+		\let \footnote \thanks
+		{\Huge \textbf{\@title} \par}%
+		\vskip 1em%
+		{\Large \textbf{Projektbericht}\par}%
+		\vskip 2em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 2em%
+		{\large Hochschule Bonn-Rhein-Sieg\par}%
+		\vskip 2em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip 1.5em}
+\makeatother
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Einleitung}
+
+\section{Methoden}
+
+\section{Ergebnisse}
+
+\section{Diskussion \& Fazit}
+
+\section{Verwendete Literatur \& Anhang}
+
+\end{document}

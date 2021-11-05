@@ -50,14 +50,14 @@ public class Neuron {
 	}
 
 	public double[] backpropagation(double learnRate, double delta, double[] prevResults) {
-		for(int i = 0; i < weights.length; i++) {
+		for(int i = 0; i < weights.length; i++)
 			weights[i] += -learnRate * prevResults[i] * delta;
-		}
+
 		bias += -learnRate * delta;
 		double[] deltas = new double[weights.length];
-		for(int i = 0; i < deltas.length; i++) {
+		for(int i = 0; i < deltas.length; i++)
 			deltas[i] = weights[i] * derivative.apply(z) * delta;
-		}
+
 		return deltas;
 	}
 
