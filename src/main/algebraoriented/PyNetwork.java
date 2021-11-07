@@ -1,10 +1,10 @@
 package main.algebraoriented;
 
 import main.INetwork;
-import main.util.Util;
 import main.afunctions.ActivationFunction;
 import main.afunctions.SigmoidFunction;
 import main.objectoriented.JNeuron;
+import main.util.Util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -1,8 +1,21 @@
 package main.afunctions;
 
-public class LogisticFunction implements  ActivationFunction{
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class LogisticFunction implements ActivationFunction {
 	public static final String NAME = "Logistic";
 	private double offset, height, factor, ordinate;
+
+	/**
+	 * Constructor for loading a {@link LogisticFunction}.
+	 * Instead of using this constructor use the {@link SigmoidFunction}.
+	 */
+	@Deprecated
+	public LogisticFunction() {
+		this(0, 1, 1, 0);
+	}
 
 	public LogisticFunction(double offset, double height, double factor, double ordinate) {
 		this.offset = offset;
@@ -23,12 +36,20 @@ public class LogisticFunction implements  ActivationFunction{
 	}
 
 	@Override
-	public String toString() {
-		return NAME + "(" + offset + ", " +  height + ", " + factor + ", " + ordinate + ")";
+	public void toBuffer(BufferedWriter writer) throws IOException {
+		writer.append(" " + offset + " " +  height + " " + factor + " " + ordinate);
 	}
 
-	public static ActivationFunction fromString(String string) {
-		string = string.replace(")", "").split("\\(")[1];
-		return new LogisticFunction(Double.parseDouble(string), Double.parseDouble(string), Double.parseDouble(string), Double.parseDouble(string));
+	@Override
+	public void fromBuffer(Scanner scanner) throws IOException {
+		offset = scanner.nextDouble();
+		height = scanner.nextDouble();
+		factor = scanner.nextDouble();
+		ordinate = scanner.nextDouble();
+	}
+
+	@Override
+	public String toString() {
+		return NAME + "(" + offset + ", " +  height + ", " + factor + ", " + ordinate + ")";
 	}
 }

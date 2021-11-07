@@ -1,9 +1,8 @@
 package main.objectoriented;
 
 import main.INetwork;
-import main.util.Util;
 import main.afunctions.ActivationFunction;
-import main.afunctions.OutputFunction;
+import main.util.Util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,7 +31,7 @@ public class JNetwork implements INetwork {
 	 * @throws IllegalArgumentException Whether the argument's length is less than two, because the network needs at least an input layer and an output layer.
 	 */
 	public JNetwork(int... numLayerUnits) {
-		this(OutputFunction.DEFAULT_FUNCTION, numLayerUnits);
+		this(ActivationFunction.DEFAULT_FUNCTION, numLayerUnits);
 	}
 
 	/**
@@ -46,7 +45,7 @@ public class JNetwork implements INetwork {
 	 * @throws  IllegalArgumentException Whether one of the condition of argument weights is false.
 	 */
 	public JNetwork(double[][][] weights, double[][] biases) {
-		this(OutputFunction.DEFAULT_FUNCTION, weights, biases);
+		this(ActivationFunction.DEFAULT_FUNCTION, weights, biases);
 	}
 
 	/**
@@ -58,7 +57,7 @@ public class JNetwork implements INetwork {
 	 *                      Last layer <=> output layer
 	 * @throws IllegalArgumentException Whether the argument's length is less than two, because the network needs at least an input layer and an output layer.
 	 */
-	private JNetwork(OutputFunction function, int... numLayerUnits) {
+	private JNetwork(ActivationFunction function, int... numLayerUnits) {
 		init(numLayerUnits, (i, j) -> new JNeuron(numLayerUnits[i], function));
 	}
 
@@ -73,7 +72,7 @@ public class JNetwork implements INetwork {
 	 *                Condition 2: weights[0][0] == weights[0][j], for every j in range.
 	 * @throws  IllegalArgumentException Whether one of the condition of argument weights is false.
 	 */
-	public JNetwork(OutputFunction function, double[][][] weights, double[][] biases) {
+	public JNetwork(ActivationFunction function, double[][][] weights, double[][] biases) {
 		init(weightsToNumbers(weights), (i, j) -> new JNeuron(weights[i][j], biases[i][j], function));
 	}
 
@@ -86,7 +85,7 @@ public class JNetwork implements INetwork {
 	 *                      Last layer <=> output layer
 	 * @throws IllegalArgumentException Whether the argument's length is less than two, because the network needs at least an input layer and an output layer.
 	 */
-	private JNetwork(OutputFunction[][] functions, int... numLayerUnits) {
+	private JNetwork(ActivationFunction[][] functions, int... numLayerUnits) {
 		init(numLayerUnits, (i, j) -> new JNeuron(numLayerUnits[i], functions[i][j]));
 	}
 
@@ -101,7 +100,7 @@ public class JNetwork implements INetwork {
 	 *                Condition 2: weights[0][0] == weights[0][j], for every j in range.
 	 * @throws  IllegalArgumentException Whether one of the condition of argument weights is false.
 	 */
-	public JNetwork(OutputFunction[][] functions, double[][][] weights, double[][] biases) {
+	public JNetwork(ActivationFunction[][] functions, double[][][] weights, double[][] biases) {
 		init(weightsToNumbers(weights), (i, j) -> new JNeuron(weights[i][j], biases[i][j], functions[i][j]));
 	}
 
@@ -285,7 +284,7 @@ public class JNetwork implements INetwork {
 	private void checkTrainable() {
 		for(JNeuron[] layer: layers)
 			for(JNeuron unit: layer)
-				if(!(unit.getFunction() instanceof ActivationFunction))
+				if(Double.isNaN(unit.getFunction().function(0)))
 					throw new IllegalStateException("Network is not trainable");
 	}
 

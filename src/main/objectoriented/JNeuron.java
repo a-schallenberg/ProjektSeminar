@@ -1,8 +1,7 @@
 package main.objectoriented;
 
-import main.util.Util;
 import main.afunctions.ActivationFunction;
-import main.afunctions.OutputFunction;
+import main.util.Util;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -12,15 +11,15 @@ public class JNeuron {
 	public double[] weights;
 	public double bias, z, a;
 	public JNeuron[] prevLayer;
-	private OutputFunction function;
+	private ActivationFunction function;
 
 	private JNeuron() {}
 
-	public JNeuron(int weightDim, OutputFunction function) {
+	public JNeuron(int weightDim, ActivationFunction function) {
 		this(Util.random(weightDim), 0, function);
 	}
 
-	public JNeuron(double[] weights, double bias, OutputFunction function) {
+	public JNeuron(double[] weights, double bias, ActivationFunction function) {
 		this.weights = weights;
 		this.bias = bias;
 		this.function = function;
@@ -67,7 +66,7 @@ public class JNeuron {
 				'}';
 	}
 
-	public OutputFunction getFunction() {
+	public ActivationFunction getFunction() {
 		return function;
 	}
 
@@ -82,7 +81,7 @@ public class JNeuron {
 			neuron.weights[i] = Double.parseDouble(strWeights[i]);
 
 		neuron.bias = Double.parseDouble(strings[1]);
-		neuron.function = OutputFunction.fromString(strings[2]);
+		//neuron.function = ActivationFunction.fromString(strings[2]); FIXME
 
 		return neuron;
 	}

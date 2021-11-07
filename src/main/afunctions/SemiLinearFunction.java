@@ -1,9 +1,13 @@
 package main.afunctions;
 
-public class SemiLinearFunction implements OutputFunction {
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class SemiLinearFunction implements ActivationFunction{
 	public static final String NAME = "Semi-Linear";
 
-	private final double lowerLimit, upperLimit;
+	private double lowerLimit, upperLimit;
 
 	public SemiLinearFunction() {
 		this(-1, 1);
@@ -22,13 +26,23 @@ public class SemiLinearFunction implements OutputFunction {
 	}
 
 	@Override
-	public String toString() {
-		return NAME + "(" + lowerLimit + " | " + upperLimit + ")";
+	public double derivative(double x) {
+		return x == lowerLimit || x == upperLimit ? Double.NaN : (x < lowerLimit || x > upperLimit ? 0 : 1 );
 	}
 
-	public static OutputFunction fromString(String string) {
-		string = string.replace(")", "").split("\\(")[1];
-		String[] args = string.split(" \\| ");
-		return new SemiLinearFunction(Double.parseDouble(args[0]), Double.parseDouble(args[1]));
+	@Override
+	public void toBuffer(BufferedWriter writer) throws IOException {
+		writer.append(" " + lowerLimit + " " + upperLimit);
+	}
+
+	@Override
+	public void fromBuffer(Scanner scanner) throws IOException {
+		lowerLimit = scanner.nextDouble();
+		upperLimit = scanner.nextDouble();
+	}
+
+	@Override
+	public String toString() {
+		return NAME + "(" + lowerLimit + " | " + upperLimit + ")";
 	}
 }

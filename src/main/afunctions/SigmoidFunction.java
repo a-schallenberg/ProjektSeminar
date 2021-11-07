@@ -1,5 +1,9 @@
 package main.afunctions;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class SigmoidFunction extends LogisticFunction {
 	public static final String NAME = "Sigmoid";
 
@@ -8,11 +12,13 @@ public class SigmoidFunction extends LogisticFunction {
 	}
 
 	@Override
+	public void toBuffer(BufferedWriter writer) throws IOException {}
+
+	@Override
+	public void fromBuffer(Scanner scanner) throws IOException {}
+
+	@Override
 	public String toString() {
 		return NAME;
-	}
-
-	public static ActivationFunction fromString(String string) {
-		return new SigmoidFunction();
 	}
 }

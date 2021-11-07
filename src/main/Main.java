@@ -1,6 +1,6 @@
 package main;
 
-import main.afunctions.OutputFunction;
+import main.afunctions.ActivationFunction;
 import main.afunctions.SignFunction;
 import main.algebraoriented.PyNetwork;
 import main.mnist.Mnist;
@@ -86,7 +86,7 @@ public class Main {
 	private static void testJXOR() {
 		double[][][] weights = new double[][][]{new double[][]{new double[]{1,1}, new double[]{-1,-1}}, new double[][]{new double[]{1, 1}}};
 		double[][] biases = new double[][]{new double[]{0, 0}, new double[]{0}};
-		OutputFunction[][] funcs = {{new SignFunction(0.5, 0, 1), new SignFunction(-1.5, 0, 1)}, {new SignFunction(1.5, 0, 1)}};
+		ActivationFunction[][] funcs = {{new SignFunction(0.5, 0, 1), new SignFunction(-1.5, 0, 1)}, {new SignFunction(1.5, 0, 1)}};
 
 		JNetwork network = new JNetwork(funcs, weights, biases);
 		double[][] input = new double[][] {{1, 1}, {1, 0}, {0, 1}, {0, 0}};

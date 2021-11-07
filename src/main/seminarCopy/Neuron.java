@@ -1,12 +1,12 @@
 package main.seminarCopy;
 
+import main.afunctions.ActivationFunction;
 import main.util.Util;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.function.Function;
 
 /**
  * Class for creating objects of type {@link Neuron}. {@link Neuron}s are used by neural {@link Network}s for saving and processing data.
@@ -15,23 +15,22 @@ import java.util.function.Function;
 public class Neuron {
 	private double[] weights;
 	private double bias, z;
-	private Function<Double, Double> function, derivative;
+	private ActivationFunction function;
 
 	private Neuron(){}
 
-	public Neuron(int weightDim, Function<Double, Double> function, Function<Double, Double> derivative) {
-		this(Util.random(weightDim), 0, function, derivative);
+	public Neuron(int weightDim, ActivationFunction function) {
+		this(Util.random(weightDim), 0, function);
 	}
 
 	/**
 	 * Constructor for {@link Neuron}.
 	 * @param weights Weighting of units in the previous layer for computing a value for this unit.
 	 */
-	public Neuron(double[] weights, double bias, Function<Double, Double> function, Function<Double, Double> derivative) {
+	public Neuron(double[] weights, double bias, ActivationFunction function) {
 		this.weights = weights;
 		this.bias = bias;
 		this.function = function;
-		this.derivative = derivative;
 	}
 
 	/**
@@ -46,7 +45,7 @@ public class Neuron {
 
 		sum += bias;
 		z = sum;
-		return function.apply(sum);
+		return function.function(sum);
 	}
 
 	public double[] backpropagation(double learnRate, double delta, double[] prevResults) {
@@ -56,7 +55,7 @@ public class Neuron {
 		bias += -learnRate * delta;
 		double[] deltas = new double[weights.length];
 		for(int i = 0; i < deltas.length; i++)
-			deltas[i] = weights[i] * derivative.apply(z) * delta;
+			deltas[i] = weights[i] * function.derivative(z) * delta;
 
 		return deltas;
 	}
@@ -67,6 +66,7 @@ public class Neuron {
 		return "Neuron{" +
 				"weights=" + Arrays.toString(weights) +
 				", bias=" + bias +
+				", function=" + function.toString() +
 				'}';
 	}
 
@@ -78,12 +78,8 @@ public class Neuron {
 		return bias;
 	}
 
-	Function<Double, Double> getFunction() {
+	ActivationFunction getFunction() {
 		return function;
-	}
-
-	Function<Double, Double> getDerivative() {
-		return derivative;
 	}
 
 	void save(BufferedWriter writer) throws IOException {

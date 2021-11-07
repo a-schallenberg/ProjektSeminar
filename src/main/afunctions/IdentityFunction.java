@@ -1,5 +1,9 @@
 package main.afunctions;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class IdentityFunction implements ActivationFunction {
 	public static final String NAME = "Identity";
 
@@ -14,11 +18,13 @@ public class IdentityFunction implements ActivationFunction {
 	}
 
 	@Override
+	public void toBuffer(BufferedWriter writer) throws IOException {}
+
+	@Override
+	public void fromBuffer(Scanner scanner) {}
+
+	@Override
 	public String toString() {
 		return NAME;
-	}
-
-	public static ActivationFunction fromString(String string) {
-		return new IdentityFunction();
 	}
 }

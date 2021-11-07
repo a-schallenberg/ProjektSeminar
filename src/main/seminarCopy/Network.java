@@ -1,24 +1,19 @@
 package main.seminarCopy;
 
+import main.afunctions.ActivationFunction;
 import main.util.Util;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Scanner;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * The class {@link Network} allows creating objects from this type. It represents a neural network and works with {@link Neuron}s.
  * @author aschal2s, azarkh2s, llegge2s, szhang2s
  */
 public class Network {
-	public static final Function<Double, Double> DEFAULT_FUNCTION = x -> 1/(1 + Math.exp(-x));
-	//public static final Function<Double, Double> DEFAULT_DERIVATIVE = x -> x * (1 - x); // nicht ganz richtig
-	public static final Function<Double, Double> DEFAULT_DERIVATIVE = Util::dSigmoid;
-
 	private int inLayerLength;
 	private Neuron[] outputLayer;
 	private Neuron[][] hiddenLayers;
@@ -27,21 +22,19 @@ public class Network {
 	private Network(){}
 
 	public Network(int numInUnit, int numOutUnit, double[][][] weights, double[][] biases, int... numHidUnit) {
-		init(numInUnit, numOutUnit, (i, j) -> new Neuron(weights[i][j], biases[i][j], DEFAULT_FUNCTION, DEFAULT_DERIVATIVE), numHidUnit);
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron(weights[i][j], biases[i][j], ActivationFunction.DEFAULT_FUNCTION), numHidUnit);
 	}
 
 	public Network(int numInUnit, int numOutUnit, int... numHidUnit) {
-		init(numInUnit, numOutUnit, (i, j) -> new Neuron(((i == 0) ? numInUnit : numHidUnit[i-1]), DEFAULT_FUNCTION, DEFAULT_DERIVATIVE), numHidUnit);
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron(((i == 0) ? numInUnit : numHidUnit[i-1]), ActivationFunction.DEFAULT_FUNCTION), numHidUnit);
 	}
 
-	public Network(int numInUnit, int numOutUnit, double[][][] weights, double[][] biases, Function<Double, Double> function, Function<Double, Double> derivative, int... numHidUnit) { // int... == int[] mit dem Unterschied: new Network(1, 1, w, 3, 5) statt new Network(1, 1, w, new int[]{3, 5})
-		if(derivative == null) trainable = false;
-		init(numInUnit, numOutUnit, (i, j) -> new Neuron(weights[i][j], biases[i][j], function, (trainable ? derivative : null)), numHidUnit);
+	public Network(int numInUnit, int numOutUnit, double[][][] weights, double[][] biases, ActivationFunction function, int... numHidUnit) { // int... == int[] mit dem Unterschied: new Network(1, 1, w, 3, 5) statt new Network(1, 1, w, new int[]{3, 5})
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron(weights[i][j], biases[i][j], function), numHidUnit);
 	}
 
-	public Network(int numInUnit, int numOutUnit, Function<Double, Double> function, Function<Double, Double> derivative,  int... numHidUnit) {  // int... == int[] mit dem Unterschied: new Network(1, 1, 3, 5) statt new Network(1, 1, new int[]{3, 5})
-		if(derivative == null) trainable = false;
-		init(numInUnit, numOutUnit, (i, j) -> new Neuron((i == 0) ? numInUnit : numHidUnit[i-1], function, (trainable ? derivative : null)), numHidUnit);
+	public Network(int numInUnit, int numOutUnit, ActivationFunction function,  int... numHidUnit) {  // int... == int[] mit dem Unterschied: new Network(1, 1, 3, 5) statt new Network(1, 1, new int[]{3, 5})
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron((i == 0) ? numInUnit : numHidUnit[i-1], function), numHidUnit);
 	}
 
 	/**
@@ -53,9 +46,8 @@ public class Network {
 	 * @param numHidUnit Numbers of units of the hidden layers. The number of arguments starting with the fourth argument represents the number of hidden layers. Every integer gives the number of units in the specific layer.
 	 * @throws IllegalArgumentException Whether the weights' matrix' size and the number of layers do not match.
 	 */
-	public Network(int numInUnit, int numOutUnit, double[][][] weights, double[][] biases, Function<Double, Double>[][] functions, Function<Double, Double>[][] derivatives, int... numHidUnit) { // int... == int[] mit dem Unterschied: new Network(1, 1, w, 3, 5) statt new Network(1, 1, w, new int[]{3, 5})
-		if(derivatives == null) trainable = false;
-		init(numInUnit, numOutUnit, (i, j) -> new Neuron(weights[i][j], biases[i][j], functions[i][j], (trainable ? derivatives[i][j] : null)), numHidUnit);
+	public Network(int numInUnit, int numOutUnit, double[][][] weights, double[][] biases, ActivationFunction[][] functions, int... numHidUnit) { // int... == int[] mit dem Unterschied: new Network(1, 1, w, 3, 5) statt new Network(1, 1, w, new int[]{3, 5})
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron(weights[i][j], biases[i][j], functions[i][j]), numHidUnit);
 	}
 
 	/**
@@ -64,9 +56,8 @@ public class Network {
 	 * @param numOutUnit Number of units of the output layer
 	 * @param numHidUnit Numbers of units of the hidden layers. The number of arguments starting with the fourth argument represents the number of hidden layers. Every integer gives the number of units in the specific layer.
 	 */
-	public Network(int numInUnit, int numOutUnit, Function<Double, Double>[][] functions, Function<Double, Double>[][] derivatives,  int... numHidUnit) {  // int... == int[] mit dem Unterschied: new Network(1, 1, 3, 5) statt new Network(1, 1, new int[]{3, 5})
-		if(derivatives == null) trainable = false;
-		init(numInUnit, numOutUnit, (i, j) -> new Neuron(((i == 0) ? numInUnit : numHidUnit[i-1]), functions[i][j], (trainable ? derivatives[i][j] : null)), numHidUnit);
+	public Network(int numInUnit, int numOutUnit, ActivationFunction[][] functions, int... numHidUnit) {  // int... == int[] mit dem Unterschied: new Network(1, 1, 3, 5) statt new Network(1, 1, new int[]{3, 5})
+		init(numInUnit, numOutUnit, (i, j) -> new Neuron(((i == 0) ? numInUnit : numHidUnit[i-1]), functions[i][j]), numHidUnit);
 	}
 
 	private void init(int numInUnit, int numOutUnit, BiFunction<Integer, Integer, Neuron> func, int... numHidUnit) {
@@ -78,13 +69,17 @@ public class Network {
 		for(int i = 0; i < hiddenLayers.length; i++) {
 			hiddenLayers[i] = new Neuron[numHidUnit[i]];
 
-			for(int j = 0; j < numHidUnit[i]; j++)
+			for(int j = 0; j < numHidUnit[i]; j++) {
 				hiddenLayers[i][j] = func.apply(i, j);
+				if(Double.isNaN(hiddenLayers[i][j].getFunction().function(0))) trainable = false;
+			}
 		}
 
 		// Initialize output layer
-		for(int i = 0; i < numOutUnit; i++)
+		for(int i = 0; i < numOutUnit; i++) {
 			outputLayer[i] = func.apply(hiddenLayers.length, i);
+			if(Double.isNaN(outputLayer[i].getFunction().function(0))) trainable = false;
+		}
 	}
 
 	/**
@@ -212,16 +207,13 @@ public class Network {
 		return "Network{\n" + string + "\n}";
 	}
 
-	void save(BufferedWriter writer) throws IOException {
-		writer.append("layers;" + inLayerLength);
+	void saveBasics(BufferedWriter writer) throws IOException {
+		writer.append("layers; " + inLayerLength);
 
-		Neuron[][] layers = new Neuron[hiddenLayers.length + 1][];
-		for(int i = 0; i < layers.length; i++)
-			layers[i] = (i < hiddenLayers.length) ? hiddenLayers[i] : outputLayer;
-
+		Neuron[][] layers = getLayers();
 
 		for(Neuron[] layer: layers)
-			writer.append(";" + layer.length);
+			writer.append("; " + layer.length);
 
 		for(int i = 0; i < layers.length; i++) {
 			Neuron[] layer = layers[i];
@@ -240,35 +232,39 @@ public class Network {
 			for(double[] dataVec : dataMatrix) {
 				writer.append("\n");
 				for(int j = 0; j < dataVec.length; j++) {
-					writer.append(dataVec[j] + ";");
-					if(j < dataVec.length - 1) writer.append(" ");
+					writer.append("" + dataVec[j]);
+					if(j < dataVec.length - 1) writer.append("; ");
 				}
 			}
 
 			if(i < layers.length - 1)
-			writer.append("\n;;;");
+			writer.append("\n");
 		}
 	}
 
-	static Network load(Scanner scanner) {
-		Network network = new Network();
+	void saveFunctions(BufferedWriter writer) throws IOException {
+		Neuron[][] layers = getLayers();
 
-		// Initialize inLayerLength and neuron arrays
-		network.inLayerLength = scanner.nextInt();
-		network.outputLayer = new Neuron[scanner.nextInt()];
+		for(int i = 0; i < layers.length; i++) {
+			if(i != 0) writer.append("\n#");
+			for(int j = 0; j < layers[i].length; j++) {
+				if(i != 0 || j != 0) writer.append("\n");
+				ActivationFunction function = layers[i][j].getFunction();
+				writer.append(function.getClass().getName() + " ");
+				function.toBuffer(writer);
+			}
+		}
+	}
 
-		network.hiddenLayers = new Neuron[scanner.nextInt()][];
-		for(int i = 0; i < network.hiddenLayers.length; i++)
-			network.hiddenLayers[i] = new Neuron[scanner.nextInt()];
+	/**
+	 * Adds output layer to hidden layers.
+	 * @return An array of all layers (without input layer).
+	 */
+	private Neuron[][] getLayers() {
+		Neuron[][] layers = new Neuron[hiddenLayers.length + 1][];
+		for(int i = 0; i < layers.length; i++)
+			layers[i] = (i < hiddenLayers.length) ? hiddenLayers[i] : outputLayer;
 
-		// Fill arrays
-		for(int i = 0; i < network.hiddenLayers.length; i++)
-			for(int j = 0; j < network.hiddenLayers[i].length; j++)
-				network.hiddenLayers[i][j] = Neuron.load(scanner);
-
-		for(int i = 0; i < network.outputLayer.length; i++)
-			network.outputLayer[i] = Neuron.load(scanner);
-
-		return network;
+		return layers;
 	}
 }
