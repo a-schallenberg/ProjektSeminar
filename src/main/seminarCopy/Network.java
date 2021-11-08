@@ -146,14 +146,15 @@ public class Network {
 		int length = hiddenLayers.length; // TODO +1 ?
 		LinkedList<double[]> list = new LinkedList<>();
 		list.add(new double[outputLayer.length]);
-		for(int i = 0; i < list.get(0).length; i++) {
+
+		for(int i = 0; i < list.get(0).length; i++)
 			list.get(0)[i] = 2 * (results[results.length - 1][i] - y[i]);
-		}
+
 		for(int i = length; i >= 0; i--) {
 			list.add(new double[i == 0 ? inLayerLength : hiddenLayers[i-1].length]);
-			for(int j = 0; j < (i == length ? outputLayer.length : hiddenLayers[i].length); j++) {
+			for(int j = 0; j < (i == length ? outputLayer.length : hiddenLayers[i].length); j++)
 				Util.addToVec1(list.get(1), (i == length ? outputLayer[j] : hiddenLayers[i][j]).backpropagation(learnRate, list.get(0)[j], results[i]));
-			}
+
 			//Util.mulToVec(1.0/(i == length ? outputLayer.length : hiddenLayers[i].length), list.get(1)); // Wird diese Zeile gebraucht?
 			list.remove(0);
 		}
