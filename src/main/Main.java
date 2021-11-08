@@ -23,19 +23,18 @@ public class Main {
 //
 //		StorageManager.save("INetwork", network2);
 
-
-		//trainPyXOR();
-		trainJXOR();
+		trainPyXOR();
+		//trainJXOR();
 
 		//testArgmax();
 		//new Network(1,1, 5, 8, 4, 2);
 	}
 
 	private static void trainPyXOR() {
-		PyNetwork network = new PyNetwork(2, 1, 3);
+		PyNetwork network = new PyNetwork(new SignFunction(0, 0, 1), 2, 1, 2);
 		double[][] input = new double[][] {{1, 1}, {1, 0}, {0, 1}, {0, 0}};
 		double[][] labels = new double[][] {{0}, {1}, {1}, {0}};
-		network.train(input, labels, 50000, 0.1);
+		network.train(input, labels, 50000, 1);
 	}
 
 	private static void trainJXOR() {

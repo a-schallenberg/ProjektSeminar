@@ -12,11 +12,11 @@
 % 1,5 Zeilenabstand
 \onehalfspacing
 
-\usepackage[scaled]{helvet}
+%\usepackage[scaled]{helvet}
 
 %opening
 \title{Neuronale Netze}
-\author{Alexandra Zarkh, Sui Yin Elisabeth Zhang,\\ Lennart Leggewie, Alexander Schallenberg}
+\author{Alexandra Zarkh, Sui Yin Zhang,\\ Lennart Leggewie, Alexander Schallenberg}
 
 \makeatletter
 \def\@maketitle{%
@@ -55,20 +55,43 @@
 \section{Einleitung}
 
 \subsection{Aufgabenstellung \& Zielsetzung}
+Die Aufgabenstellung lautete zunächst, die Grundlagen eines künstlichen neuronalen Netzes (knN) in Java zu implementieren, sodass mit diesem schon zu einfachen Eingaben eine korrekte Ausgabe kalkuliert wird (Forward Propagation). Diese weiteten sich darauf aus, das Netz trainieren zu können (Backpropagation) und die trainierten Einstellungen des Netzes zu speichern und zu laden.\\
+Das Ziel war, die erste Hälfte der Aufgabenstellung in den ersten zwei Wochen und die zweite Hälfte in den folgenden zwei Wochen umzusetzen.
 
 \subsection{Aufgabenkontext \& externe Vorgaben}
+Vorgegeben war, ein knN erstellen zu können, dem man bei seiner Erstellung Gewichtungen sowie Biases übergeben kann. Außerdem soll das Netz Ausgaben abhängig von den Eingaben berechnen können und die Gewichtungen und Biases sollen trainiert werden können. Außerdem ist ein Format zur Abspeicherung der Gewichte und Biases vorgegeben worden, welche in diesem Format in eine CSV-Datei gespeichert werden soll.
 
-\subsection{Nicht vorgegeben aber notwenidgerweise von uns festegelegt}
+\subsection{Nicht vorgegeben aber notwendigerweise von uns festgelegt}
+Nicht vorgegeben, aber notwendigerweise festgelegt wurde, dass beim Erstellen eines knN die Anzahl der Neuronen für jede Neuronenschicht vom Benutzer festgelegt wird. Implizit wird damit auch die Anzahl der versteckten Schichten verlangt. Außerdem ist die Struktur des Netzes frei gewählt.
+% ggf. functions
 
-\subsection{Literaturarbeit: Verweis auf Vorarbeiten (eher kurz gehalten)}
+\subsection{Literaturarbeit: Verweis auf Vorarbeiten}
+\begin{itemize}
+	\item{An Introduction to Neural Networks, Kroese, B., a Van der Smagt, P., 1996}
+	\item{Neural Networks, 3Blue1Brown, 2018, \hyperref{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}{}{}{YouTube}}
+\end{itemize}
+
 
 \newpage
 
-\section{Methoden}
+\section{Methoden} % Aufteilen, wer was macht
+% Beschreibung \& Begründung der Umsetzung
+% Beschreibung der Feinstrukturen (Programmteile, Objekte/Klassen und besondere Herausforderungen)
+\subsection{Util}
 
-\subsection{Beschreibung \& Begründung der Umsetzung}
+\subsection{Klassenstruktur Network \& Neuron}
 
-\subsection{Beschreibung der Feinstrukturen (Programmteile, Objekte/Klassen und besondere Herausforderungen)}
+\subsection{Konstruktoren \& Initialisierung}
+
+\subsection{Kalkulation}
+\subsubsection{Forward Propagation}
+
+\subsection{Training}
+\subsubsection{Backpropagation}
+
+\subsection{Speichern \& Laden}
+
+\subsection{toString}¸
 
 \newpage
 

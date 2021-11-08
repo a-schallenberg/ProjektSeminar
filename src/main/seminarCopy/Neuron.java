@@ -49,6 +49,8 @@ public class Neuron {
 	}
 
 	public double[] backpropagation(double learnRate, double delta, double[] prevResults) {
+		//System.out.println("z = " + z + ", a = " + function.function(z) + ", delta = " + delta);
+
 		for(int i = 0; i < weights.length; i++)
 			weights[i] += -learnRate * prevResults[i] * delta;
 

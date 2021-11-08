@@ -250,25 +250,4 @@ public class Network {
 
 		return network;
 	}
-
-	public static void main(String[] args) throws IOException {
-//		double[][][] w = new double[][][]{new double[][]{new double[]{0.5, 0.5}}};
-//		double[][] b = new double[][]{new double[]{0.7}};
-//
-//		Network network = new Network(2, 1, w, b);
-
-		Network network = new Network(3, 2, 5, 7);
-
-		NetworkHelper.save(network, "Network");
-		Network network1 = NetworkHelper.load("Network");
-
-		NetworkHelper.save(network1, "Network1");
-
-//		System.out.println(network);
-//		System.out.println("-------------------------------------------------");
-//		System.out.println(Arrays.toString(network.compute(new double[]{0, 0})));
-//		System.out.println(Arrays.toString(network.compute(new double[]{0, 1})));
-//		System.out.println(Arrays.toString(network.compute(new double[]{1, 0})));
-//		System.out.println(Arrays.toString(network.compute(new double[]{1, 1})));
-	}
 }
