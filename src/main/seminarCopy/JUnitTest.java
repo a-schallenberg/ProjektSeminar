@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class JUnitTest {
 
 	@Test
-	private void testSaveLoad() throws IOException {
+	void testSaveLoad() throws IOException {
 		Network network = new Network(3, 2, new SignFunction(1.6, 0, 1), 5, 7);
 
 		NetworkHelper.save(network, "network");
@@ -23,21 +23,21 @@ public class JUnitTest {
 	}
 
 	@Test
-	private void testAND() {
+	void testAND() {
 		Network network = new Network(2, 1, new double[][][]{{{1, 1}}}, new double[][]{{0}}, new SignFunction(1.5, 0, 1));
 
 		printBinary(network); // 0, 0, 0, 1
 	}
 
 	@Test
-	private void testOR() {
+	void testOR() {
 		Network network = new Network(2, 1, new double[][][]{{{1, 1}}}, new double[][]{{0}}, new SignFunction(0.5, 0, 1));
 
 		printBinary(network); // 0, 1, 1, 1
 	}
 
 	@Test
-	private void testXOR() {
+	void testXOR() {
 		double[][][] weights = new double[][][]{new double[][]{new double[]{1,1}, new double[]{-1,-1}}, new double[][]{new double[]{1, 1}}};
 		double[][] biases = new double[][]{new double[]{0, 0}, new double[]{0}};
 		ActivationFunction[][] functions = new ActivationFunction[][] {{new SignFunction(0.5, 0, 1), new SignFunction(-1.5, 0, 1)}, {new SignFunction(1.5, 0, 1)}}; // OR-Gate, NAND-Gate, AND-Gate
@@ -48,7 +48,7 @@ public class JUnitTest {
 	}
 
 	@Test
-	private void trainAND() {
+	void trainAND() {
 		Network network = new Network(2, 1, new SignFunction(0, 0, 1));
 
 		double[][] inputs = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
@@ -58,7 +58,7 @@ public class JUnitTest {
 	}
 
 	@Test
-	private void trainOR() {
+	void trainOR() {
 		Network network = new Network(2, 1, new SignFunction(0, 0, 1));
 
 		double[][] inputs = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
@@ -68,7 +68,7 @@ public class JUnitTest {
 	}
 
 	@Test
-	private void train3OR() {
+	void train3OR() {
 		Network network = new Network(3, 1, new SignFunction(0, 0, 1));
 
 		double[][] inputs = {{0, 0, 0}, {0, 0, 1}, {0, 1, 0}, {0, 1, 1}, {1, 0, 0}, {1, 0, 1}, {1, 1, 0}, {1, 1, 1}};
@@ -78,7 +78,7 @@ public class JUnitTest {
 	}
 
 	@Test
-	private void trainXOR() {
+	void trainXOR() {
 		Network network = new Network(2, 1, new SignFunction(0, 0, 1), 2);
 
 		double[][] inputs = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
