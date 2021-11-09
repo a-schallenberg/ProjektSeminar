@@ -23,7 +23,7 @@ public class Util {
 	}
 
 	/**
-	 * Adds two vectors.
+	 * Adds the second vector to the first vector.
 	 * @param vec1 The first vector to which the second vector is added. The vector is affected by the addition.
 	 * @param vec2 The second vector to be added by the first vector. The vector is not affected by the addition.
 	 * @throws NullPointerException If one vector is null.
