@@ -96,7 +96,7 @@ public class Network {
 		return results[results.length - 1];
 	}
 
-	public void train(double[][] input, double learnRate, double[][] y, int iterations) {
+	public void train(double[][] input, double[][] y, double learnRate, int iterations) {
 		if(!trainable)
 			throw new UnsupportedOperationException("Network is not trainable");
 
@@ -109,9 +109,9 @@ public class Network {
 
 				cost += cost(results[results.length - 1], y[j]);
 
-				System.out.println(Arrays.toString(results[results.length - 1]));
-				System.out.println(Arrays.toString(y[j]));
-				System.out.println();
+//				System.out.println(Arrays.toString(results[results.length - 1]));
+//				System.out.println(Arrays.toString(y[j]));
+//				System.out.println();
 
 				backpropagation(learnRate, y[j], results);
 			}

@@ -12,12 +12,12 @@
 \contentsline {subsubsection}{\numberline {2.4.1}Forward Propagation}{4}{subsubsection.2.4.1}%
 \contentsline {subsection}{\numberline {2.5}Training}{4}{subsection.2.5}%
 \contentsline {subsubsection}{\numberline {2.5.1}Backpropagation}{4}{subsubsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.6}Speichern \& Laden}{4}{subsection.2.6}%
-\contentsline {subsection}{\numberline {2.7}toString}{4}{subsection.2.7}%
-\contentsline {section}{\numberline {3}Ergebnisse}{5}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Begr\"undung der Korrektheit der Umsetzung}{5}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Performance-\"Uberlegungen}{5}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Diskussion \& Fazit}{6}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Vor- \& Nachteile der gew\"ahlten Umsetzung}{6}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Was fehlt ? Was k\"onnte erweiternd gemacht werden?}{6}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Verwendete Literatur \& Anhang}{7}{section.5}%
+\contentsline {subsection}{\numberline {2.6}Speichern \& Laden}{5}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}toString}{5}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Ergebnisse}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Begründung der Korrektheit der Umsetzung}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Performance-Überlegungen}{6}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Diskussion \& Fazit}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Vor- \& Nachteile der gewählten Umsetzung}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Was fehlt ? Was könnte erweiternd gemacht werden?}{7}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Verwendete Literatur \& Anhang}{8}{section.5}%

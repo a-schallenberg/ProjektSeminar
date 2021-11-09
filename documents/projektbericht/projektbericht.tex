@@ -1,13 +1,14 @@
 \documentclass[paper=A4,pagesize=auto,12pt,headinclude=true,footinclude=true,BCOR=0mm,DIV=calc]{scrartcl}
 
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 % neue deutsche Trennungsregeln, etc
 \usepackage[ngerman]{babel}
 \usepackage[hidelinks]{hyperref}
 \usepackage{setspace}	% \onehalfspaceing
-% Seitenr√§nder
+% Seitenr√É¬§nder
 \usepackage[left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry}
 % 1,5 Zeilenabstand
 \onehalfspacing
@@ -55,60 +56,68 @@
 \section{Einleitung}
 
 \subsection{Aufgabenstellung \& Zielsetzung}
-Die Aufgabenstellung lautete zun‰chst, die Grundlagen eines k¸nstlichen neuronalen Netzes (knN) in Java zu implementieren, sodass mit diesem schon zu einfachen Eingaben eine korrekte Ausgabe kalkuliert wird (Forward Propagation). Diese weiteten sich darauf aus, das Netz trainieren zu kˆnnen (Backpropagation) und die trainierten Einstellungen des Netzes zu speichern und zu laden.\\
-Das Ziel war, die erste H‰lfte der Aufgabenstellung in den ersten zwei Wochen und die zweite H‰lfte in den folgenden zwei Wochen umzusetzen.
+Die Aufgabenstellung lautete zun√§chst, die Grundlagen eines k√ºnstlichen neuronalen Netzes (knN) in Java zu implementieren, sodass mit diesem schon zu einfachen Eingaben eine korrekte Ausgabe kalkuliert wird (Forward Propagation). Diese weiteten sich darauf aus, das Netz trainieren zu k√∂nnen (Backpropagation) und die trainierten Einstellungen des Netzes zu speichern und zu laden.\\
+Das Ziel war, die erste H√§lfte der Aufgabenstellung in den ersten zwei Wochen und die zweite H√§lfte in den folgenden zwei Wochen umzusetzen.
 
 \subsection{Aufgabenkontext \& externe Vorgaben}
-Vorgegeben war, ein knN erstellen zu kˆnnen, dem man bei seiner Erstellung Gewichtungen sowie Biases ¸bergeben kann. Auﬂerdem soll das Netz Ausgaben abh‰ngig von den Eingaben berechnen kˆnnen und die Gewichtungen und Biases sollen trainiert werden kˆnnen. Auﬂerdem ist ein Format zur Abspeicherung der Gewichte und Biases vorgegeben worden, welche in diesem Format in eine CSV-Datei gespeichert werden soll.
+Vorgegeben war, ein knN erstellen zu k√∂nnen, dem man bei seiner Erstellung Gewichtungen sowie Biases √ºbergeben kann. Au√üerdem soll das Netz Ausgaben abh√§ngig von den Eingaben berechnen k√∂nnen und die Gewichtungen und Biases sollen trainiert werden k√∂nnen. Au√üerdem ist ein Format zur Abspeicherung der Gewichte und Biases vorgegeben worden, welche in diesem Format in eine CSV-Datei gespeichert werden soll.
 
 \subsection{Nicht vorgegeben aber notwendigerweise von uns festgelegt}
-Nicht vorgegeben, aber notwendigerweise festgelegt wurde, dass beim Erstellen eines knN die Anzahl der Neuronen f¸r jede Neuronenschicht vom Benutzer festgelegt wird. Implizit wird damit auch die Anzahl der versteckten Schichten verlangt. Auﬂerdem ist die Struktur des Netzes frei gew‰hlt.
+Nicht vorgegeben, aber notwendigerweise festgelegt wurde, dass beim Erstellen eines knN die Anzahl der Neuronen f√ºr jede Neuronenschicht vom Benutzer festgelegt wird. Implizit wird damit auch die Anzahl der versteckten Schichten verlangt. Au√üerdem ist die Struktur des Netzes frei gew√§hlt.
 % ggf. functions
 
 \subsection{Literaturarbeit: Verweis auf Vorarbeiten}
 \begin{itemize}
 	\item{An Introduction to Neural Networks, Kroese, B., a Van der Smagt, P., 1996}
-	\item{Neural Networks, 3Blue1Brown, 2018, \hyperref{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}{}{}{YouTube}}
+	\hypertarget{3b1b}{\item{Neural Networks, 3Blue1Brown, 2018, \hyperref{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}{}{}{YouTube}}}
 \end{itemize}
 
 
 \newpage
 
 \section{Methoden} % Aufteilen, wer was macht
-% Beschreibung \& Begr¸ndung der Umsetzung
+% Beschreibung \& Begr√ºndung der Umsetzung
 % Beschreibung der Feinstrukturen (Programmteile, Objekte/Klassen und besondere Herausforderungen)
 \subsection{Util}
-Die Klasse \textit{Util} bietet die abstrakten Hilfsmethoden \textit{random(int)}, \textit{addToVec1(double[], double[])} und \textit{mulToVec(double, double[])} f¸r das kreieren und f¸r den Umgang mit Vektoren bzw. Arrays. Da diese Methoden mit ausreichend JavaDoc ausgestattet sind, wodurch sie selbsterkl‰rend sind, wird auf diese hier nicht n‰her eingegangen.
+Die Klasse \textit{Util} bietet die abstrakten Hilfsmethoden \textit{random(int)}, \textit{addToVec1(double[], double[])} und \textit{mulToVec(double, double[])} f√ºr das kreieren und f√ºr den Umgang mit Vektoren bzw. Arrays. Da diese Methoden mit ausreichend JavaDoc ausgestattet sind, wodurch sie selbsterkl√§rend sind, wird auf diese hier nicht n√§her eingegangen.
 
 \subsection{Klassenstruktur Network \& Neuron}
 
 \subsection{Konstruktoren \& Initialisierung}
 
 \subsection{Kalkulation}
-\subsubsection{Forward Propagation}
+\hypertarget{forwardprop}{\subsubsection{Forward Propagation}}
 
 \subsection{Training}
-\subsubsection{Backpropagation}
+Die Methode \textit{train(double[][], double, double[][], int)} in der Klasse \textit{Network} bietet dem Benutzer die M√∂glichkeit das knN bzw. dessen Gewichte und Biases zu trainieren, sodass das Netz nach ausreichend Training immer das gew√ºnschte Ergebnis errechnet. Dazu nimmt die Methode mehrere Eingabevektoren und passende Zielausgabevektoren, sowie eine Lernrate sowie die Anzahl der Wiederholungen des Trainingsprozesses ben√∂tigt. Auf die Eingabevektoren (EV) wird erst die \hyperlink{forwardprop}{Forward Propagation} angewendet um die Ergebnisse der Neruonen zu erhalten, welche dann f√ºr den eigentlichen Lernprozess durch die \hyperlink{backprop}{Backpropagation} benutzt werden. Die Kosten des Durchlaufs werden f√ºr eine Trainingsdurchlauf summiert und danach zur Trainingskontrolle ausgegeben. Die Methode \textit{cost(double[], double[])} errechnet diese durch
+\begin{equation}
+	C_0 = \sum_{i=0}^{n} (o_{i} - y_{i})^2
+\end{equation}
+mit o und y = tats√§chliche und gew√ºnschte Ergebnisse und n = Anzahl der Ergebnisse in o.
+
+\hypertarget{backprop}{\subsubsection{Backpropagation}}
+Die Umsetzung der Backpropagation ist an die Mathematik von \hyperlink{3b1b}{3Blue1Brown} angelehnt.
+
 
 \subsection{Speichern \& Laden}
 
-\subsection{toString}∏
+\subsection{toString}¬∏
 
 \newpage
 
 \section{Ergebnisse}
 
-\subsection{Begr¸ndung der Korrektheit der Umsetzung}
+\subsection{Begr√ºndung der Korrektheit der Umsetzung}
 
-\subsection{Performance-‹berlegungen}
+\subsection{Performance-√úberlegungen}
 
 \newpage
 
 \section{Diskussion \& Fazit}
 
-\subsection{Vor- \& Nachteile der gew‰hlten Umsetzung}
+\subsection{Vor- \& Nachteile der gew√§hlten Umsetzung}
 
-\subsection{Was fehlt ? Was kˆnnte erweiternd gemacht werden?}
+\subsection{Was fehlt ? Was k√∂nnte erweiternd gemacht werden?}
 
 \newpage
 
