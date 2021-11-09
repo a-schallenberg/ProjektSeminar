@@ -124,7 +124,7 @@ public class Network {
 	private double[][] forwardPropagation(double[] input) {
 		if(input.length != inLayerLength) throw new IllegalArgumentException("Argument's size and input layer's size do not match");
 
-		double[][] results = new double[hiddenLayers.length + 2][];
+		double[][] results = new double[hiddenLayers.length + 2][];			//+2 = +inputpLayer+outputLayer
 
 		results[0] = input;
 
