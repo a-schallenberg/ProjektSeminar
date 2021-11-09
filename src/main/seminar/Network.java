@@ -1,7 +1,5 @@
 package main.seminar;
 
-import main.util.Util;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,7 +15,7 @@ import java.util.function.Function;
 public class Network {
 	public static final Function<Double, Double> DEFAULT_FUNCTION = x -> 1/(1 + Math.exp(-x));
 	//public static final Function<Double, Double> DEFAULT_DERIVATIVE = x -> x * (1 - x); // nicht ganz richtig
-	public static final Function<Double, Double> DEFAULT_DERIVATIVE = Util::dSigmoid;
+	public static final Function<Double, Double> DEFAULT_DERIVATIVE = x -> DEFAULT_FUNCTION.apply(x) * (1 - DEFAULT_FUNCTION.apply(x));
 
 	private int inLayerLength;
 	private Neuron[] outputLayer;
