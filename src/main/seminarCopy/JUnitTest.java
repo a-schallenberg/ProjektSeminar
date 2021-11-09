@@ -2,6 +2,8 @@ package main.seminarCopy;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import main.mnist.Mnist;
+import main.objectoriented.JNetwork;
 import org.junit.jupiter.api.Test;
 
 import main.afunctions.ActivationFunction;
@@ -87,10 +89,38 @@ public class JUnitTest {
 		network.train(inputs, 1, y, 10);
 	}
 
+	@Test
+	void trainMnist() {
+		Network network = new Network(Mnist.TRAIN_IMAGES[0].length, 10, 16, 16);
+		network.train(Mnist.TRAIN_IMAGES, 0.01, Mnist.TRAIN_LABELS, 1000);
+	}
+
 	private static void printBinary(Network network) {
 		System.out.println(Arrays.toString(network.compute(new double[]{0, 0})));
 		System.out.println(Arrays.toString(network.compute(new double[]{0, 1})));
 		System.out.println(Arrays.toString(network.compute(new double[]{1, 0})));
 		System.out.println(Arrays.toString(network.compute(new double[]{1, 1})));
+	}
+
+	public static String neuronsToAddress(Neuron[][] hidden, Neuron[] output) {
+		String s = "[";
+		for(int i = 0; i < hidden.length; i++) {
+			if(i != 0) s += ", ";
+			s += "[";
+			for(int j = 0; j < hidden[i].length; j++) {
+				if(j != 0) s += ", ";
+				s += hidden[i][j];
+			}
+			s += "]";
+		}
+
+		s += "[";
+		for(int i = 0; i < output.length; i++) {
+			if(i != 0) s += ", ";
+			s += output[i];
+		}
+		s += "]]";
+
+		return s;
 	}
 }

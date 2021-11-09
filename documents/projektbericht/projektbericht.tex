@@ -1,22 +1,23 @@
 \documentclass[paper=A4,pagesize=auto,12pt,headinclude=true,footinclude=true,BCOR=0mm,DIV=calc]{scrartcl}
 
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 % neue deutsche Trennungsregeln, etc
 \usepackage[ngerman]{babel}
 \usepackage[hidelinks]{hyperref}
 \usepackage{setspace}	% \onehalfspaceing
-% Seitenränder
+% SeitenrÃ¤nder
 \usepackage[left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry}
 % 1,5 Zeilenabstand
 \onehalfspacing
 
-\usepackage[scaled]{helvet}
+%\usepackage[scaled]{helvet}
 
 %opening
 \title{Neuronale Netze}
-\author{Alexandra Zarkh, Sui Yin Elisabeth Zhang,\\ Lennart Leggewie, Alexander Schallenberg}
+\author{Alexandra Zarkh, Sui Yin Zhang,\\ Lennart Leggewie, Alexander Schallenberg}
 
 \makeatletter
 \def\@maketitle{%
@@ -55,36 +56,69 @@
 \section{Einleitung}
 
 \subsection{Aufgabenstellung \& Zielsetzung}
+Die Aufgabenstellung lautete zunächst, die Grundlagen eines künstlichen neuronalen Netzes (knN) in Java zu implementieren, sodass mit diesem schon zu einfachen Eingaben eine korrekte Ausgabe kalkuliert wird (Forward Propagation). Diese weiteten sich darauf aus, das Netz trainieren zu können (Backpropagation) und die trainierten Einstellungen des Netzes zu speichern und zu laden.\\
+Das Ziel war, die erste Hälfte der Aufgabenstellung in den ersten zwei Wochen und die zweite Hälfte in den folgenden zwei Wochen umzusetzen.
 
 \subsection{Aufgabenkontext \& externe Vorgaben}
+Vorgegeben war, ein knN erstellen zu können, dem man bei seiner Erstellung Gewichtungen sowie Biases übergeben kann. Außerdem soll das Netz Ausgaben abhängig von den Eingaben berechnen können und die Gewichtungen und Biases sollen trainiert werden können. Außerdem ist ein Format zur Abspeicherung der Gewichte und Biases vorgegeben worden, welche in diesem Format in eine CSV-Datei gespeichert werden soll.
 
-\subsection{Nicht vorgegeben aber notwenidgerweise von uns festegelegt}
+\subsection{Nicht vorgegeben aber notwendigerweise von uns festgelegt}
+Nicht vorgegeben, aber notwendigerweise festgelegt wurde, dass beim Erstellen eines knN die Anzahl der Neuronen für jede Neuronenschicht vom Benutzer festgelegt wird. Implizit wird damit auch die Anzahl der versteckten Schichten verlangt. Außerdem ist die Struktur des Netzes frei gewählt.
+% ggf. functions
 
-\subsection{Literaturarbeit: Verweis auf Vorarbeiten (eher kurz gehalten)}
+\subsection{Literaturarbeit: Verweis auf Vorarbeiten}
+\begin{itemize}
+	\item{An Introduction to Neural Networks, Kroese, B., a Van der Smagt, P., 1996}
+	\hypertarget{3b1b}{\item{Neural Networks, 3Blue1Brown, 2018, \hyperref{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}{}{}{YouTube}}}
+\end{itemize}
+
 
 \newpage
 
-\section{Methoden}
+\section{Methoden} % Aufteilen, wer was macht
+% Beschreibung \& Begründung der Umsetzung
+% Beschreibung der Feinstrukturen (Programmteile, Objekte/Klassen und besondere Herausforderungen)
+\subsection{Util}
+Die Klasse \textit{Util} bietet die abstrakten Hilfsmethoden \textit{random(int)}, \textit{addToVec1(double[], double[])} und \textit{mulToVec(double, double[])} für das kreieren und für den Umgang mit Vektoren bzw. Arrays. Da diese Methoden mit ausreichend JavaDoc ausgestattet sind, wodurch sie selbsterklärend sind, wird auf diese hier nicht näher eingegangen.
 
-\subsection{Beschreibung \& Begr�ndung der Umsetzung}
+\subsection{Klassenstruktur Network \& Neuron}
 
-\subsection{Beschreibung der Feinstrukturen (Programmteile, Objekte/Klassen und besondere Herausforderungen)}
+\subsection{Konstruktoren \& Initialisierung}
+
+\subsection{Kalkulation}
+\hypertarget{forwardprop}{\subsubsection{Forward Propagation}}
+
+\subsection{Training}
+Die Methode \textit{train(double[][], double, double[][], int)} in der Klasse \textit{Network} bietet dem Benutzer die Möglichkeit das knN bzw. dessen Gewichte und Biases zu trainieren, sodass das Netz nach ausreichend Training immer das gewünschte Ergebnis errechnet. Dazu nimmt die Methode mehrere Eingabevektoren und passende Zielausgabevektoren, sowie eine Lernrate sowie die Anzahl der Wiederholungen des Trainingsprozesses benötigt. Auf die Eingabevektoren (EV) wird erst die \hyperlink{forwardprop}{Forward Propagation} angewendet um die Ergebnisse der Neruonen zu erhalten, welche dann für den eigentlichen Lernprozess durch die \hyperlink{backprop}{Backpropagation} benutzt werden. Die Kosten des Durchlaufs werden für eine Trainingsdurchlauf summiert und danach zur Trainingskontrolle ausgegeben. Die Methode \textit{cost(double[], double[])} errechnet diese durch
+\begin{equation}
+	C_0 = \sum_{i=0}^{n} (o_{i} - y_{i})^2
+\end{equation}
+mit o und y = tatsächliche und gewünschte Ergebnisse und n = Anzahl der Ergebnisse in o.
+
+\hypertarget{backprop}{\subsubsection{Backpropagation}}
+Die Umsetzung der Backpropagation ist an die Mathematik von \hyperlink{3b1b}{3Blue1Brown} angelehnt und beruht auf der Delta-Regel. Zunächst wird eine LinkedList angelegt, die zur Speicherung der Deltas für die aktuelle Ebene, sowie für die vorherige Ebene dient. Diese Liste hat dadurch maximal zwei Elemente. Die Idee ist, das die "neuen" Deltas beim Löschen der "aktuellen" Deltas zu diesen werden. Danach werden die ersten Deltas durch die Ableitung der Kostenfunktion ohne Sigma initialisiert. Im nächsten Schritt wird die Backpropagation auf alle Neuronen (innere Schleife) jeder Ebene (äußere Schleife), beginnend bei der Ausgabeebene, angewendet, indem die \textit{backpropagation(double, double, double[])} des jeweiligen Neurons aufgerufen wird und die daraus resultierenden Deltas auf die "neuen" Deltas addiert werden.\\Im Backpropgationteil des Neurons wird jedes Gewicht um den Wert der nach dem Gewicht abgeleiteten Kosten multiplziert mit der negativen Lernrate erhöht. Der Bias wird analog erhöht. Die "neuen" Deltas werden durch die Ableitung der Kosten nach dem jeweiligen Ergebnis des Vorgängers berechnet.
+
+
+\subsection{Speichern \& Laden}
+
+\subsection{toString}
+Die toString() Methoden dienen der anschaulichen Ausgabe und ggf. Fehlersuche des knN. 
 
 \newpage
 
 \section{Ergebnisse}
 
-\subsection{Begr�ndung der Korrektheit der Umsetzung}
+\subsection{Begründung der Korrektheit der Umsetzung}
 
-\subsection{Performance-�berlegungen}
+\subsection{Performance-Überlegungen}
 
 \newpage
 
 \section{Diskussion \& Fazit}
 
-\subsection{Vor- \& Nachteile der gew�hlten Umsetzung}
+\subsection{Vor- \& Nachteile der gewählten Umsetzung}
 
-\subsection{Was fehlt ? Was k�nnte erweiternd gemacht werden?}
+\subsection{Was fehlt ? Was könnte erweiternd gemacht werden?}
 
 \newpage
 

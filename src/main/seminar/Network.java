@@ -1,7 +1,5 @@
 package main.seminar;
 
-import main.util.Util;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,7 +15,7 @@ import java.util.function.Function;
 public class Network {
 	public static final Function<Double, Double> DEFAULT_FUNCTION = x -> 1/(1 + Math.exp(-x));
 	//public static final Function<Double, Double> DEFAULT_DERIVATIVE = x -> x * (1 - x); // nicht ganz richtig
-	public static final Function<Double, Double> DEFAULT_DERIVATIVE = Util::dSigmoid;
+	public static final Function<Double, Double> DEFAULT_DERIVATIVE = x -> DEFAULT_FUNCTION.apply(x) * (1 - DEFAULT_FUNCTION.apply(x));
 
 	private int inLayerLength;
 	private Neuron[] outputLayer;
@@ -98,7 +96,7 @@ public class Network {
 		return results[results.length - 1];
 	}
 
-	public void train(double[][] input, double learnRate, double[][] y, int iterations) {
+	public void train(double[][] input, double[][] y, double learnRate, int iterations) {
 		if(!trainable)
 			throw new UnsupportedOperationException("Network is not trainable");
 
@@ -111,9 +109,9 @@ public class Network {
 
 				cost += cost(results[results.length - 1], y[j]);
 
-				System.out.println(Arrays.toString(results[results.length - 1]));
-				System.out.println(Arrays.toString(y[j]));
-				System.out.println();
+//				System.out.println(Arrays.toString(results[results.length - 1]));
+//				System.out.println(Arrays.toString(y[j]));
+//				System.out.println();
 
 				backpropagation(learnRate, y[j], results);
 			}
@@ -151,14 +149,14 @@ public class Network {
 		int length = hiddenLayers.length; // TODO +1 ?
 		LinkedList<double[]> list = new LinkedList<>();
 		list.add(new double[outputLayer.length]);
-		for(int i = 0; i < list.get(0).length; i++) {
+		for(int i = 0; i < list.get(0).length; i++)
 			list.get(0)[i] = 2 * (results[results.length - 1][i] - y[i]);
-		}
+
 		for(int i = length; i >= 0; i--) {
 			list.add(new double[i == 0 ? inLayerLength : hiddenLayers[i-1].length]);
-			for(int j = 0; j < (i == length ? outputLayer.length : hiddenLayers[i].length); j++) {
+			for(int j = 0; j < (i == length ? outputLayer.length : hiddenLayers[i].length); j++)
 				Util.addToVec1(list.get(1), (i == length ? outputLayer[j] : hiddenLayers[i][j]).backpropagation(learnRate, list.get(0)[j], results[i]));
-			}
+			
 			//Util.mulToVec(1.0/(i == length ? outputLayer.length : hiddenLayers[i].length), list.get(1)); // Wird diese Zeile gebraucht?
 			list.remove(0);
 		}
@@ -249,26 +247,5 @@ public class Network {
 			network.outputLayer[i] = Neuron.load(scanner);
 
 		return network;
-	}
-
-	public static void main(String[] args) throws IOException {
-//		double[][][] w = new double[][][]{new double[][]{new double[]{0.5, 0.5}}};
-//		double[][] b = new double[][]{new double[]{0.7}};
-//
-//		Network network = new Network(2, 1, w, b);
-
-		Network network = new Network(3, 2, 5, 7);
-
-		NetworkHelper.save(network, "Network");
-		Network network1 = NetworkHelper.load("Network");
-
-		NetworkHelper.save(network1, "Network1");
-
-//		System.out.println(network);
-//		System.out.println("-------------------------------------------------");
-//		System.out.println(Arrays.toString(network.compute(new double[]{0, 0})));
-//		System.out.println(Arrays.toString(network.compute(new double[]{0, 1})));
-//		System.out.println(Arrays.toString(network.compute(new double[]{1, 0})));
-//		System.out.println(Arrays.toString(network.compute(new double[]{1, 1})));
 	}
 }

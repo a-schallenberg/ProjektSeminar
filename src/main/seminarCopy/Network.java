@@ -99,6 +99,8 @@ public class Network {
 
 		double[][] results;
 
+		System.out.println(JUnitTest.neuronsToAddress(hiddenLayers, outputLayer));
+
 		for(int i = 0; i < iterations; i++) {
 			double cost = 0;
 			for(int j = 0; j < input.length; j++) {
@@ -106,13 +108,15 @@ public class Network {
 
 				cost += cost(results[results.length - 1], y[j]);
 
-				System.out.println(Arrays.toString(results[results.length - 1]));
-				System.out.println(Arrays.toString(y[j]));
+				System.out.println("Results: " + Arrays.deepToString(results));
+				System.out.println("Output: " + Arrays.toString(results[results.length - 1]));
+				System.out.println("Target: " + Arrays.toString(y[j]));
 				System.out.println();
 
 				backpropagation(learnRate, y[j], results);
 			}
 			System.out.println("Cost: " + cost);
+			System.out.println("--------------------------------------------");
 		}
 	}
 

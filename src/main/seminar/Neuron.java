@@ -1,7 +1,5 @@
 package main.seminar;
 
-import main.util.Util;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Arrays;
@@ -51,9 +49,9 @@ public class Neuron {
 
 	public double[] backpropagation(double learnRate, double delta, double[] prevResults) {
 		for(int i = 0; i < weights.length; i++)
-			weights[i] += -learnRate * prevResults[i] * delta;
+			weights[i] += -learnRate * prevResults[i] * derivative.apply(z) * delta;
 
-		bias += -learnRate * delta;
+		bias += -learnRate * delta * derivative.apply(z);
 		double[] deltas = new double[weights.length];
 		for(int i = 0; i < deltas.length; i++)
 			deltas[i] = weights[i] * derivative.apply(z) * delta;

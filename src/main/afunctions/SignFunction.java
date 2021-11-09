@@ -29,7 +29,7 @@ public class SignFunction implements ActivationFunction {
 
 	@Override
 	public double derivative(double x) {
-		return 0;
+		return 1;
 	}
 
 	@Override
