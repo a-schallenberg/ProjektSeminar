@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  9 NOV 2021 11:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  9 NOV 2021 18:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -553,21 +553,21 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 7
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [3]
 [4] [5] [6] [7]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 126.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 127.
  [8]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 126.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 127.
  (./projektbericht.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 126.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 126.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 127.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 127.
 Package rerunfilecheck Info: File `projektbericht.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 126.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 127.
  ) 
 Here is how much of TeX's memory you used:
- 9507 strings out of 481239
- 164144 string characters out of 5920376
+ 9513 strings out of 481239
+ 164229 string characters out of 5920376
  554643 words of memory out of 5000000
- 24579 multiletter control sequences out of 15000+600000
+ 24585 multiletter control sequences out of 15000+600000
  588988 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,6n,55p,10109b,386s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -581,7 +581,7 @@ type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/pub
 lic/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/sh
 are/texmf/fonts/type1/public/lm/lmsy10.pfb>
-Output written on projektbericht.pdf (8 pages, 146036 bytes).
+Output written on projektbericht.pdf (8 pages, 147612 bytes).
 PDF statistics:
  216 PDF objects out of 1000 (max. 8388607)
  195 compressed objects within 2 object streams

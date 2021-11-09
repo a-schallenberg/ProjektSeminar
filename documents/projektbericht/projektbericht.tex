@@ -96,12 +96,13 @@ Die Methode \textit{train(double[][], double, double[][], int)} in der Klasse \t
 mit o und y = tatsächliche und gewünschte Ergebnisse und n = Anzahl der Ergebnisse in o.
 
 \hypertarget{backprop}{\subsubsection{Backpropagation}}
-Die Umsetzung der Backpropagation ist an die Mathematik von \hyperlink{3b1b}{3Blue1Brown} angelehnt.
+Die Umsetzung der Backpropagation ist an die Mathematik von \hyperlink{3b1b}{3Blue1Brown} angelehnt und beruht auf der Delta-Regel. Zunächst wird eine LinkedList angelegt, die zur Speicherung der Deltas für die aktuelle Ebene, sowie für die vorherige Ebene dient. Diese Liste hat dadurch maximal zwei Elemente. Die Idee ist, das die "neuen" Deltas beim Löschen der "aktuellen" Deltas zu diesen werden. Danach werden die ersten Deltas durch die Ableitung der Kostenfunktion ohne Sigma initialisiert. Im nächsten Schritt wird die Backpropagation auf alle Neuronen (innere Schleife) jeder Ebene (äußere Schleife), beginnend bei der Ausgabeebene, angewendet, indem die \textit{backpropagation(double, double, double[])} des jeweiligen Neurons aufgerufen wird und die daraus resultierenden Deltas auf die "neuen" Deltas addiert werden.\\Im Backpropgationteil des Neurons wird jedes Gewicht um den Wert der nach dem Gewicht abgeleiteten Kosten multiplziert mit der negativen Lernrate erhöht. Der Bias wird analog erhöht. Die "neuen" Deltas werden durch die Ableitung der Kosten nach dem jeweiligen Ergebnis des Vorgängers berechnet.
 
 
 \subsection{Speichern \& Laden}
 
-\subsection{toString}¸
+\subsection{toString}
+Die toString() Methoden dienen der anschaulichen Ausgabe und ggf. Fehlersuche des knN. 
 
 \newpage
 
