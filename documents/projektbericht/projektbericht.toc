@@ -19,5 +19,7 @@
 \contentsline {subsection}{\numberline {3.2}Performance-Überlegungen}{8}{subsection.3.2}%
 \contentsline {section}{\numberline {4}Diskussion \& Fazit}{9}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Vor- \& Nachteile der gewählten Umsetzung}{9}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Vorteile}{9}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2}Nachteile}{9}{subsubsection.4.1.2}%
 \contentsline {subsection}{\numberline {4.2}Was fehlt ? Was könnte erweiternd gemacht werden?}{9}{subsection.4.2}%
 \contentsline {section}{\numberline {5}Verwendete Literatur \& Anhang}{10}{section.5}%

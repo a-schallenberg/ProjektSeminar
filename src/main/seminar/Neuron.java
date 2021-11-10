@@ -59,7 +59,6 @@ public class Neuron {
 		return deltas;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Neuron{" +

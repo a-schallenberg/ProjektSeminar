@@ -55,7 +55,7 @@ public class Test {
 		double[][] inputs = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
 		double[][] y = {{0}, {1}, {1}, {1}};
 
-		network.train(inputs, 100, y, 100);
+		network.train(inputs, y, 100, 100);
 	}
 
 	private static void train3OR() {
