@@ -22,7 +22,7 @@ public class Network {
 	private Neuron[][] hiddenLayers;
 	private boolean trainable = true;
 
-	private Network(){}
+	private Network(){} // for load/save
 
 	public Network(int numInUnit, int numOutUnit, double[][][] weights, double[][] biases, int... numHidUnit) {
 		init(numInUnit, numOutUnit, (i, j) -> new Neuron(weights[i][j], biases[i][j], DEFAULT_FUNCTION, DEFAULT_DERIVATIVE), numHidUnit);

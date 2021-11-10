@@ -8,16 +8,16 @@
 \contentsline {subsection}{\numberline {2.1}Util}{4}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Klassenstruktur Network \& Neuron}{4}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}Konstruktoren \& Initialisierung}{4}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Kalkulation}{4}{subsection.2.4}%
-\contentsline {subsubsection}{\numberline {2.4.1}Forward Propagation}{4}{subsubsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.5}Training}{4}{subsection.2.5}%
-\contentsline {subsubsection}{\numberline {2.5.1}Backpropagation}{4}{subsubsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.6}Speichern \& Laden}{5}{subsection.2.6}%
-\contentsline {subsection}{\numberline {2.7}toString}{5}{subsection.2.7}%
-\contentsline {section}{\numberline {3}Ergebnisse}{6}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Begründung der Korrektheit der Umsetzung}{6}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Performance-Überlegungen}{6}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Diskussion \& Fazit}{7}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Vor- \& Nachteile der gewählten Umsetzung}{7}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Was fehlt ? Was könnte erweiternd gemacht werden?}{7}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Verwendete Literatur \& Anhang}{8}{section.5}%
+\contentsline {subsection}{\numberline {2.4}Kalkulation}{5}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Forward Propagation}{5}{subsubsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.5}Training}{6}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}Backpropagation}{6}{subsubsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.6}Speichern \& Laden}{7}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}toString}{7}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Ergebnisse}{8}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Begründung der Korrektheit der Umsetzung}{8}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Performance-Überlegungen}{8}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Diskussion \& Fazit}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Vor- \& Nachteile der gewählten Umsetzung}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Was fehlt ? Was könnte erweiternd gemacht werden?}{9}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Verwendete Literatur \& Anhang}{10}{section.5}%
