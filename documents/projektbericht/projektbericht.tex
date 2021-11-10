@@ -169,19 +169,39 @@ Die \textit{toString()} Methoden dienen der anschaulichen Ausgabe und ggf. Fehle
 \section{Ergebnisse}
 
 \subsection{Begründung der Korrektheit der Umsetzung}
+Neben der Umsetzung mathematisch korrekter Formeln stellten wir durch Testen mit verschiedenen logischen Gattern die Korrektheit der Berechnung der Ergebnisse /(compute (double[])/) fest.
+Außerdem stellten wir durch dieses Testen fest, dass das Training in einem Netz ohne Hiddenlayers ebenfalls funktoniert.
 
 \subsection{Performance-Überlegungen}
+Durch die Iterative Umsetzung der Backpropagation ist eine Aufsummierung der Deltas in einer Layer \textit{L} möglich, sodass erst danach die Layer \textit{L-1} bearbeitet werden kann.
+Bei einer Rekursiven Umsetzung müsste man für jedes Output Neuron die Neuronen der restlichen Layers bearbeiten wodurch man jedes Neuron der Hiddenlayers \textit{n} Mal bearbeiten müsste, wobei n die Länge des Outputvektors ist.
+Statt einem Array bzw. einer ArrayList verwenden wir in der Backpropagation eine LinkedList um das ständige verschieben der Deltas an Position 1 auf Position 0 im Array zu vermeiden.
 
 \newpage
 
 \section{Diskussion \& Fazit}
 
 \subsection{Vor- \& Nachteile der gewählten Umsetzung}
-
+\subsubsection{Vorteile}
+\begin{itemize}
+	\item flexibler Umgang mit Aktivierungsfunktionen und deren Ableitung
+	\item Flexiblität bei Erstellung des Netzes
+	\item durch Auslagerungen von \textit{weights}, \textit{bias}, Aktivierungsfunktion und Ableitung entstehen übersichtlichere Array-Iterationen
+\end{itemize}
+\subsubsection{Nachteile}
+\begin{itemize}
+	\item ggf. Fehleranfällig durch flexiblen Umgang mit Aktivierungsfunktionen und deren Ableitung
+	\item durch die Benutzung von Function/BiFunction wird ein geringer Verlust von Performance in Kauf genommen
+\end{itemize}
 \subsection{Was fehlt ? Was könnte erweiternd gemacht werden?}
-
+Das Training für ein Netz, das mindestenst eine Hiddenlayer besitzt, ist noch fehlerhaft. Außerdem kann das Programm noch keine Aktivierungsfunktionen und deren Ableitungen speichern.
+Dies wäre mit unserer Umsetzung sehr performance-, speicher- und programmieraufwendig. Die Implentierung eines anderen Aktivierungsfunktionssystems, was es erlaubt diese zu speichern und zu laden, könnte ein nächster Schritt sein.
+Zudem ist das Speicherformat der \textit{weights} und \textit{biases} nicht auf dem vorgegebenen Standard.
 \newpage
 
 \section{Verwendete Literatur \& Anhang}
-
+\begin{itemize}
+	\item{An Introduction to Neural Networks, Kroese, B., a Van der Smagt, P., 1996}
+	\hypertarget{3b1b}{\item{Neural Networks, 3Blue1Brown, 2018, \hyperref{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}{}{}{YouTube}}}
+\end{itemize}
 \end{document}
