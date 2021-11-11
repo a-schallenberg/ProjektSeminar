@@ -4,16 +4,12 @@
 \usepackage{amsmath}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-% neue deutsche Trennungsregeln, etc
 \usepackage[ngerman]{babel}
 \usepackage[hidelinks]{hyperref}
-\usepackage{setspace}	% \onehalfspaceing
-% SeitenrÃ¤nder
+\usepackage{setspace}
 \usepackage[left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry}
-% 1,5 Zeilenabstand
 \onehalfspacing
 
-%\usepackage[scaled]{helvet}
 
 %opening
 \title{Neuronale Netze}
@@ -81,11 +77,11 @@ Nicht vorgegeben, aber notwendigerweise festgelegt wurde, dass beim Erstellen ei
 \newpage
 
 
-\section{Methoden} % Aufteilen, wer was macht
+\section{Methoden}
 % Beschreibung \& Begründung der Umsetzung
 % Beschreibung der Feinstrukturen (Programmteile, Objekte/Klassen und besondere Herausforderungen)
 
-\subsection{Util} % Alex
+\subsection{Util}
 Die Klasse \textit{Util} bietet die abstrakten Hilfsmethoden \textit{random(int)}, \textit{addToVec1(double[], double[])} und \textit{mulToVec(double, double[])} für das kreieren und für den Umgang mit Vektoren bzw. Arrays. Da diese Methoden mit ausreichend JavaDoc ausgestattet sind, wodurch sie selbsterklärend sind, wird auf diese hier nicht näher eingegangen.
 
 
@@ -101,7 +97,7 @@ Es befinden sich zwei Konstanten in der Klasse, die die mathematischen Formeln f
 Die \textit{NetworkHelper} Klasse ist dafür da, um Netzwerke zu speichern und zu laden.
 
 
-\subsection{Konstruktoren \& Initialisierung} %Sui Yin
+\subsection{Konstruktoren \& Initialisierung}
 In der Klasse Network gibt es insgesamt 7 Konstruktoren.
 Alle außer dem ersten Konstruktor rufen eine “init”-Methode auf um redudanten Code zu verhindern. Die "init"-Methode hat vier Parameter: \textit{int}, \textit{int}, \textit{BiFunction} und ein \textit{int[]}. Die \textit{BiFunction} wird dazu verwendet, der Methode mitzuteilen, wie die Neuronen erstellt werden sollen.
 Zuerst werden alle Attribute außer "trainable" entweder direkt mit den passenden Werten oder durch erstellen eines Arrays passender Größe initialisiert.
@@ -121,7 +117,7 @@ Der vierte und fünfte Konstruktor haben einen ähnlichen Aufbau von den Paramet
 Statt allen Neuronen die gleiche Aktivierungsfunktion und Ableitung zu geben, bekommen die Neuronen in den letzten beiden Konstruktoren jeweils Eigene.
 
 
-\subsection{Kalkulation} %Alexi
+\subsection{Kalkulation}
 Die Methode \textit{compute(double[])} nimmt einen Input-Vektor und gibt einen Output-Vektor zurück. Sie berechnet die Ergebnisse aller Layers mit Hilfe der Methode \textit{forwardPropagation(double[])} und gibt den letzten Ergebnisvektor (Output-Vektor) zurück.
 
 \hypertarget{forwardprop}{\subsubsection{Forward Propagation}}
@@ -143,7 +139,7 @@ Zuletzt wird die zweite Dimension beim letzten Eintrag der ersten Dimension auf 
 Am Ende wird \textit{results} zurückgegeben.
 
 
-\subsection{Training} % Alex % TODO ggf. Parameter als Text schreiben
+\subsection{Training}
 Die Methode \textit{train(double[][], double, double[][], int)} in der Klasse \textit{Network} bietet dem Benutzer die Möglichkeit das knN bzw. dessen \textit{weights} und \textit{biases} zu trainieren, sodass das Netz nach ausreichend Training immer das gewünschte Ergebnis errechnet. Dazu nimmt die Methode mehrere Input-Vektoren und passende Zielvektoren, sowie eine Lernrate und die Anzahl der Wiederholungen des Trainingsprozesses. Auf die Input-Vektoren wird erst die \hyperlink{forwardprop}{Forward Propagation} angewendet um die Ergebnisse der Neuronen zu erhalten, welche dann für den eigentlichen Lernprozess durch die \hyperlink{backprop}{Backpropagation} benutzt werden. Die Kosten des Durchlaufs werden für einen Trainingsdurchlauf summiert und danach zur Trainingskontrolle ausgegeben. Die Methode \textit{cost(double[], double[])} errechnet diese durch
 \begin{equation}
 	C_0 = \sum_{i=0}^{n} (o_{i} - y_{i})^2
@@ -155,7 +151,7 @@ mit o und y = tatsächliche und gewünschte Ergebnisse und n = Anzahl der Ergebn
 Die Umsetzung der Backpropagation ist an die Mathematik von \hyperlink{3b1b}{3Blue1Brown} angelehnt und beruht auf der Delta-Regel. Zunächst wird eine \textit{LinkedList} angelegt, die der Speicherung der Deltas für die aktuelle Ebene, sowie für die vorherige Ebene dient. Diese Liste hat dadurch immer maximal zwei Elemente. Die Idee ist, das die "neuen" Deltas beim Löschen der "aktuellen" Deltas zu diesen werden.\\Danach werden die ersten Deltas durch die Ableitung der Kostenfunktion ohne Sigma initialisiert. Im nächsten Schritt wird die Backpropagation auf alle Neuronen (innere Schleife) jeder Layer (äußere Schleife), beginnend bei der Output-Layer, angewendet, indem die \textit{backpropagation(double, double, double[])} des jeweiligen Neurons aufgerufen wird und die daraus resultierenden Deltas auf die "neuen" Deltas addiert werden.\\Im Backpropgationteil des Neurons wird jedes Gewicht um den Wert der nach dem Gewicht abgeleiteten Kosten multipliziert mit der negativen Lernrate erhöht. Der \textit{bias} wird analog erhöht. Die "neuen" Deltas werden durch die Ableitung der Kosten nach dem jeweiligen Ergebnis des Vorgängers berechnet.
 
 
-\subsection{Speichern \& Laden} %Lennart
+\subsection{Speichern \& Laden}
 Die Instanzmethode \textit{save(Network, String)} und Klassenmethode \textit{load(String)} in der \textit{NetworkHelper} Klasse, geben dem Benutzer die Optionen das erstellte \textit{Network} zu speichern und dieses auch wieder zu laden.
 Um das Netzwerk zu speichern, wird ein neues Dokument mit dem als Parameter übergebenem Namen erstellt. Damit dieses Dokument nun mit dem ausgewählten Netzwerk gefüllt wird, wird von der Klasse \textit{Network} die Methode \textit{save()} aufgerufen. Die Methode ist dafür da um das Netzwerk durchzugehen und seine Werte in das
 erstellte Dokument zu schreiben. Für das Laden eines zuvor eingespeicherten Netzwerkes rufen wir die Methode \textit{load()} der \textit{NetzwerkHelper} Klasse auf. Diese Methode bekommt den Namen des gewünschten Netzwerkes als Parameter übergeben damit nun von der \textit{Network} Klasse \textit{load()} aufgerufen werden kann. Als erstes erstellt diese ein neues leeres Netzwerk, um es danach mit den Netzwerk-Daten aus dem übergebenem Dokument zu füllen. Zuletzt wird nur noch das Netzwerk zurück gegeben.
@@ -204,4 +200,10 @@ Zudem ist das Speicherformat der \textit{weights} und \textit{biases} nicht auf 
 	\item{An Introduction to Neural Networks, Kroese, B., a Van der Smagt, P., 1996}
 	\hypertarget{3b1b}{\item{Neural Networks, 3Blue1Brown, 2018, \hyperref{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}{}{}{YouTube}}}
 \end{itemize}
+
+\vspace{1cm}
+
+\section{GitHub}
+Unser Projekt inklusive einer Testklasse und diesem Projektbericht steht auf \hyperref{https://github.com/Griszder/ProjektSeminar.git}{}{}{\textit{\textbf{GitHub}}} zur Verfügung.
+
 \end{document}
