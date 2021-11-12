@@ -210,20 +210,46 @@ public class Network {
 	}
 
 	void save(BufferedWriter writer) throws IOException {
-		writer.append(inLayerLength + " " + outputLayer.length + " " + hiddenLayers.length);
+		{ // Number of units in each layer
+			writer.append("layers;" + inLayerLength);
 
-		for(Neuron[] layer: hiddenLayers)
-			writer.append(" " + layer.length);
+			for(Neuron[] layer : hiddenLayers)
+				writer.append(";" + layer.length);
 
-		for(Neuron[] layer: hiddenLayers) {
-			writer.append("\n");
-			for(Neuron unit : layer)
-				unit.save(writer);
+			writer.append(";" + outputLayer.length + "\n");
 		}
 
-		writer.append("\n");
-		for(Neuron unit: outputLayer)
-			unit.save(writer);
+		double[][][] temp = new double[hiddenLayers.length + 1][][]; // 1. layers, 2. Länge weights + 1, 3. Anzahl Neruonen
+
+		for(int i = 0; i < temp.length; i++) {
+			Neuron[] layer = (i < temp.length - 1) ? hiddenLayers[i] : outputLayer;
+			temp[i] = new double[layer[0].getWeights().length][];
+			for(int j = 0; j < temp[i].length; j++) {
+				temp[i][j] = new double[layer.length];
+				for(int k = 0; k < temp[i][j].length; k++) {
+					temp[i][j][k] = layer[k].getWeights()[j];
+				}
+			}
+		}
+
+		for(int i = 0; i < temp.length; i++) {
+			Neuron[] layer = (i < temp.length - 1) ? hiddenLayers[i] : outputLayer;
+
+			if(i != 0) writer.append("\n\n");
+			for(int j = 0; j < temp[i].length; j++) {
+				if(j != 0) writer.append("\n");
+				for(int k = 0; k < temp[i][j].length; k++) {
+					if(k != 0) writer.append("; ");
+					writer.append("" + temp[i][j][k]);
+				}
+			}
+
+			writer.append("\n");
+			for(int j = 0; j < layer.length; j++) {
+				if(j != 0) writer.append("; ");
+				writer.append("" + layer[j].getBias());
+			}
+		}
 	}
 
 	static Network load(Scanner scanner) {
@@ -238,12 +264,12 @@ public class Network {
 			network.hiddenLayers[i] = new Neuron[scanner.nextInt()];
 
 		// Fill arrays
-		for(int i = 0; i < network.hiddenLayers.length; i++)
-			for(int j = 0; j < network.hiddenLayers[i].length; j++)
-				network.hiddenLayers[i][j] = Neuron.load(scanner);
-
-		for(int i = 0; i < network.outputLayer.length; i++)
-			network.outputLayer[i] = Neuron.load(scanner);
+//		for(int i = 0; i < network.hiddenLayers.length; i++)
+//			for(int j = 0; j < network.hiddenLayers[i].length; j++)
+//				network.hiddenLayers[i][j] = Neuron.load(scanner);
+//
+//		for(int i = 0; i < network.outputLayer.length; i++)
+//			network.outputLayer[i] = Neuron.load(scanner);
 
 		return network;
 	}

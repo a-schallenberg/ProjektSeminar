@@ -67,24 +67,11 @@ public class Neuron {
 				'}';
 	}
 
-	void save(BufferedWriter writer) throws IOException {
-		writer.append("\n" + bias);
-
-		writer.append(" " + weights.length);
-		for(double weight: weights)
-			writer.append(" " + weight);
-
+	double[] getWeights() {
+		return weights;
 	}
 
-	static Neuron load(Scanner scanner) {
-		Neuron neuron = new Neuron();
-
-		neuron.bias = scanner.nextDouble();
-
-		neuron.weights = new double[scanner.nextInt()];
-		for(int i = 0; i < neuron.weights.length; i++)
-			neuron.weights[i] = scanner.nextDouble();
-
-		return neuron;
+	double getBias() {
+		return bias;
 	}
 }

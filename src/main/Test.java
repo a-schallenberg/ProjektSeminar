@@ -1,12 +1,24 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.function.Function;
 
 public class Test {
 
-	public static void main(String[] args) {
-		trainXOR();
+	public static void main(String[] args) throws IOException {
+		testSaveLoad();
+	}
+
+	private static void testSaveLoad() throws IOException {
+		Network network = new Network(3, 1, 4, 6);
+		NetworkHelper.save(network, "test");
+
+		Network network1 = NetworkHelper.load("test");
+		NetworkHelper.save(network1, "test1");
 	}
 
 	private static void testAND() {
