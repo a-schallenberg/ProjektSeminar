@@ -1,6 +1,10 @@
 package main;
 
+import main.functions.ActivationFunction;
+
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class NetworkHelper {
@@ -12,6 +16,19 @@ public class NetworkHelper {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
 
 		network.save(writer);
+
+		saveFunctions(network, filename);
+
+		writer.close();
+	}
+
+	private static void saveFunctions(Network network, String filename) throws IOException {
+		File file = new File("resources/networkfiles/" + filename + "_functions.csv");
+		file.createNewFile();
+
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
+
+		network.saveFunctions(writer);
 
 		writer.close();
 	}
@@ -54,6 +71,50 @@ public class NetworkHelper {
 
 		reader.close();
 
-		return new Network(inputLength, outputLength, weights, biases, hiddenLengths);
+		ActivationFunction[][] functions = loadFunctions(filename);
+
+		if(functions == null)
+			return new Network(inputLength, outputLength, weights, biases, hiddenLengths);
+
+		return new Network(inputLength, outputLength, weights, biases, functions, hiddenLengths);
 	}
+
+	private static ActivationFunction[][] loadFunctions(String filename) throws IOException {
+		Scanner scanner;
+		try {
+			scanner = new Scanner(new File("resources/networkfiles/" + filename + "_functions.csv"));
+		} catch(FileNotFoundException e) {
+			return null;
+		}
+
+		LinkedList<LinkedList<ActivationFunction>> functions = new LinkedList<>();
+		functions.add(new LinkedList<>());
+
+		while(scanner.hasNext()) {
+			String name = scanner.next();
+			if(name.equals("#"))
+				functions.add(new LinkedList<>());
+			else {
+				try {
+					Class<ActivationFunction> clazz = (Class<ActivationFunction>) ClassLoader.getSystemClassLoader().loadClass(name);
+					ActivationFunction function = clazz.getConstructor().newInstance();
+					function.fromBuffer(scanner);
+					functions.getLast().add(function);
+				} catch(ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+					functions.getLast().add(ActivationFunction.DEFAULT_FUNCTION);
+					e.printStackTrace();
+				}
+			}
+		}
+		scanner.close();
+
+		ActivationFunction[][] funcs = new ActivationFunction[functions.size()][];
+
+		for(int i = 0; i < funcs.length; i++)
+			funcs[i] = functions.removeFirst().toArray(ActivationFunction[]::new);
+
+		return funcs;
+	}
+
+
 }
