@@ -26,7 +26,8 @@ public class Logistic implements ActivationFunction{
 
 	@Override
 	public double derivative(double x) {
-		return 0; //TODO
+		double e = Math.exp(factor * (x - xOffset));
+		return factor * height * e / Math.pow(e + 1, 2); //TODO done
 	}
 
 	@Override
