@@ -5,9 +5,7 @@ import main.functions.ActivationFunction;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Scanner;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * The class {@link Network} allows creating objects from this type. It represents a neural network and works with {@link Neuron}s.
@@ -94,16 +92,13 @@ public class Network {
 	}
 
 	public void train(double[][] input, double[][] y, double learnRate, int iterations) {
-		if(!trainable)
-			throw new UnsupportedOperationException("Network is not trainable");
+		if(!trainable) throw new UnsupportedOperationException("Network is not trainable");
 
 		double[][] results;
-
 		for(int i = 0; i < iterations; i++) {
 			double cost = 0;
 			for(int j = 0; j < input.length; j++) {
 				results = forwardPropagation(input[j]);
-
 				cost += cost(results[results.length - 1], y[j]);
 
 //				System.out.println(Arrays.toString(results[results.length - 1]));
@@ -120,7 +115,6 @@ public class Network {
 		if(input.length != inLayerLength) throw new IllegalArgumentException("Argument's size and input layer's size do not match");
 
 		double[][] results = new double[hiddenLayers.length + 2][];			//+2 = +inputpLayer+outputLayer
-
 		results[0] = input;
 
 		// Fire all units of hidden layers
@@ -130,7 +124,6 @@ public class Network {
 
 			for(int j = 0; j < length; j++)
 				results[i + 1][j] = hiddenLayers[i][j].fire(i == 0 ? input : results[i]);
-
 		}
 
 		results[results.length - 1] = new double[outputLayer.length];
@@ -266,32 +259,11 @@ public class Network {
 		}
 	}
 
-	static Network load(Scanner scanner) {
-		Network network = new Network();
-
-		// Initialize inLayerLength and neuron arrays
-		network.inLayerLength = scanner.nextInt();
-		network.outputLayer = new Neuron[scanner.nextInt()];
-
-		network.hiddenLayers = new Neuron[scanner.nextInt()][];
-		for(int i = 0; i < network.hiddenLayers.length; i++)
-			network.hiddenLayers[i] = new Neuron[scanner.nextInt()];
-
-		// Fill arrays
-//		for(int i = 0; i < network.hiddenLayers.length; i++)
-//			for(int j = 0; j < network.hiddenLayers[i].length; j++)
-//				network.hiddenLayers[i][j] = Neuron.load(scanner);
-//
-//		for(int i = 0; i < network.outputLayer.length; i++)
-//			network.outputLayer[i] = Neuron.load(scanner);
-
-		return network;
-	}
-
 	private Neuron[][] getLayers() {
 		Neuron[][] layers = new Neuron[hiddenLayers.length + 1][];
-		for(int i = 0; i < layers.length; i++)
-			layers[i] = (i < hiddenLayers.length) ? hiddenLayers[i] : outputLayer;
+
+		System.arraycopy(hiddenLayers, 0, layers, 0, hiddenLayers.length);
+		layers[layers.length - 1] = outputLayer;
 
 		return layers;
 	}
