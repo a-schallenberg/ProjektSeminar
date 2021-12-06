@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  30 NOV 2021 16:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  30 NOV 2021 17:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -576,10 +576,10 @@ Package rerunfilecheck Info: File `projektbericht.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 218.
  ) 
 Here is how much of TeX's memory you used:
- 9529 strings out of 481239
- 164404 string characters out of 5920376
+ 9528 strings out of 481239
+ 164389 string characters out of 5920376
  555643 words of memory out of 5000000
- 24593 multiletter control sequences out of 15000+600000
+ 24592 multiletter control sequences out of 15000+600000
  593259 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,6n,55p,10109b,386s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -594,7 +594,7 @@ onts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbxi10
 public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmri12.pfb></usr/sha
 re/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/publi
 c/lm/lmsy10.pfb>
-Output written on projektbericht.pdf (10 pages, 181359 bytes).
+Output written on projektbericht.pdf (10 pages, 181292 bytes).
 PDF statistics:
  256 PDF objects out of 1000 (max. 8388607)
  231 compressed objects within 3 object streams

@@ -89,18 +89,18 @@ Die Klasse \textit{Util} bietet die abstrakten Hilfsmethoden \textit{random(int)
 Die Klassenstruktur des Programmes besteht neben \textit{Util} aus den Klassen \textit{Neuron}, \textit{Network} sowie \textit{NetworkHelper}.
 
 Im \textit{Neuron} sind die \textit{weights}, der \textit{bias}, die Aktivierungsfunktion sowie deren Ableitung und eine Hilfsvariable \textit{z} als private Attribute definiert.
-Es befinden sich zwei Konstruktoren in der Klasse, wobei der Erste den Zweiten mit zufälligen \textit{weights} und einem \textit{bias}=0 sowie der Funktion und deren Abletiung aufruft und der Zweite dafür zuständig ist, einen genau definiertes Neuron zu kreieren.
+Es befinden sich zwei Konstruktoren in der Klasse, wobei der Erste den Zweiten mit zufälligen \textit{weights} und einem \textit{bias}=0 sowie der Funktion und deren Ableitung aufruft und der Zweite dafür zuständig ist, einen genau definiertes Neuron zu kreieren.
 
 In der Klasse \textit{Network} wird das knN erstellt.
-Es befinden sich zwei Konstanten in der Klasse, die die mathematischen Formeln für die Sigmoidfunktion und deren Ableitung darstellt. Außerdem gibt es noch vier private Attribute,  die in den Methoden mehrfach benutzt werden. Das erste private Attribut “inLayerLength” definiert die Länge der input layer. Die “outputLayer” besteht aus einem eindimensonalen \textit{Neuron}-Array. Dann gibt es noch das Attribut “hiddenLayers”, welches ein zweidimensonales \textit{Neuron}-Array ist, wo der erste Index die Position der jeweiligen Hiddenlayer und der zweite die jeweilige Position des \textit{Neuron}s angibt. Zuletzt gibt es das Attribut “trainable”, welches einen Wahrheitswert ist und standartmäßig wahr ist.
+Es befinden sich zwei Konstanten in der Klasse, die die mathematischen Formeln für die Sigmoidfunktion und deren Ableitung darstellt. Außerdem gibt es noch vier private Attribute,  die in den Methoden mehrfach benutzt werden. Das erste private Attribut “inLayerLength” definiert die Länge der input layer. Die “outputLayer” besteht aus einem eindimensionalen \textit{Neuron}-Array. Dann gibt es noch das Attribut “hiddenLayers”, welches ein zweidimensionales \textit{Neuron}-Array ist, wo der erste Index die Position der jeweiligen Hiddenlayer und der zweite die jeweilige Position des \textit{Neuron}s angibt. Zuletzt gibt es das Attribut “trainable”, welches einen Wahrheitswert ist und standardmäßig wahr ist.
 
 Die \textit{NetworkHelper} Klasse ist dafür da, um Netzwerke zu speichern und zu laden.
 
 
 \subsection{Konstruktoren \& Initialisierung}
 In der Klasse Network gibt es insgesamt 7 Konstruktoren.
-Alle außer dem ersten Konstruktor rufen eine “init”-Methode auf um redudanten Code zu verhindern. Die "init"-Methode hat vier Parameter: \textit{int}, \textit{int}, \textit{BiFunction} und ein \textit{int[]}. Die \textit{BiFunction} wird dazu verwendet, der Methode mitzuteilen, wie die Neuronen erstellt werden sollen.
-Zuerst werden alle Attribute außer "trainable" entweder direkt mit den passenden Werten oder durch erstellen eines Arrays passender Größe initialisiert.
+Alle außer dem ersten Konstruktor rufen eine “init”-Methode auf um redundanten Code zu verhindern. Die "init"-Methode hat vier Parameter: \textit{int}, \textit{int}, \textit{BiFunction} und ein \textit{int[]}. Die \textit{BiFunction} wird dazu verwendet, der Methode mitzuteilen, wie die Neuronen erstellt werden sollen.
+Zuerst werden alle Attribute außer “trainable” entweder direkt mit den passenden Werten oder durch erstellen eines Arrays passender Größe initialisiert.
 Darauf folgen zwei Iterationen um diese Arrays mit den übergebenen Werten zu initialisieren.
 
 Der erste Konstruktor ist ein privater leerer Konstruktor für das Laden eines Netzes. 
@@ -181,7 +181,7 @@ Statt einem Array bzw. einer ArrayList verwenden wir in der Backpropagation eine
 \subsubsection{Vorteile}
 \begin{itemize}
 	\item flexibler Umgang mit Aktivierungsfunktionen und deren Ableitung
-	\item Flexiblität bei Erstellung des Netzes
+	\item Flexibilität bei Erstellung des Netzes
 	\item durch Auslagerungen von \textit{weights}, \textit{bias}, Aktivierungsfunktion und Ableitung entstehen übersichtlichere Array-Iterationen
 \end{itemize}
 \subsubsection{Nachteile}
