@@ -5,11 +5,11 @@ package main.functions;
  */
 public class SignDiff extends Sign{
 	public SignDiff() {
-		super(0);
+		super(0d);
 	}
 
 	public SignDiff(double threshold) {
-		super(threshold, -1, 1);
+		super(threshold, -1d, 1d);
 	}
 
 	public SignDiff(double threshold, double lowerLimit, double upperLimit) {

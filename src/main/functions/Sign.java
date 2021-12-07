@@ -8,11 +8,11 @@ public class Sign implements ActivationFunction{
 	private double threshold, lowerLimit, upperLimit;
 
 	public Sign() {
-		this(0);
+		this(0d);
 	}
 
 	public Sign(double threshold) {
-		this(threshold, -1, 1);
+		this(threshold, -1d, 1d);
 	}
 
 	public Sign(double threshold, double lowerLimit, double upperLimit) {
