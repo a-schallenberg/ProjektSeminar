@@ -55,6 +55,7 @@
 
 
 \section{Einleitung}
+Ein künstliches neuronales Netz (knN) besteht aus vielen kleinen Verarbeitungseinheiten, die durch Gewichtungen miteinander kommunizieren, wie definiert durch Abschnitt 2.1 in \hyperlink{[1]}{“An introduction to Neural Networks” ´[1]}.
 
 \subsection{Aufgabenstellung \& Zielsetzung}
 Die Aufgabenstellung lautete zunächst, die Grundlagen eines künstlichen neuronalen Netzes (knN) in Java zu implementieren, sodass mit diesem schon zu einfachen Eingaben eine korrekte Ausgabe kalkuliert wird (Forward Propagation). Diese weiteten sich darauf aus, das Netz trainieren zu können (Backpropagation) und die trainierten Einstellungen des Netzes zu speichern und zu laden.\\
@@ -68,26 +69,21 @@ Nicht vorgegeben, aber notwendigerweise festgelegt wurde, dass beim Erstellen ei
 % ggf. functions
 
 \subsection{Literaturarbeit: Verweis auf Vorarbeiten}
-\begin{itemize}
-	\item{An Introduction to Neural Networks, Kroese, B., a Van der Smagt, P., 1996}
-	\hypertarget{3b1b}{\item{Neural Networks, 3Blue1Brown, 2018, \hyperref{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}{}{}{\textit{YouTube}}}}
-\end{itemize}
-
+Die wissenschaftliche Arbeit von Kröse und van der Smagt \hyperlink{1}{[1]}, welches den Aufbau eines knN beschreibt, sowie Erweiterungen dessen, dient der Definition, dem Grundverständnis und dem groben Aufbau eines solchen Netzes.
+Das mathematische Verständnis und die darauf aufbauende Implementierung des knN ergab sich aus den Videos 
+der Playlist von 3Blue1Brown \hyperlink{2}{[2]}.
 
 \newpage
 
 
 \section{Methoden}
-% Beschreibung \& Begründung der Umsetzung
-% Beschreibung der Feinstrukturen (Programmteile, Objekte/Klassen und besondere Herausforderungen)
+Die Klassenstruktur des Programmes besteht aus den Klassen \textit{Neuron}, \textit{Network} sowie \textit{NetworkHelper} und einer zusätzlichen Utility-Klasse \textit{Util}.
 
 \subsection{Util}
-Die Klasse \textit{Util} bietet die abstrakten Hilfsmethoden \textit{random(int)}, \textit{addToVec1(double[], double[])} und \textit{mulToVec(double, double[])} für das kreieren und für den Umgang mit Vektoren bzw. Arrays. Da diese Methoden mit ausreichend JavaDoc ausgestattet sind, wodurch sie selbsterklärend sind, wird auf diese hier nicht näher eingegangen.
+Die Klasse \textit{Util} bietet drei abstrakte Hilfsmethoden. \textit{random(int)} gibt ein beliebig-dimensionales Array mit zufälligen Zahlen zurück. \textit{addToVec1(double[], double[])} addiert einen Vektor auf den anderen. Die dritte Methode \textit{mulToVec(double, double[])} multipliziert ein Skalar auf einen Vektor. Dies erleichtert das Kreieren und den Umgang mit Vektoren bzw. Arrays im knN.
 
 
 \subsection{Klassenstruktur Network \& Neuron} %Sui Yin
-Die Klassenstruktur des Programmes besteht neben \textit{Util} aus den Klassen \textit{Neuron}, \textit{Network} sowie \textit{NetworkHelper}.
-
 Im \textit{Neuron} sind die \textit{weights}, der \textit{bias}, die Aktivierungsfunktion sowie deren Ableitung und eine Hilfsvariable \textit{z} als private Attribute definiert.
 Es befinden sich zwei Konstruktoren in der Klasse, wobei der Erste den Zweiten mit zufälligen \textit{weights} und einem \textit{bias}=0 sowie der Funktion und deren Ableitung aufruft und der Zweite dafür zuständig ist, einen genau definiertes Neuron zu kreieren.
 
@@ -132,7 +128,7 @@ Für die nächsten Zeilen des Codes muss vorerst eine weitere Methode erklärt w
 \begin{equation}
 	sum = \sum_{i=0}^{n} (w_{i} * in_{i}) + \theta
 \end{equation}
-berechnet mit \textit{in} = Input-Vektor, \textit{w} = weights-Vektor, \textit{$\theta$} = \textit{bias} und \textit{n} = Länge von \textit{in}. Als Rückgabewert wird die Aktivierung durch die Summe eingesetzt in die Aktivierungsfunktion \(function.apply(sum)\) zurückgegeben.\\
+\hyperlink[1]{[1]} berechnet mit \textit{in} = Input-Vektor, \textit{w} = weights-Vektor, \textit{$\theta$} = \textit{bias} und \textit{n} = Länge von \textit{in}. Als Rückgabewert wird die Aktivierung durch die Summe eingesetzt in die Aktivierungsfunktion \(function.apply(sum)\) zurückgegeben.\\
 Die nun folgende \textit{for}-Schleife durchläuft die \textit{hiddenLayers} und berechnet mit Hilfe von \textit{fire(double[])} das Ergebnisarray. Die zweite Dimension des Arrays \textit{results} wird unter Verwendung des \textit{hiddenLayers}-Arrays an der Stelle \textit{i} festgelegt. \textit{results} bekommt dann an der Stelle \textit{i+1} ein neues Array der vorher bestimmten Dimension zugewiesen. Nun folgt eine weitere \textit{for}-Schleife mit dem Index \textit{j}, der die zweite Dimension des Arrays \textit{results} mit  \textit{fire(double[])} berechnet. Dabei wird der Fall überprüft, dass wenn \textit{i} gleich \textit{0} sein sollte, der Input-Vektor als erster Eintrag genommen wird und ansonsten, \textit{results} an der Stelle \textit{i} berechnet wird. 
 Zuletzt wird die zweite Dimension beim letzten Eintrag der ersten Dimension auf die Länge der
 \textit{outputLayer} festgelegt und die Werte der \textit{outputLayer} mit \textit{fire(double[])} berechnet und in \textit{results} abgespeichert. 
@@ -144,11 +140,11 @@ Die Methode \textit{train(double[][], double, double[][], int)} in der Klasse \t
 \begin{equation}
 	C_0 = \sum_{i=0}^{n} (o_{i} - y_{i})^2
 \end{equation}
-mit o und y = tatsächliche und gewünschte Ergebnisse und n = Anzahl der Ergebnisse in o.
+\hyperlink{2}{[2]} mit o und y = tatsächliche und gewünschte Ergebnisse und n = Anzahl der Ergebnisse in o.
 
 
 \hypertarget{backprop}{\subsubsection{Backpropagation}}
-Die Umsetzung der Backpropagation ist an die Mathematik von \hyperlink{3b1b}{3Blue1Brown} angelehnt und beruht auf der Delta-Regel. Zunächst wird eine \textit{LinkedList} angelegt, die der Speicherung der Deltas für die aktuelle Ebene, sowie für die vorherige Ebene dient. Diese Liste hat dadurch immer maximal zwei Elemente. Die Idee ist, das die "neuen" Deltas beim Löschen der "aktuellen" Deltas zu diesen werden.\\Danach werden die ersten Deltas durch die Ableitung der Kostenfunktion ohne Sigma initialisiert. Im nächsten Schritt wird die Backpropagation auf alle Neuronen (innere Schleife) jeder Layer (äußere Schleife), beginnend bei der Output-Layer, angewendet, indem die \textit{backpropagation(double, double, double[])} des jeweiligen Neurons aufgerufen wird und die daraus resultierenden Deltas auf die "neuen" Deltas addiert werden.\\Im Backpropgationteil des Neurons wird jedes Gewicht um den Wert der nach dem Gewicht abgeleiteten Kosten multipliziert mit der negativen Lernrate erhöht. Der \textit{bias} wird analog erhöht. Die "neuen" Deltas werden durch die Ableitung der Kosten nach dem jeweiligen Ergebnis des Vorgängers berechnet.
+Die Umsetzung der Backpropagation ist an die Mathematik von 3Blue1Brown \hyperlink{2}{[2]} angelehnt und beruht auf der Delta-Regel. Zunächst wird eine \textit{LinkedList} angelegt, die der Speicherung der Deltas für die aktuelle Ebene, sowie für die vorherige Ebene dient. Diese Liste hat dadurch immer maximal zwei Elemente. Die Idee ist, das die "neuen" Deltas beim Löschen der "aktuellen" Deltas zu diesen werden.\\Danach werden die ersten Deltas durch die Ableitung der Kostenfunktion ohne Sigma initialisiert. Im nächsten Schritt wird die Backpropagation auf alle Neuronen (innere Schleife) jeder Layer (äußere Schleife), beginnend bei der Output-Layer, angewendet, indem die \textit{backpropagation(double, double, double[])} des jeweiligen Neurons aufgerufen wird und die daraus resultierenden Deltas auf die "neuen" Deltas addiert werden.\\Im Backpropgationteil des Neurons wird jedes Gewicht um den Wert der nach dem Gewicht abgeleiteten Kosten multipliziert mit der negativen Lernrate erhöht. Der \textit{bias} wird analog erhöht. Die "neuen" Deltas werden durch die Ableitung der Kosten nach dem jeweiligen Ergebnis des Vorgängers berechnet.
 
 
 \subsection{Speichern \& Laden}
@@ -165,8 +161,13 @@ Die \textit{toString()} Methoden dienen der anschaulichen Ausgabe und ggf. Fehle
 \section{Ergebnisse}
 
 \subsection{Begründung der Korrektheit der Umsetzung}
-Neben der Umsetzung mathematisch korrekter Formeln stellten wir durch Testen mit verschiedenen logischen Gattern die Korrektheit der Berechnung der Ergebnisse \(compute (double[])\) fest.
-Außerdem stellten wir durch dieses Testen fest, dass das Training in einem Netz ohne Hiddenlayers ebenfalls funktoniert.
+Zur Überprüfen wurden verschiedene Datensätze verwendet, unter anderem die typischen Datensätze von AND-Gatter, OR-Gatter und XOR-Gatter, sowie dem Datensatz eines OR-Gatters mit drei Eingängen:
+% Bild 3OR-Gatter
+Das Testen unterteilte sich in zwei Abschnitte. Zunächst wurde die Korrektheit des Berechnens überprüft, indem einem vorkonfiguriertem Netz ein Testdatensatz gegeben und die Ausgabe des Netzes mit den zu erwartenden Werten verglichen wurde.
+
+So konnte im zweiten Abschnitt vorausgesetzt werden, dass das Berechnen des Netzes bereits korrekt funktioniert. So wurde ein nicht konfiguriertes Netz mithilfe von Trainingsdatensätzen inklusive deren zu erwartenden Werte trainiert. Anhand der Kosten konnte man hier kontrollieren ob das knN korrekt trainiert wird (Die Kosten müssen dafür mit wenigen Ausnahmen stetig fallend sein). 
+
+Daraus folgend, dass die Tests erfolgreich waren, wurde das Netz als korrekt bewertet.
 
 \subsection{Performance-Überlegungen}
 Durch die Iterative Umsetzung der Backpropagation ist eine Aufsummierung der Deltas in einer Layer \textit{L} möglich, sodass erst danach die Layer \textit{L-1} bearbeitet werden kann.
@@ -190,29 +191,27 @@ Statt einem Array bzw. einer ArrayList verwenden wir in der Backpropagation eine
 	\item durch die Benutzung von Function/BiFunction wird ein geringer Verlust von Performance in Kauf genommen
 \end{itemize}
 \subsection{Was fehlt ? Was könnte erweiternd gemacht werden?}
-Das Training für ein Netz, das mindestenst eine Hiddenlayer besitzt, ist noch fehlerhaft. Außerdem kann das Programm noch keine Aktivierungsfunktionen und deren Ableitungen speichern.
-Dies wäre mit unserer Umsetzung sehr performance-, speicher- und programmieraufwendig. Die Implentierung eines anderen Aktivierungsfunktionssystems, was es erlaubt diese zu speichern und zu laden, könnte ein nächster Schritt sein.
+Das Training für ein Netz, das mindestens eine Hiddenlayer besitzt, ist noch fehlerhaft. Außerdem kann das Programm noch keine Aktivierungsfunktionen und deren Ableitungen speichern.
+Dies wäre mit unserer Umsetzung sehr performance-, speicher- und programmieraufwendig. Die Implementierung eines anderen Aktivierungsfunktionssystems, was es erlaubt diese zu speichern und zu laden, könnte ein nächster Schritt sein.
 Zudem ist das Speicherformat der \textit{weights} und \textit{biases} nicht auf dem vorgegebenen Standard.
 \newpage
 
 \section{GitHub}
-Unser Projekt inklusive einer Testklasse und diesem Projektbericht steht auf \hyperref{https://github.com/Griszder/ProjektSeminar.git}{}{}{\textit{\textbf{GitHub}}} zur Verfügung.
+Unser Projekt inklusive einer Testklasse und diesem Projektbericht steht auf \textit{\textbf{GitHub}} (\hyperref{https://github.com/Griszder/ProjektSeminar.git}{}{}{\textit{https://github.com/Griszder/ProjektSeminar.git}}) zur Verfügung.
 
 \vspace{1cm}
 
 \section{Anteile am Gesamtprojekt}
-\begin{itemize}
-	\item Alexandra Zarkh: 			ca. 21\%
-	\item Sui Yin Zhang: 			ca. 24\%
-	\item Lennart Leggewie: 		ca. 21\%
-	\item Alexander Schallenberg: 	ca. 34\%
-\end{itemize}
+Der Projektbericht wurde größtenteils zusammen angefertigt. Der Abschnitt \textit{Methoden} ist in vier Teile aufgeteilt worden. Die Abschnitte 2.2 und 2.3 wurden von Frau Zhang angefertigt, der Abschnitt 2.4 von Frau Zarkh, 2.1, 2.5 und 2.7 hat Herr Schallenberg verfasst und Abschnitt 2.6 schrieb Herr Leggewie. trotz der Kürze des zuletzt genannten Abschnitts, war der Arbeitsaufwand durch die Komplexität des Speicherns und Ladens, der gleiche, wie in den restlichen Abschnitten. Dadurch war die Arbeit am Projektbericht in etwa gleich verteilt. Auch in das Erstellen des knN (zunächst programmiersprachenunabhängig) haben alle ungefähr gleich viel Arbeit investiert. Das Übersetzen des Netzes in die konkrete Programmiersprache Java wurde überwiegend von Herrn Schallenberg stets mithilfe des restlichen Teams, dessen Überlegungen zur Implementierung ebenfalls mit in das Programm einflossen, umgesetzt. Durch einige weitere sehr gute Umsetzungsideen, entstand für Frau Zhang ein zusätzlicher Arbeitsaufwand.
 
 \vspace{1cm}
 
 \section{Verwendete Literatur \& Anhang}
 \begin{itemize}
-	\item{An Introduction to Neural Networks, Kroese, B., a Van der Smagt, P., 1996}
-	\hypertarget{3b1b}{\item{Neural Networks, 3Blue1Brown, 2018, \hyperref{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}{}{}{\textit{YouTube}}}}
+	\hypertarget{1}{\item[]{[1] An Introduction to Neural Networks, Kröse, B., van der Smagt, P., 1996}}
+	\hypertarget{2}{\item[]{[2] Neural Networks, 3Blue1Brown, 2018, 
+			\hyperref{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}{}{}{\textit{https://www.youtube.com/playlist?list\\=PLZHQObOWTQDNU6R1\_67000Dx\_ZCJB-3pi}}}}
+	
+	
 \end{itemize}
 \end{document}
