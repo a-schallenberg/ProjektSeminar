@@ -1,0 +1,19 @@
+[0] Config.pm:304> INFO - This is Biber 2.14 (beta)
+[0] Config.pm:307> INFO - Logfile is 'projektbericht.blg'
+[106] biber:322> INFO - === Do Dez  9, 2021, 23:41:46
+[144] Biber.pm:415> INFO - Reading 'projektbericht.bcf'
+[203] Biber.pm:943> INFO - Found 2 citekeys in bib section 0
+[214] Biber.pm:4256> INFO - Processing section 0
+[215] Utils.pm:75> INFO - Globbing data source 'projektbericht.bib'
+[215] Utils.pm:91> INFO - Globbed data source 'projektbericht.bib' to projektbericht.bib
+[262] Biber.pm:4455> INFO - Looking for bibtex format file 'projektbericht.bib' for section 0
+[263] bibtex.pm:1653> INFO - LaTeX decoding ...
+[266] bibtex.pm:1471> INFO - Found BibTeX data source 'projektbericht.bib'
+[315] Utils.pm:293> WARN - Entry '3b1b' (projektbericht.bib): Invalid format '09.12.2021' of date field 'urldate' - ignoring
+[323] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'variable = shifted' with 'variable = non-ignorable'
+[324] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[324] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'de-DE'
+[324] Biber.pm:4090> INFO - No sort tailoring available for locale 'de-DE'
+[368] bbl.pm:652> INFO - Writing 'projektbericht.bbl' with encoding 'UTF-8'
+[370] bbl.pm:755> INFO - Output to projektbericht.bbl
+[370] Biber.pm:128> INFO - WARNINGS: 1

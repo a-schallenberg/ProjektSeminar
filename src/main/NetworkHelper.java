@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class NetworkHelper {
 
 	public static void save(Network network, String filename) throws IOException {
-		File file = new File("resources/networkfiles/" + filename + "_basics.csv");
+		File file = new File("resources/networkfiles/" + filename + ".csv");
 		file.createNewFile();
 
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
@@ -23,7 +23,7 @@ public class NetworkHelper {
 	}
 
 	private static void saveFunctions(Network network, String filename) throws IOException {
-		File file = new File("resources/networkfiles/" + filename + "_functions.csv");
+		File file = new File("resources/networkfiles/" + filename + ".fct");
 		file.createNewFile();
 
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));

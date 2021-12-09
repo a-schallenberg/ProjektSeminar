@@ -8,8 +8,10 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{setspace}
 \usepackage[left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry}
+\usepackage[backend=biber, style=ieee, citestyle=ieee]{biblatex}
 \onehalfspacing
 
+\bibliography{projektbericht.bib}
 
 %opening
 \title{Neuronale Netze}
@@ -55,23 +57,23 @@
 
 
 \section{Einleitung}
-Ein künstliches neuronales Netz (knN) besteht aus vielen kleinen Verarbeitungseinheiten, die durch Gewichtungen miteinander kommunizieren, wie definiert durch Abschnitt 2.1 in \hyperlink{[1]}{“An introduction to Neural Networks” ´[1]}.
+Ein künstliches neuronales Netz (knN) besteht aus vielen kleinen Verarbeitungseinheiten, die durch Gewichtungen miteinander kommunizieren, wie definiert durch Abschnitt 2.1 in “An Introduction to Neural Networks” \cite{script}.
 
 \subsection{Aufgabenstellung \& Zielsetzung}
 Die Aufgabenstellung lautete zunächst, die Grundlagen eines künstlichen neuronalen Netzes (knN) in Java zu implementieren, sodass mit diesem schon zu einfachen Eingaben eine korrekte Ausgabe kalkuliert wird (Forward Propagation). Diese weiteten sich darauf aus, das Netz trainieren zu können (Backpropagation) und die trainierten Einstellungen des Netzes zu speichern und zu laden.\\
-Das Ziel war, die erste Hälfte der Aufgabenstellung in den ersten zwei Wochen und die zweite Hälfte in den folgenden zwei Wochen umzusetzen.
+Das Ziel war, die erste Hälfte der Aufgabenstellung in den ersten zwei Wochen und die zweite Hälfte in den folgenden zwei Wochen umzusetzen und so ein funktionsfähiges künstliches neuronales Netz in Java zu implementieren.
 
 \subsection{Aufgabenkontext \& externe Vorgaben}
 Vorgegeben war, ein knN erstellen zu können, dem man bei seiner Erstellung Gewichtungen sowie Biases übergeben kann. Außerdem soll das Netz Ausgaben abhängig von den Eingaben berechnen können und die Gewichtungen und Biases sollen trainiert werden können. Außerdem ist ein Format zur Abspeicherung der Gewichte und Biases vorgegeben worden, welche in diesem Format in eine CSV-Datei gespeichert werden soll.
 
 \subsection{Nicht vorgegeben aber notwendigerweise von uns festgelegt}
-Nicht vorgegeben, aber notwendigerweise festgelegt wurde, dass beim Erstellen eines knN die Anzahl der Neuronen für jede Neuronenschicht vom Benutzer festgelegt wird. Implizit wird damit auch die Anzahl der versteckten Schichten verlangt. Außerdem ist die Struktur des Netzes frei gewählt.
+Nicht vorgegeben, aber notwendigerweise festgelegt wurde, dass beim Erstellen eines knN die Anzahl der Neuronen für jede Neuronenschicht vom Benutzer festgelegt wird. Implizit wird damit auch die Anzahl der versteckten Schichten verlangt. Außerdem ist die Struktur des Netzes frei gewählt. Das Programm basiert auf der von uns gewählten Java-Version 17 (openjdk).
 % ggf. functions
 
 \subsection{Literaturarbeit: Verweis auf Vorarbeiten}
-Die wissenschaftliche Arbeit von Kröse und van der Smagt \hyperlink{1}{[1]}, welches den Aufbau eines knN beschreibt, sowie Erweiterungen dessen, dient der Definition, dem Grundverständnis und dem groben Aufbau eines solchen Netzes.
+Die wissenschaftliche Arbeit von Kröse und van der Smagt \cite{script}, welches den Aufbau eines knN beschreibt, sowie Erweiterungen dessen, dient der Definition, dem Grundverständnis und dem groben Aufbau eines solchen Netzes.
 Das mathematische Verständnis und die darauf aufbauende Implementierung des knN ergab sich aus den Videos 
-der Playlist von 3Blue1Brown \hyperlink{2}{[2]}.
+der Playlist von 3Blue1Brown \cite{3b1b}.
 
 \newpage
 
@@ -128,7 +130,7 @@ Für die nächsten Zeilen des Codes muss vorerst eine weitere Methode erklärt w
 \begin{equation}
 	sum = \sum_{i=0}^{n} (w_{i} * in_{i}) + \theta
 \end{equation}
-\hyperlink[1]{[1]} berechnet mit \textit{in} = Input-Vektor, \textit{w} = weights-Vektor, \textit{$\theta$} = \textit{bias} und \textit{n} = Länge von \textit{in}. Als Rückgabewert wird die Aktivierung durch die Summe eingesetzt in die Aktivierungsfunktion \(function.apply(sum)\) zurückgegeben.\\
+\cite{script} berechnet mit \textit{in} = Input-Vektor, \textit{w} = weights-Vektor, \textit{$\theta$} = \textit{bias} und \textit{n} = Länge von \textit{in}. Als Rückgabewert wird die Aktivierung durch die Summe eingesetzt in die Aktivierungsfunktion \(function.apply(sum)\) zurückgegeben.\\
 Die nun folgende \textit{for}-Schleife durchläuft die \textit{hiddenLayers} und berechnet mit Hilfe von \textit{fire(double[])} das Ergebnisarray. Die zweite Dimension des Arrays \textit{results} wird unter Verwendung des \textit{hiddenLayers}-Arrays an der Stelle \textit{i} festgelegt. \textit{results} bekommt dann an der Stelle \textit{i+1} ein neues Array der vorher bestimmten Dimension zugewiesen. Nun folgt eine weitere \textit{for}-Schleife mit dem Index \textit{j}, der die zweite Dimension des Arrays \textit{results} mit  \textit{fire(double[])} berechnet. Dabei wird der Fall überprüft, dass wenn \textit{i} gleich \textit{0} sein sollte, der Input-Vektor als erster Eintrag genommen wird und ansonsten, \textit{results} an der Stelle \textit{i} berechnet wird. 
 Zuletzt wird die zweite Dimension beim letzten Eintrag der ersten Dimension auf die Länge der
 \textit{outputLayer} festgelegt und die Werte der \textit{outputLayer} mit \textit{fire(double[])} berechnet und in \textit{results} abgespeichert. 
@@ -140,7 +142,7 @@ Die Methode \textit{train(double[][], double, double[][], int)} in der Klasse \t
 \begin{equation}
 	C_0 = \sum_{i=0}^{n} (o_{i} - y_{i})^2
 \end{equation}
-\hyperlink{2}{[2]} mit o und y = tatsächliche und gewünschte Ergebnisse und n = Anzahl der Ergebnisse in o.
+\cite{3b1b} mit o und y = tatsächliche und gewünschte Ergebnisse und n = Anzahl der Ergebnisse in o.
 
 
 \hypertarget{backprop}{\subsubsection{Backpropagation}}
@@ -153,16 +155,72 @@ Um das Netzwerk zu speichern, wird ein neues Dokument mit dem als Parameter übe
 erstellte Dokument zu schreiben. Für das Laden eines zuvor eingespeicherten Netzwerkes rufen wir die Methode \textit{load()} der \textit{NetzwerkHelper} Klasse auf. Diese Methode bekommt den Namen des gewünschten Netzwerkes als Parameter übergeben damit nun von der \textit{Network} Klasse \textit{load()} aufgerufen werden kann. Als erstes erstellt diese ein neues leeres Netzwerk, um es danach mit den Netzwerk-Daten aus dem übergebenem Dokument zu füllen. Zuletzt wird nur noch das Netzwerk zurück gegeben.
 
 
+\subsection{Functioning}
+
+
 \subsection{toString}
 Die \textit{toString()} Methoden dienen der anschaulichen Ausgabe und ggf. Fehlersuche des knN. 
 
 \newpage
 
 \section{Ergebnisse}
-
+Das in der Einleitung genannte Ziel, ein funktionsfähiges künstliches neuronales Netz in Java zu implementieren, wurde dieses erreicht. Dies ist begründet durch ausgiebiges Testen.
 \subsection{Begründung der Korrektheit der Umsetzung}
 Zur Überprüfen wurden verschiedene Datensätze verwendet, unter anderem die typischen Datensätze von AND-Gatter, OR-Gatter und XOR-Gatter, sowie dem Datensatz eines OR-Gatters mit drei Eingängen:
-% Bild 3OR-Gatter
+\begin{center}
+\begin{tabular}{|c|c|c|}
+	\hline
+	\multicolumn{3}{|c|}{\textbf{AND-Gate}} \\ \hline
+	\hline
+	\multicolumn{2}{|c|}{\textbf{Input}} & \textbf{Output} \\ \hline
+	$x_0$ & $x_1$ & $y$ \\
+	\hline\hline
+	0 & 0 & 0 \\ \hline
+	0 & 1 & 0 \\ \hline
+	1 & 0 & 0 \\ \hline
+	1 & 1 & 1 \\ \hline
+\end{tabular}
+\begin{tabular}{|c|c|c|}
+	\hline
+	\multicolumn{3}{|c|}{\textbf{OR-Gate}} \\ \hline
+	\hline
+	\multicolumn{2}{|c|}{\textbf{Input}} & \textbf{Output} \\ \hline
+	$x_0$ & $x_1$ & $y$ \\
+	\hline\hline
+	0 & 0 & 0 \\ \hline
+	0 & 1 & 1 \\ \hline
+	1 & 0 & 1 \\ \hline
+	1 & 1 & 1 \\ \hline
+\end{tabular}
+\begin{tabular}{|c|c|c|}
+	\hline
+	\multicolumn{3}{|c|}{\textbf{XOR-Gate}} \\ \hline
+	\hline
+	\multicolumn{2}{|c|}{\textbf{Input}} & \textbf{Output} \\ \hline
+	$x_0$ & $x_1$ & $y$ \\
+	\hline\hline
+	0 & 0 & 0 \\ \hline
+	0 & 1 & 1 \\ \hline
+	1 & 0 & 1 \\ \hline
+	1 & 1 & 0 \\ \hline
+\end{tabular}
+\begin{tabular}{|c|c|c|c|}
+	\hline
+	\multicolumn{4}{|c|}{\textbf{3OR-Gate}} \\ \hline
+	\hline
+	\multicolumn{3}{|c|}{\textbf{Input}} & \textbf{Output} \\ \hline
+	$x_0$ & $x_1$ & $x_2$ & $y$ \\
+	\hline\hline
+	0 & 0 & 0 & 0 \\ \hline
+	0 & 0 & 1 & 1 \\ \hline
+	0 & 1 & 0 & 1 \\ \hline
+	0 & 1 & 1 & 1 \\ \hline
+	1 & 0 & 0 & 1 \\ \hline
+	1 & 0 & 1 & 1 \\ \hline
+	1 & 1 & 0 & 1 \\ \hline
+	1 & 1 & 1 & 1 \\ \hline
+\end{tabular}
+\end{center}
 Das Testen unterteilte sich in zwei Abschnitte. Zunächst wurde die Korrektheit des Berechnens überprüft, indem einem vorkonfiguriertem Netz ein Testdatensatz gegeben und die Ausgabe des Netzes mit den zu erwartenden Werten verglichen wurde.
 
 So konnte im zweiten Abschnitt vorausgesetzt werden, dass das Berechnen des Netzes bereits korrekt funktioniert. So wurde ein nicht konfiguriertes Netz mithilfe von Trainingsdatensätzen inklusive deren zu erwartenden Werte trainiert. Anhand der Kosten konnte man hier kontrollieren ob das knN korrekt trainiert wird (Die Kosten müssen dafür mit wenigen Ausnahmen stetig fallend sein). 
@@ -170,48 +228,48 @@ So konnte im zweiten Abschnitt vorausgesetzt werden, dass das Berechnen des Netz
 Daraus folgend, dass die Tests erfolgreich waren, wurde das Netz als korrekt bewertet.
 
 \subsection{Performance-Überlegungen}
-Durch die Iterative Umsetzung der Backpropagation ist eine Aufsummierung der Deltas in einer Layer \textit{L} möglich, sodass erst danach die Layer \textit{L-1} bearbeitet werden kann.
-Bei einer Rekursiven Umsetzung müsste man für jedes Output Neuron die Neuronen der restlichen Layers bearbeiten wodurch man jedes Neuron der Hiddenlayers \textit{n} Mal bearbeiten müsste, wobei n die Länge des Outputvektors ist.
+Durch die Iterative Umsetzung der Backpropagation ist eine Aufsummierung der Deltas in einer Layer \textit{L} möglich, sodass erst danach die Layer \textit{L-1} bearbeitet werden kann. Bei einer Rekursiven Umsetzung müsste man für jedes Output Neuron die Neuronen der restlichen Layers bearbeiten wodurch man jedes Neuron der Hiddenlayers $n$ Mal bearbeiten müsste, wobei $n$ die Länge des Outputvektors ist. Daraus ergibt sich bei der iterativen Umsetzung eine lineare Laufzeit, abhängig von Größe und Anzahl der vorangehenden Layers, und bei der rekursiven Umsetzung eine quadratische Laufzeit abhängig von eben genanntem Faktor sowie Größe der aktuellen Layer.
 Statt einem Array bzw. einer ArrayList verwenden wir in der Backpropagation eine LinkedList um das ständige verschieben der Deltas an Position 1 auf Position 0 im Array zu vermeiden.
+
+Für forward propagation und backpropagation fällt jeweils eine kubische Laufzeit an, welches durch die Gewichtungen (pro Zwischenraum von Layers eine Gewichtsmatrix) des Netzes begründet ist.
+
+Wenn man Wiederholungs- und Datensatziterations-Schleife in der Methode \textit{train(double[][], double[][], double, int)} berücksichtigt, ist dort sogar eine Laufzeit von $n^5$ vorhanden.
+
+Neben dem eigentlichen Arbeiten mit externen Datensätzen, ist auch die Performance von Laden  \& Speichern zu berücksichtigen. Beides hat eine kubische Laufzeit, wobei beim Laden des knN durch die Benutzung von \textit{Reflection} eine lineare Laufzeit mit relativ hohem Vorfaktor zu finden ist, was das gerade Speichern von kleineren Netzes verlangsamt.
+
+Nicht zu vergessen ist die Initialisierung des kNN. Da in dieser jedes Neuron jeder Layer erstellt wird, handelt es sich hierbei um eine quadratische Laufzeit.
+
+
 
 \newpage
 
 \section{Diskussion \& Fazit}
+Dass das Ziel erreicht ist, impliziert nicht, dass die Umsetzung perfekt ist. In Bereichen wie Performance, Speicheraufwand und Benutzerfreundlichkeit sind Vor- sowie Nachteile zu finden und können stetig verbessert werden.
 
-\subsection{Vor- \& Nachteile der gewählten Umsetzung}
-\subsubsection{Vorteile}
-\begin{itemize}
-	\item flexibler Umgang mit Aktivierungsfunktionen und deren Ableitung
-	\item Flexibilität bei Erstellung des Netzes
-	\item durch Auslagerungen von \textit{weights}, \textit{bias}, Aktivierungsfunktion und Ableitung entstehen übersichtlichere Array-Iterationen
-\end{itemize}
-\subsubsection{Nachteile}
-\begin{itemize}
-	\item ggf. Fehleranfällig durch flexiblen Umgang mit Aktivierungsfunktionen und deren Ableitung
-	\item durch die Benutzung von Function/BiFunction wird ein geringer Verlust von Performance in Kauf genommen
-\end{itemize}
+\subsection{Vorteile der gewählten Umsetzung}
+Durch die gewählte Aktivierungsfunktionsstruktur, ist ein flexibler Umgang mit diesen möglich, sodass auch Benutzer des Netzes je nach Anwendung eigene Aktivierungsfunktionen implementieren und im Netz benutzen können.
+Eine Vielzahl von Konstruktoren bietet viele verschiedene Möglichkeiten ein künstliches neuronales Netz zu erstellen. So muss ein komplexer Konstruktor nur bei komplexer Konfiguration des Netzes verwendet werden.
+Dies macht die Umsetzung benutzerfreundlich.
+Die Auslagerungen von \textit{weights}, \textit{bias}, Aktivierungsfunktion und Ableitung führen zu übersichtlicheren Array-Iterationen und damit zu einem gut lesbaren Code.
+
+\subsection{Nachteile der gewählten Umsetzung}
+Ein Nachteil der Implementierung ist, dass jede Aktivierungsfunktion ein Konstruktor besitzen muss, der keine Übergabeparameter nimmt, um das korrekte Laden dieser Funktionen aus einer Datei in ein knN garantieren zu können. Außerdem müssen die Methoden \textit{toBuffer(BufferedWriter)} und \textit{fromBuffer(Scanner)} aufeinander abgestimmt sein, damit kein Fehler beim Laden entsteht.
+Wie in Abschnitt 3.2 bereits genannt zieht auch die Benutzung von \textit{Reflection} den Nachteil mit sich, dass es sich hierbei um einen relativ großen Performance-Aufwand handelt.
+
 \subsection{Was fehlt ? Was könnte erweiternd gemacht werden?}
-Das Training für ein Netz, das mindestens eine Hiddenlayer besitzt, ist noch fehlerhaft. Außerdem kann das Programm noch keine Aktivierungsfunktionen und deren Ableitungen speichern.
-Dies wäre mit unserer Umsetzung sehr performance-, speicher- und programmieraufwendig. Die Implementierung eines anderen Aktivierungsfunktionssystems, was es erlaubt diese zu speichern und zu laden, könnte ein nächster Schritt sein.
-Zudem ist das Speicherformat der \textit{weights} und \textit{biases} nicht auf dem vorgegebenen Standard.
+Da das Netz funktioniert und allen Vorgaben entspricht ist die Implementation vollständig. Verbesserungen können in Bereichen wie Performance, Speicheraufwand und Benutzerfreundlichkeit ständig vorgenommen werden. Außerdem könnte das Testen um Anwendungsfälle außerhalb der logischen Gatter erweitert werden (z.B. Mnist). Es können Erweiterungen des Netzes (z.B. die eigenständige Berechnung einer angemessenen Lernrate) implementiert werden.
+Ausreichend JavaDoc-Kommentare im Code würden die Verständlichkeit dessen unterstreichen.
 \newpage
 
 \section{GitHub}
-Unser Projekt inklusive einer Testklasse und diesem Projektbericht steht auf \textit{\textbf{GitHub}} (\hyperref{https://github.com/Griszder/ProjektSeminar.git}{}{}{\textit{https://github.com/Griszder/ProjektSeminar.git}}) zur Verfügung.
+Unser Projekt inklusive einer Testklasse und dieses Projektberichts steht auf \textbf{GitHub} (\hyperref{https://github.com/Griszder/ProjektSeminar.git}{}{}{\textit{https://github.com/Griszder/ProjektSeminar.git}}) zur Verfügung.
 
 \vspace{1cm}
 
 \section{Anteile am Gesamtprojekt}
-Der Projektbericht wurde größtenteils zusammen angefertigt. Der Abschnitt \textit{Methoden} ist in vier Teile aufgeteilt worden. Die Abschnitte 2.2 und 2.3 wurden von Frau Zhang angefertigt, der Abschnitt 2.4 von Frau Zarkh, 2.1, 2.5 und 2.7 hat Herr Schallenberg verfasst und Abschnitt 2.6 schrieb Herr Leggewie. trotz der Kürze des zuletzt genannten Abschnitts, war der Arbeitsaufwand durch die Komplexität des Speicherns und Ladens, der gleiche, wie in den restlichen Abschnitten. Dadurch war die Arbeit am Projektbericht in etwa gleich verteilt. Auch in das Erstellen des knN (zunächst programmiersprachenunabhängig) haben alle ungefähr gleich viel Arbeit investiert. Das Übersetzen des Netzes in die konkrete Programmiersprache Java wurde überwiegend von Herrn Schallenberg stets mithilfe des restlichen Teams, dessen Überlegungen zur Implementierung ebenfalls mit in das Programm einflossen, umgesetzt. Durch einige weitere sehr gute Umsetzungsideen, entstand für Frau Zhang ein zusätzlicher Arbeitsaufwand.
+Der Projektbericht wurde größtenteils zusammen angefertigt. Der Abschnitt \textit{Methoden} ist in vier Teile aufgeteilt worden. Die Abschnitte 2.2 und 2.3 wurden von Frau Zhang angefertigt, der Abschnitt 2.4 von Frau Zarkh, 2.1, 2.5 und 2.8 hat Herr Schallenberg verfasst und Abschnitt 2.6 schrieb Herr Leggewie. trotz der Kürze des zuletzt genannten Abschnitts, war der Arbeitsaufwand durch die Komplexität des Speicherns und Ladens, der gleiche, wie in den restlichen Abschnitten. Der Abschnitt 2.7 ist gemeinsam verfasst worden. Dadurch war die Arbeit am Projektbericht in etwa gleich verteilt. Auch in das Erstellen des knN (zunächst programmiersprachenunabhängig) haben alle ungefähr gleich viel Arbeit investiert. Das Übersetzen des Netzes in die konkrete Programmiersprache Java wurde überwiegend von Herrn Schallenberg stets mithilfe des restlichen Teams, dessen Überlegungen zur Implementierung ebenfalls mit in das Programm einflossen, umgesetzt. Durch einige weitere sehr gute Umsetzungsideen, entstand für Frau Zhang ein zusätzlicher Arbeitsaufwand.
 
 \vspace{1cm}
 
-\section{Verwendete Literatur \& Anhang}
-\begin{itemize}
-	\hypertarget{1}{\item[]{[1] An Introduction to Neural Networks, Kröse, B., van der Smagt, P., 1996}}
-	\hypertarget{2}{\item[]{[2] Neural Networks, 3Blue1Brown, 2018, 
-			\hyperref{https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi}{}{}{\textit{https://www.youtube.com/playlist?list\\=PLZHQObOWTQDNU6R1\_67000Dx\_ZCJB-3pi}}}}
-	
-	
-\end{itemize}
+\printbibliography[heading=bibnumbered]
 \end{document}
