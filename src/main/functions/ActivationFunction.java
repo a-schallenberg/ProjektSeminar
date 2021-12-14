@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * Constructor with no parameters!!!
+ * IMPORTANT: Every subclass of this interface has to implement a constructor without parameters!
  */
 public interface ActivationFunction {
 	ActivationFunction DEFAULT_FUNCTION = new Sigmoid();

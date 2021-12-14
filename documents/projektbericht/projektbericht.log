@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  9 DEC 2021 23:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  14 DEC 2021 17:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -838,10 +838,29 @@ strak-te Hilfs-me-tho-den. \T1/lmr/m/it/12 ran-dom(int) \T1/lmr/m/n/12 gibt ein
  beliebig-dimensionales
  []
 
-[4] [5] [6] [7] [8]
-Overfull \hbox (21.33961pt too wide) in paragraph at lines 236--237
-[]\T1/lmr/m/n/12 Wenn man Wiederholungs- und Datensatziterations-Schleife in de
-r Me-tho-de \T1/lmr/m/it/12 train(double[][],
+[4] [5] [6]
+Overfull \hbox (11.33234pt too wide) in paragraph at lines 151--153
+\T1/lmr/m/n/12 Das In-ter-face \T1/lmr/m/it/12 Ac-ti-va-tion-Func-ti-on \T1/lmr
+/m/n/12 be-sitzt ei-ne glo-ba-le Kon-stan-te ^^PDEFAULT_FUNCTION^^Q,
+ []
+
+
+Overfull \hbox (8.09111pt too wide) in paragraph at lines 151--153
+\T1/lmr/m/n/12 on), \T1/lmr/m/it/12 Lo-gi-stic \T1/lmr/m/n/12 (lo-gis-ti-sche F
+unk-ti-on), \T1/lmr/m/it/12 Se-mi-Li-ne-ar \T1/lmr/m/n/12 (Semi-lineare Funk-ti
+-on), \T1/lmr/m/it/12 Sig-mo-id \T1/lmr/m/n/12 (Sigmoid-
+ []
+
+
+Overfull \hbox (17.39055pt too wide) in paragraph at lines 156--159
+\T1/lmr/m/n/12 In bzw. aus ei-ner se-pa-ra-ten CSV-Datei wer-den mit-hil-fe der
+ Me-tho-den \T1/lmr/m/it/12 sa-ve-Func-ti-ons(Network,
+ []
+
+[7] [8]
+Overfull \hbox (15.52963pt too wide) in paragraph at lines 236--237
+[]\T1/lmr/m/n/12 Wenn man Wiederholungs- und Da-ten-sat-zi-te-ra-ti-ons-schlei-
+fe in der Me-tho-de \T1/lmr/m/it/12 train(double[][],
  []
 
 [9] [10]
@@ -865,17 +884,14 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 275.
  ) 
 Here is how much of TeX's memory you used:
  16624 strings out of 481239
- 301587 string characters out of 5920376
- 1091352 words of memory out of 5000000
+ 301589 string characters out of 5920376
+ 1090352 words of memory out of 5000000
  31617 multiletter control sequences out of 15000+600000
  591929 words of font info for 58 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  43i,7n,55p,10109b,2205s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{2} has been referenced but does not exist, replac
 ed by a fixed one
-
-pdfTeX warning (dest): name{section.8} has been referenced but does not exist, 
-replaced by a fixed one
 
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvip
 s/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/t
@@ -887,7 +903,7 @@ type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/pu
 blic/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/s
 hare/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on projektbericht.pdf (11 pages, 202442 bytes).
+Output written on projektbericht.pdf (11 pages, 204113 bytes).
 PDF statistics:
  266 PDF objects out of 1000 (max. 8388607)
  240 compressed objects within 3 object streams

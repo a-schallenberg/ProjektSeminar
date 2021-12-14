@@ -27,17 +27,17 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{\numberline {2.5.1}Backpropagation}{6}{subsubsection.2.5.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.6}Speichern \& Laden}{7}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.6}Functioning}{7}{subsection.2.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.7}Functioning}{7}{subsection.2.7}%
+\contentsline {subsection}{\numberline {2.7}Speichern \& Laden}{7}{subsection.2.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.8}toString}{7}{subsection.2.8}%
+\contentsline {subsection}{\numberline {2.8}toString}{8}{subsection.2.8}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3}Ergebnisse}{8}{section.3}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.1}Begründung der Korrektheit der Umsetzung}{8}{subsection.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}Performance-Überlegungen}{8}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.2}Performance-Überlegungen}{9}{subsection.3.2}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4}Diskussion \& Fazit}{10}{section.4}%
 \defcounter {refsection}{0}\relax 

@@ -79,40 +79,38 @@ der Playlist von 3Blue1Brown \cite{3b1b}.
 
 
 \section{Methoden}
-Die Klassenstruktur des Programmes besteht aus den Klassen \textit{Neuron}, \textit{Network} sowie \textit{NetworkHelper} und einer zusätzlichen Utility-Klasse \textit{Util}.
+Die Klassenstruktur des Programmes besteht aus den Klassen \textit{Neuron}, \textit{Network}, \textit{NetworkHelper} sowie \textit{ActivationFunction} und davon abgeleitete Klassen und einer zusätzlichen Utility-Klasse \textit{Util}.
 
 \subsection{Util}
 Die Klasse \textit{Util} bietet drei abstrakte Hilfsmethoden. \textit{random(int)} gibt ein beliebig-dimensionales Array mit zufälligen Zahlen zurück. \textit{addToVec1(double[], double[])} addiert einen Vektor auf den anderen. Die dritte Methode \textit{mulToVec(double, double[])} multipliziert ein Skalar auf einen Vektor. Dies erleichtert das Kreieren und den Umgang mit Vektoren bzw. Arrays im knN.
 
 
 \subsection{Klassenstruktur Network \& Neuron} %Sui Yin
-Im \textit{Neuron} sind die \textit{weights}, der \textit{bias}, die Aktivierungsfunktion sowie deren Ableitung und eine Hilfsvariable \textit{z} als private Attribute definiert.
-Es befinden sich zwei Konstruktoren in der Klasse, wobei der Erste den Zweiten mit zufälligen \textit{weights} und einem \textit{bias}=0 sowie der Funktion und deren Ableitung aufruft und der Zweite dafür zuständig ist, einen genau definiertes Neuron zu kreieren.
+Im \textit{Neuron} sind die \textit{weights}, der \textit{bias}, die Aktivierungsfunktion und eine Hilfsvariable \textit{z} als private Attribute deklarieren.
+Es befinden sich zwei Konstruktoren in der Klasse, wobei der Erste den Zweiten mit zufälligen \textit{weights} und einem \textit{bias}=0 sowie der Aktivierungsfunktion aufruft und der Zweite dafür zuständig ist, ein genau definiertes Neuron zu kreieren.
 
 In der Klasse \textit{Network} wird das knN erstellt.
-Es befinden sich zwei Konstanten in der Klasse, die die mathematischen Formeln für die Sigmoidfunktion und deren Ableitung darstellt. Außerdem gibt es noch vier private Attribute,  die in den Methoden mehrfach benutzt werden. Das erste private Attribut “inLayerLength” definiert die Länge der input layer. Die “outputLayer” besteht aus einem eindimensionalen \textit{Neuron}-Array. Dann gibt es noch das Attribut “hiddenLayers”, welches ein zweidimensionales \textit{Neuron}-Array ist, wo der erste Index die Position der jeweiligen Hiddenlayer und der zweite die jeweilige Position des \textit{Neuron}s angibt. Zuletzt gibt es das Attribut “trainable”, welches einen Wahrheitswert ist und standardmäßig wahr ist.
+Es gibt vier private Attribute, die in den Methoden mehrfach benutzt werden. Das erste private Attribut “inLayerLength” definiert die Länge der “inputLayer”. Die “outputLayer” besteht aus einem eindimensionalen \textit{Neuron}-Array. Dann gibt es noch das Attribut “hiddenLayers”, welches ein zweidimensionales \textit{Neuron}-Array ist, wo der erste Index die Position der jeweiligen Hiddenlayer und der zweite die jeweilige Position des \textit{Neuron}s angibt. Zuletzt gibt es das Attribut “trainable”, welches einen Wahrheitswert ist und standardmäßig wahr ist.
 
-Die \textit{NetworkHelper} Klasse ist dafür da, um Netzwerke zu speichern und zu laden.
+Die Klasse \textit{NetworkHelper} ist dafür da, um Netzwerke zu speichern und zu laden.
 
 
 \subsection{Konstruktoren \& Initialisierung}
-In der Klasse Network gibt es insgesamt 7 Konstruktoren.
-Alle außer dem ersten Konstruktor rufen eine “init”-Methode auf um redundanten Code zu verhindern. Die "init"-Methode hat vier Parameter: \textit{int}, \textit{int}, \textit{BiFunction} und ein \textit{int[]}. Die \textit{BiFunction} wird dazu verwendet, der Methode mitzuteilen, wie die Neuronen erstellt werden sollen.
+In der Klasse \textit{Network} gibt es insgesamt 6 Konstruktoren.
+Diese rufen eine “init”-Methode auf um redundanten Code zu verhindern. Die "init"-Methode hat vier Parameter: \textit{int}, \textit{int}, \textit{BiFunction} und ein \textit{int[]}. Die \textit{BiFunction} wird dazu verwendet, der Methode mitzuteilen, wie die Neuronen erstellt werden sollen.
 Zuerst werden alle Attribute außer “trainable” entweder direkt mit den passenden Werten oder durch erstellen eines Arrays passender Größe initialisiert.
 Darauf folgen zwei Iterationen um diese Arrays mit den übergebenen Werten zu initialisieren.
 
-Der erste Konstruktor ist ein privater leerer Konstruktor für das Laden eines Netzes. 
-
-Der zweite Konstruktor ist dafür da, um ein Netzwerk zu erstellen, wo die Attribute “numInUnit” (die Anzahl der Input Units),”numOutUnit”(die Anzahl der Output Units,“weights”,”biases”, sowie die Anzahl der Hiddenlayers vorgegeben sind.
--> kann gar nicht sein, dass es nicht trainierbar ist, da es default function immer ableitbar ist.
+Der erste Konstruktor ist dafür da, um ein Netzwerk zu erstellen, wo die Attribute “numInUnit” (die Anzahl der Input Units), ”numOutUnit”(die Anzahl der Output Units), “weights”, ”biases”, sowie die Anzahl der Hiddenlayers gegeben sind. Als Aktivierungsfunktionen \hyperlink{functioning}{(siehe Abschnitt 2.6)} wird hier eine Standardfunktion (Sigmoid) gewählt. Durch die Differenzierbarkeit der Sigmoid-Funktion ist ein solches knN also trainierbar.
+% -> kann gar nicht sein, dass es nicht trainierbar ist, da es default function immer ableitbar ist.
 
 Danach folgt der gleiche Konstruktor, mit dem Unterschied, dass die “weights” und die “biases” nicht angegeben sind.
 
-In den nächsten Konstruktoren, die Aktivierungsfunktionen und deren Ableitungen übergeben bekommen, wird immer erst überprüft, ob das knN trainierbar ist, also ob die Ableitungsfunktion nicht null ist. Falls sie es doch ist, wird dies zwar zugelassen, führt aber dazu, dass das Netz nicht trainierbar ist. 
+In den nächsten Konstruktoren, die Aktivierungsfunktionen übergeben bekommen, wird immer erst überprüft, ob das knN trainierbar ist, also ob die Ableitungsfunktion differenzierbar ist. Falls sie es nicht ist, wird dies zwar zugelassen, führt aber dazu, dass das Netz nicht trainierbar ist (trainable wird gleich null gesetzt).
 
-Der vierte und fünfte Konstruktor haben einen ähnlichen Aufbau von den Parametern wie der zweite und dritte Konstruktor, mit dem Unterschied, dass diesmal eine Funktion, mit dessen Ableitung übergeben wird.
+Der dritte und vierte Konstruktor haben einen ähnlichen Aufbau von den Parametern wie der erste und zweite Konstruktor, mit dem Unterschied, dass diesmal eine Aktivierungsfunktion für alle Neuronen übergeben wird.
 
-Statt allen Neuronen die gleiche Aktivierungsfunktion und Ableitung zu geben, bekommen die Neuronen in den letzten beiden Konstruktoren jeweils Eigene.
+Statt allen Neuronen die gleiche Aktivierungsfunktion zu geben, bekommen die Neuronen in den letzten beiden Konstruktoren jeweils Eigene.
 
 
 \subsection{Kalkulation}
@@ -146,22 +144,24 @@ Die Methode \textit{train(double[][], double, double[][], int)} in der Klasse \t
 
 
 \hypertarget{backprop}{\subsubsection{Backpropagation}}
-Die Umsetzung der Backpropagation ist an die Mathematik von 3Blue1Brown \hyperlink{2}{[2]} angelehnt und beruht auf der Delta-Regel. Zunächst wird eine \textit{LinkedList} angelegt, die der Speicherung der Deltas für die aktuelle Ebene, sowie für die vorherige Ebene dient. Diese Liste hat dadurch immer maximal zwei Elemente. Die Idee ist, das die "neuen" Deltas beim Löschen der "aktuellen" Deltas zu diesen werden.\\Danach werden die ersten Deltas durch die Ableitung der Kostenfunktion ohne Sigma initialisiert. Im nächsten Schritt wird die Backpropagation auf alle Neuronen (innere Schleife) jeder Layer (äußere Schleife), beginnend bei der Output-Layer, angewendet, indem die \textit{backpropagation(double, double, double[])} des jeweiligen Neurons aufgerufen wird und die daraus resultierenden Deltas auf die "neuen" Deltas addiert werden.\\Im Backpropgationteil des Neurons wird jedes Gewicht um den Wert der nach dem Gewicht abgeleiteten Kosten multipliziert mit der negativen Lernrate erhöht. Der \textit{bias} wird analog erhöht. Die "neuen" Deltas werden durch die Ableitung der Kosten nach dem jeweiligen Ergebnis des Vorgängers berechnet.
+Die Umsetzung der Backpropagation ist an die Mathematik von 3Blue1Brown \hyperlink{2}{[2]} angelehnt und beruht auf der Delta-Regel. Zunächst wird eine \textit{LinkedList} angelegt, die der Speicherung der Deltas für die aktuelle Ebene, sowie für die vorherige Ebene dient. Diese Liste hat dadurch immer maximal zwei Elemente. Die Idee ist, das die "neuen" Deltas beim Löschen der “aktuellen” Deltas zu diesen werden.\\Danach werden die ersten Deltas durch die Ableitung der Kostenfunktion ohne Sigma initialisiert. Im nächsten Schritt wird die Backpropagation auf alle Neuronen (innere Schleife) jeder Layer (äußere Schleife), beginnend bei der Output-Layer, angewendet, indem die \textit{backpropagation(double, double, double[])} des jeweiligen Neurons aufgerufen wird und die daraus resultierenden Deltas auf die “neuen” Deltas addiert werden.\\Im Backpropgationteil des Neurons wird jedes Gewicht um den Wert der nach dem Gewicht abgeleiteten Kosten multipliziert mit der negativen Lernrate erhöht. Der \textit{bias} wird analog erhöht. Die “neuen” Deltas werden durch die Ableitung der Kosten nach dem jeweiligen Ergebnis des Vorgängers berechnet.
+
+
+\hypertarget{functioning}{\subsection{Functioning}}
+Das Interface \textit{ActivationFunction} besitzt eine globale Konstante “DEFAULT\_FUNCTION”, die mit dem Wert einer Sigmoid-Funktion initialisiert ist und vier abstrakten Methoden \textit{function(double)}, \textit{derivative(double)}, \textit{toBuffer(BufferedWriter)} und \textit{fromBuffer(Scanner)}, welche eine mathematische Funktion sowie deren Ableitung repräsentieren soll und dem Speichern und Laden einer Aktivierungsfunktion dienen. Ein JavaDoc Kommentar weißt darauf hin, dass jede von diesem Interface abgeleitete Klasse einen Konstruktor besitzen muss, welche keine Parameter nimmt, damit von der Klasse dargestellte Aktivierungsfunktion korrekt geladen werden kann. \\
+Zudem gibt es die vorimplementierten Aktivierungsfunktionen \textit{Identity} (Identitätsfunktion), \textit{Logistic} (logistische Funktion), \textit{SemiLinear} (Semi-lineare Funktion), \textit{Sigmoid} (Sigmoid-Funktion), \textit{Sign} (Sign-Funktion), \textit{SignDiff} (differenzierbare Sign-Funktion, mathematisch inkorrekt) und \textit{TangensHyperbolicus} (Tangens hyperbolicus).
 
 
 \subsection{Speichern \& Laden}
-Die Instanzmethode \textit{save(Network, String)} und Klassenmethode \textit{load(String)} in der \textit{NetworkHelper} Klasse, geben dem Benutzer die Optionen das erstellte \textit{Network} zu speichern und dieses auch wieder zu laden.
-Um das Netzwerk zu speichern, wird ein neues Dokument mit dem als Parameter übergebenem Namen erstellt. Damit dieses Dokument nun mit dem ausgewählten Netzwerk gefüllt wird, wird von der Klasse \textit{Network} die Methode \textit{save()} aufgerufen. Die Methode ist dafür da um das Netzwerk durchzugehen und seine Werte in das
-erstellte Dokument zu schreiben. Für das Laden eines zuvor eingespeicherten Netzwerkes rufen wir die Methode \textit{load()} der \textit{NetzwerkHelper} Klasse auf. Diese Methode bekommt den Namen des gewünschten Netzwerkes als Parameter übergeben damit nun von der \textit{Network} Klasse \textit{load()} aufgerufen werden kann. Als erstes erstellt diese ein neues leeres Netzwerk, um es danach mit den Netzwerk-Daten aus dem übergebenem Dokument zu füllen. Zuletzt wird nur noch das Netzwerk zurück gegeben.
-
-
-\subsection{Functioning}
+Die Klassenmethoden \textit{save(Network, String)} und \textit{load(String)} in der Klasse \textit{NetworkHelper}, geben dem Benutzer die Option das erstellte knN zu speichern und dieses auch wieder zu laden. Um es zu speichern, wird eine neue CSV-Datei mit dem als Parameter übergebenem Namen erstellt. Damit diese Datei nun auch mit dem übergebenen Netz gefüllt wird, wird in der jeweiligen Instanz der Klasse \textit{Network} die Methode \textit{save(BufferedWriter)} aufgerufen. Diese ist dafür da um das knN durchzugehen und seine \textit{weights} und \textit{biases} im vorgegebenen Format (also mit Semikola getrennt) in die erstellte CSV-Datei zu schreiben. Um ein zuvor gespeichertes Netz zu laden, wird die Methode \textit{load(String)} der Klasse \textit{NetworkHelper} aufgerufen, welche den Dateinamen der zu ladenden Datei fordert. Nun werden die Werte aus der gewünschten Datei gelesen und in temporäre Variablen gespeichert. Danach wird mit ihnen das entsprechende knN wieder aufgebaut und anschließend zurückgegeben.
+\\
+In bzw. aus einer separaten CSV-Datei werden mithilfe der Methoden \textit{saveFunctions(Network, String)} und \textit{loadFunctions(String)} der Klasse \textit{NetworkHelper} die einzelnen Aktivierungsfunktionen der Neuronen des knN gespeichert bzw. geladen. Auch hierbei wird das Speichern der Funktionen an das Netz übergeben, weswegen die Klasse \textit{Network} eine package-pivate Instanzmethode saveFunctions(String) besitzt.
 
 
 \subsection{toString}
 Die \textit{toString()} Methoden dienen der anschaulichen Ausgabe und ggf. Fehlersuche des knN. 
 
-\newpage
+\vspace{2cm}
 
 \section{Ergebnisse}
 Das in der Einleitung genannte Ziel, ein funktionsfähiges künstliches neuronales Netz in Java zu implementieren, wurde dieses erreicht. Dies ist begründet durch ausgiebiges Testen.
@@ -233,7 +233,7 @@ Statt einem Array bzw. einer ArrayList verwenden wir in der Backpropagation eine
 
 Für forward propagation und backpropagation fällt jeweils eine kubische Laufzeit an, welches durch die Gewichtungen (pro Zwischenraum von Layers eine Gewichtsmatrix) des Netzes begründet ist.
 
-Wenn man Wiederholungs- und Datensatziterations-Schleife in der Methode \textit{train(double[][], double[][], double, int)} berücksichtigt, ist dort sogar eine Laufzeit von $n^5$ vorhanden.
+Wenn man Wiederholungs- und Datensatziterationsschleife in der Methode \textit{train(double[][], double[][], double, int)} berücksichtigt, ist dort sogar eine Laufzeit von $n^5$ vorhanden.
 
 Neben dem eigentlichen Arbeiten mit externen Datensätzen, ist auch die Performance von Laden  \& Speichern zu berücksichtigen. Beides hat eine kubische Laufzeit, wobei beim Laden des knN durch die Benutzung von \textit{Reflection} eine lineare Laufzeit mit relativ hohem Vorfaktor zu finden ist, was das gerade Speichern von kleineren Netzes verlangsamt.
 
@@ -267,7 +267,7 @@ Unser Projekt inklusive einer Testklasse und dieses Projektberichts steht auf \t
 \vspace{1cm}
 
 \section{Anteile am Gesamtprojekt}
-Der Projektbericht wurde größtenteils zusammen angefertigt. Der Abschnitt \textit{Methoden} ist in vier Teile aufgeteilt worden. Die Abschnitte 2.2 und 2.3 wurden von Frau Zhang angefertigt, der Abschnitt 2.4 von Frau Zarkh, 2.1, 2.5 und 2.8 hat Herr Schallenberg verfasst und Abschnitt 2.6 schrieb Herr Leggewie. trotz der Kürze des zuletzt genannten Abschnitts, war der Arbeitsaufwand durch die Komplexität des Speicherns und Ladens, der gleiche, wie in den restlichen Abschnitten. Der Abschnitt 2.7 ist gemeinsam verfasst worden. Dadurch war die Arbeit am Projektbericht in etwa gleich verteilt. Auch in das Erstellen des knN (zunächst programmiersprachenunabhängig) haben alle ungefähr gleich viel Arbeit investiert. Das Übersetzen des Netzes in die konkrete Programmiersprache Java wurde überwiegend von Herrn Schallenberg stets mithilfe des restlichen Teams, dessen Überlegungen zur Implementierung ebenfalls mit in das Programm einflossen, umgesetzt. Durch einige weitere sehr gute Umsetzungsideen, entstand für Frau Zhang ein zusätzlicher Arbeitsaufwand.
+Der Projektbericht wurde größtenteils zusammen angefertigt. Der Abschnitt \textit{Methoden} ist in vier Teile aufgeteilt worden. Die Abschnitte 2.2 und 2.3 wurden von Frau Zhang angefertigt, der Abschnitt 2.4 von Frau Zarkh, 2.1, 2.5 und 2.8 hat Herr Schallenberg verfasst und Abschnitt 2.7 schrieb Herr Leggewie. trotz der Kürze des zuletzt genannten Abschnitts, war der Arbeitsaufwand durch die Komplexität des Speicherns und Ladens, der gleiche, wie in den restlichen Abschnitten. Der Abschnitt 2.6 ist gemeinsam verfasst worden. Dadurch war die Arbeit am Projektbericht in etwa gleich verteilt. Auch in das Erstellen des knN (zunächst programmiersprachenunabhängig) haben alle ungefähr gleich viel Arbeit investiert. Das Übersetzen des Netzes in die konkrete Programmiersprache Java wurde überwiegend von Herrn Schallenberg stets mithilfe des restlichen Teams, dessen Überlegungen zur Implementierung ebenfalls mit in das Programm einflossen, umgesetzt. Durch einige weitere sehr gute Umsetzungsideen, entstand für Frau Zhang ein zusätzlicher Arbeitsaufwand.
 
 \vspace{1cm}
 
