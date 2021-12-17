@@ -60,7 +60,7 @@
 Ein künstliches neuronales Netz (knN) besteht aus vielen kleinen Verarbeitungseinheiten, die durch Gewichtungen miteinander kommunizieren, wie definiert durch Abschnitt 2.1 in “An Introduction to Neural Networks” \cite{script}.
 
 \subsection{Aufgabenstellung \& Zielsetzung}
-Die Aufgabenstellung lautete zunächst, die Grundlagen eines künstlichen neuronalen Netzes (knN) in Java zu implementieren, sodass mit diesem schon zu einfachen Eingaben eine korrekte Ausgabe kalkuliert wird (Forward Propagation). Diese weiteten sich darauf aus, das Netz trainieren zu können (Backpropagation) und die trainierten Einstellungen des Netzes zu speichern und zu laden.\\
+Die Aufgabenstellung lautete zunächst, die Grundlagen eines solchen künstlichen neuronalen Netzes in Java zu implementieren, sodass mit diesem schon zu einfachen Eingaben eine korrekte Ausgabe kalkuliert wird (Forward Propagation). Jene weitete sich darauf aus, das Netz trainieren zu können (Backpropagation) und die trainierten Einstellungen des Netzes zu speichern sowie zu laden.\\
 Das Ziel war, die erste Hälfte der Aufgabenstellung in den ersten zwei Wochen und die zweite Hälfte in den folgenden zwei Wochen umzusetzen und so ein funktionsfähiges künstliches neuronales Netz in Java zu implementieren.
 
 \subsection{Aufgabenkontext \& externe Vorgaben}
@@ -73,7 +73,7 @@ Nicht vorgegeben, aber notwendigerweise festgelegt wurde, dass beim Erstellen ei
 \subsection{Literaturarbeit: Verweis auf Vorarbeiten}
 Die wissenschaftliche Arbeit von Kröse und van der Smagt \cite{script}, welches den Aufbau eines knN beschreibt, sowie Erweiterungen dessen, dient der Definition, dem Grundverständnis und dem groben Aufbau eines solchen Netzes.
 Das mathematische Verständnis und die darauf aufbauende Implementierung des knN ergab sich aus den Videos 
-der Playlist von 3Blue1Brown \cite{3b1b}.
+der Playlist des YouTube-Kanals 3Blue1Brown \cite{3b1b}.
 
 \newpage
 
@@ -82,12 +82,12 @@ der Playlist von 3Blue1Brown \cite{3b1b}.
 Die Klassenstruktur des Programmes besteht aus den Klassen \textit{Neuron}, \textit{Network}, \textit{NetworkHelper} sowie \textit{ActivationFunction} und davon abgeleitete Klassen und einer zusätzlichen Utility-Klasse \textit{Util}.
 
 \subsection{Util}
-Die Klasse \textit{Util} bietet drei abstrakte Hilfsmethoden. \textit{random(int)} gibt ein beliebig-dimensionales Array mit zufälligen Zahlen zurück. \textit{addToVec1(double[], double[])} addiert einen Vektor auf den anderen. Die dritte Methode \textit{mulToVec(double, double[])} multipliziert ein Skalar auf einen Vektor. Dies erleichtert das Kreieren und den Umgang mit Vektoren bzw. Arrays im knN.
+Die Klasse \textit{Util} bietet drei abstrakte Hilfsmethoden. \textit{random(int)} gibt ein beliebig-dimensionales Array mit zufälligen Zahlen zurück. \textit{addToVec1(double[], double[])} addiert einen Vektor auf den anderen. Die dritte Methode \textit{mulToVec(double, double[])} multipliziert ein Skalar auf einen Vektor. Jene Methoden erleichtern das Kreieren und den Umgang mit Vektoren bzw. Arrays im knN.
 
 
 \subsection{Klassenstruktur Network \& Neuron} %Sui Yin
-Im \textit{Neuron} sind die \textit{weights}, der \textit{bias}, die Aktivierungsfunktion und eine Hilfsvariable \textit{z} als private Attribute deklarieren.
-Es befinden sich zwei Konstruktoren in der Klasse, wobei der Erste den Zweiten mit zufälligen \textit{weights} und einem \textit{bias}=0 sowie der Aktivierungsfunktion aufruft und der Zweite dafür zuständig ist, ein genau definiertes Neuron zu kreieren.
+Im \textit{Neuron} sind die \textit{weights}, der \textit{bias}, die Aktivierungsfunktion und eine Hilfsvariable \textit{z} als private Attribute deklariert.
+Es befinden sich zwei Konstruktoren in der Klasse, wobei der Erste den Zweiten mit zufälligen \textit{weights} und einem $bias=0$ sowie der Aktivierungsfunktion aufruft und der Zweite dafür zuständig ist, ein genau definiertes Neuron zu kreieren.
 
 In der Klasse \textit{Network} wird das knN erstellt.
 Es gibt vier private Attribute, die in den Methoden mehrfach benutzt werden. Das erste private Attribut “inLayerLength” definiert die Länge der “inputLayer”. Die “outputLayer” besteht aus einem eindimensionalen \textit{Neuron}-Array. Dann gibt es noch das Attribut “hiddenLayers”, welches ein zweidimensionales \textit{Neuron}-Array ist, wo der erste Index die Position der jeweiligen Hiddenlayer und der zweite die jeweilige Position des \textit{Neuron}s angibt. Zuletzt gibt es das Attribut “trainable”, welches einen Wahrheitswert ist und standardmäßig wahr ist.
@@ -97,19 +97,15 @@ Die Klasse \textit{NetworkHelper} ist dafür da, um Netzwerke zu speichern und z
 
 \subsection{Konstruktoren \& Initialisierung}
 In der Klasse \textit{Network} gibt es insgesamt 6 Konstruktoren.
-Diese rufen eine “init”-Methode auf um redundanten Code zu verhindern. Die "init"-Methode hat vier Parameter: \textit{int}, \textit{int}, \textit{BiFunction} und ein \textit{int[]}. Die \textit{BiFunction} wird dazu verwendet, der Methode mitzuteilen, wie die Neuronen erstellt werden sollen.
+Diese rufen eine Methode \textit{init} auf um redundanten Code zu verhindern. \textit{init} hat vier Parameter: \textit{int}, \textit{int}, \textit{BiFunction} und ein \textit{int[]}. Die \textit{BiFunction} wird dazu verwendet, der Methode mitzuteilen, wie die Neuronen erstellt werden sollen.
 Zuerst werden alle Attribute außer “trainable” entweder direkt mit den passenden Werten oder durch erstellen eines Arrays passender Größe initialisiert.
-Darauf folgen zwei Iterationen um diese Arrays mit den übergebenen Werten zu initialisieren.
+Darauf folgen zwei Iterationen um diese Arrays mit den übergebenen Werten zu initialisieren. Dabei wird überprüft, ob das knN trainierbar ist, also ob die Ableitung der Aktivierungsfunktion differenzierbar ist. Falls sie es nicht ist, wird dies zwar zugelassen, führt aber dazu, dass das Netz nicht trainierbar ist (trainable wird auf false gesetzt).
 
 Der erste Konstruktor ist dafür da, um ein Netzwerk zu erstellen, wo die Attribute “numInUnit” (die Anzahl der Input Units), ”numOutUnit”(die Anzahl der Output Units), “weights”, ”biases”, sowie die Anzahl der Hiddenlayers gegeben sind. Als Aktivierungsfunktionen \hyperlink{functioning}{(siehe Abschnitt 2.6)} wird hier eine Standardfunktion (Sigmoid) gewählt. Durch die Differenzierbarkeit der Sigmoid-Funktion ist ein solches knN also trainierbar.
-% -> kann gar nicht sein, dass es nicht trainierbar ist, da es default function immer ableitbar ist.
-
 Danach folgt der gleiche Konstruktor, mit dem Unterschied, dass die “weights” und die “biases” nicht angegeben sind.
-
-In den nächsten Konstruktoren, die Aktivierungsfunktionen übergeben bekommen, wird immer erst überprüft, ob das knN trainierbar ist, also ob die Ableitungsfunktion differenzierbar ist. Falls sie es nicht ist, wird dies zwar zugelassen, führt aber dazu, dass das Netz nicht trainierbar ist (trainable wird gleich null gesetzt).
-
+\\
+Den nächsten Konstruktoren werden Aktivierungsfunktionen übergeben.
 Der dritte und vierte Konstruktor haben einen ähnlichen Aufbau von den Parametern wie der erste und zweite Konstruktor, mit dem Unterschied, dass diesmal eine Aktivierungsfunktion für alle Neuronen übergeben wird.
-
 Statt allen Neuronen die gleiche Aktivierungsfunktion zu geben, bekommen die Neuronen in den letzten beiden Konstruktoren jeweils Eigene.
 
 
@@ -148,7 +144,7 @@ Die Umsetzung der Backpropagation ist an die Mathematik von 3Blue1Brown \hyperli
 
 
 \hypertarget{functioning}{\subsection{Functioning}}
-Das Interface \textit{ActivationFunction} besitzt eine globale Konstante “DEFAULT\_FUNCTION”, die mit dem Wert einer Sigmoid-Funktion initialisiert ist und vier abstrakten Methoden \textit{function(double)}, \textit{derivative(double)}, \textit{toBuffer(BufferedWriter)} und \textit{fromBuffer(Scanner)}, welche eine mathematische Funktion sowie deren Ableitung repräsentieren soll und dem Speichern und Laden einer Aktivierungsfunktion dienen. Ein JavaDoc Kommentar weißt darauf hin, dass jede von diesem Interface abgeleitete Klasse einen Konstruktor besitzen muss, welche keine Parameter nimmt, damit von der Klasse dargestellte Aktivierungsfunktion korrekt geladen werden kann. \\
+Das Interface \textit{ActivationFunction} besitzt eine globale Konstante “DEFAULT\_FUNCTION”, die mit dem Wert einer Sigmoid-Funktion initialisiert ist und vier abstrakte Methoden \textit{function(double)}, \textit{derivative(double)}, \textit{toBuffer(BufferedWriter)} und \textit{fromBuffer(Scanner)}, welche eine mathematische Funktion sowie deren Ableitung repräsentieren soll und dem Speichern und Laden einer Aktivierungsfunktion dienen. Ein JavaDoc Kommentar weißt darauf hin, dass jede von diesem Interface abgeleitete Klasse einen Konstruktor besitzen muss, welcher keine Parameter nimmt, damit die von der Klasse dargestellte Aktivierungsfunktion korrekt geladen werden kann. \\
 Zudem gibt es die vorimplementierten Aktivierungsfunktionen \textit{Identity} (Identitätsfunktion), \textit{Logistic} (logistische Funktion), \textit{SemiLinear} (Semi-lineare Funktion), \textit{Sigmoid} (Sigmoid-Funktion), \textit{Sign} (Sign-Funktion), \textit{SignDiff} (differenzierbare Sign-Funktion, mathematisch inkorrekt) und \textit{TangensHyperbolicus} (Tangens hyperbolicus).
 
 
