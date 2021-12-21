@@ -4,12 +4,22 @@ import main.functions.ActivationFunction;
 import main.functions.Identity;
 import main.functions.Sign;
 import main.functions.SignDiff;
+import main.imageadapter.ImageAdapter;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 public class TestSuite {
+
+	public static void main(String[] args) {
+		ImageAdapter.init();
+	}
+
+	@Test
+	public void testImageAdapter() {
+		ImageAdapter.init();
+	}
 
 	@Test
 	public void testSaveLoad() throws IOException {
@@ -75,7 +85,6 @@ public class TestSuite {
 
 	@Test
 	public void trainXOR() {
-		//Network network = new Network(2, 1, new SignDiff(0d, 0d, 1d), 2);
 		Network network = new Network(2, 1, new Identity(), 2);
 
 		double[][] inputs = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
