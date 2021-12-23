@@ -1,10 +1,10 @@
 package main;
 
+import main.computervision.imageadapter.ImageAdapter;
 import main.functions.ActivationFunction;
 import main.functions.Identity;
 import main.functions.Sign;
 import main.functions.SignDiff;
-import main.imageadapter.ImageAdapter;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

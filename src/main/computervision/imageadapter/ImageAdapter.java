@@ -1,4 +1,4 @@
-package main.imageadapter;
+package main.computervision.imageadapter;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -8,31 +8,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ImageAdapter {
-	private static final String PATH = "resources/images/road_sign_";
-	private static final int WIDTH = 64;
-	private static final int HEIGHT = 64;
+	private static final String PATH = "resources/images/";
+	public static final int WIDTH = 64;
+	public static final int HEIGHT = 64;
 
-	public static final ArrayList<int[]> rgbValues = new ArrayList<>();
+	public static final ArrayList<TrainData> TRAIN_DATA = new ArrayList<>();
 
 	public static void init() {
-		for(int i = 0; true; i++) {
-			try {
-				System.out.println(i);
-				BufferedImage img = ImageIO.read(new File(PATH + i + ".png"));
+		addTrainData("road_sign_0.png", RoadSignLabel.STOP);
+		addTrainData("test.png", RoadSignLabel.GIVE_WAY);
 
-				BufferedImage imgCropped = squareImage(img);
-				File imageCropped =  new File(PATH + "imageCropped.png");
-				ImageIO.write(imgCropped, "png", imageCropped);
+		System.out.println("[ImageAdapter] Finished initializing. " + TRAIN_DATA.size() + " images loaded");
+	}
 
-				BufferedImage imgScaled = scaleImage(imgCropped);
-				File imageScaled =  new File(PATH + "imageScaled.png");
-				ImageIO.write(imgScaled, "png", imageScaled);
+	private static void addTrainData(String filename, RoadSignLabel label) {
+		TRAIN_DATA.add(new TrainData(getRGBs(scaleImage(squareImage(loadImage(filename)))), label));
+	}
 
-				rgbValues.add(getRGBs(img));
-			} catch(IOException e) {
-				System.out.println("[ImageAdapter] Finished initializing");
-				break;
-			}
+	private static BufferedImage loadImage(String filename) {
+		try {
+			return ImageIO.read(new File(PATH + filename));
+		} catch(IOException e) {
+			throw new IllegalArgumentException(e);
 		}
 	}
 
@@ -68,5 +65,24 @@ public class ImageAdapter {
 		g.drawImage(image, 0, 0, null);
 		g.dispose();
 		return newImage;
+	}
+
+	public static double[][] getInput() {
+		double[][] input = new double[TRAIN_DATA.size()][WIDTH * HEIGHT];
+
+		for(int i = 0; i < input.length; i++)
+			for(int j = 0; j < input[i].length; j++)
+				input[i][j] = TRAIN_DATA.get(i).image()[j];
+
+		return input;
+	}
+
+	public static double[][] getLabels() {
+		double[][] labels = new double[TRAIN_DATA.size()][RoadSignLabel.values().length];
+
+		for(int i = 0; i < labels.length; i++)
+			labels[i][TRAIN_DATA.get(i).label().index] = 1d;
+
+		return labels;
 	}
 }
