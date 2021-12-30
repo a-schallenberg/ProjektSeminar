@@ -17,6 +17,41 @@ public class ImageAdapter {
 	public static void init() {
 		addTrainData("road_sign_0.png", RoadSignLabel.STOP);
 		addTrainData("test.png", RoadSignLabel.GIVE_WAY);
+		addTrainData("road_sign_1.png", RoadSignLabel.DANGER);
+		addTrainData("road_sign_2.png", RoadSignLabel.NO_ENTRANCE);
+		addTrainData("road_sign_3.png", RoadSignLabel.CROSS);
+		addTrainData("road_sign_4.png", RoadSignLabel.STOP);
+		addTrainData("road_sign_5.png", RoadSignLabel.DANGER);
+		addTrainData("road_sign_6.png", RoadSignLabel.NO_ENTRANCE);
+		addTrainData("road_sign_7.png", RoadSignLabel.NO_ENTRANCE);
+		addTrainData("road_sign_8.png", RoadSignLabel.SIDE_WALK);
+		addTrainData("road_sign_9.png", RoadSignLabel.GIVE_WAY);
+		addTrainData("road_sign_10.png", RoadSignLabel.NO_ENTRANCE);
+		addTrainData("road_sign_11_hard_to_read.png", RoadSignLabel.SIDE_WALK);
+		addTrainData("road_sign_12.png", RoadSignLabel.NO_ENTRANCE);
+		addTrainData("road_sign_13.png", RoadSignLabel.CROSSWALK);
+		addTrainData("road_sign_14.png", RoadSignLabel.SIDE_WALK);
+		addTrainData("road_sign_15.png", RoadSignLabel.MAIN_ROAD);
+		addTrainData("road_sign_16.png", RoadSignLabel.GIVE_WAY);
+		addTrainData("road_sign_17.png", RoadSignLabel.GIVE_WAY);
+		addTrainData("road_sign_18.png", RoadSignLabel.SIDE_WALK);
+		addTrainData("road_sign_19.png", RoadSignLabel.SIDE_WALK);
+		addTrainData("road_sign_20.png", RoadSignLabel.SIDE_WALK);
+		addTrainData("road_sign_21.png", RoadSignLabel.NO_ENTRANCE);
+		addTrainData("road_sign_22.png", RoadSignLabel.SIDE_WALK);
+		addTrainData("road_sign_23.png", RoadSignLabel.MAIN_ROAD);
+		addTrainData("road_sign_24.png", RoadSignLabel.CROSSWALK);
+		addTrainData("road_sign_25.png", RoadSignLabel.CROSSWALK);
+		addTrainData("road_sign_26.png", RoadSignLabel.SIDE_WALK);
+		addTrainData("road_sign_27.png", RoadSignLabel.CROSS);
+		addTrainData("road_sign_28.png", RoadSignLabel.CROSS);
+		addTrainData("road_sign_29.png", RoadSignLabel.CROSS);
+		addTrainData("road_sign_30.png", RoadSignLabel.CROSS);
+		addTrainData("road_sign_31.png", RoadSignLabel.MAIN_ROAD);
+		addTrainData("road_sign_32.png", RoadSignLabel.MAIN_ROAD);
+		addTrainData("road_sign_33.png", RoadSignLabel.MAIN_ROAD);
+		addTrainData("road_sign_34.png", RoadSignLabel.MAIN_ROAD);
+
 
 		System.out.println("[ImageAdapter] Finished initializing. " + TRAIN_DATA.size() + " images loaded");
 	}
