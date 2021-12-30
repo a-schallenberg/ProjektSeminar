@@ -1,0 +1,87 @@
+\documentclass[paper=A4,pagesize=auto,12pt,headinclude=true,footinclude=true,BCOR=0mm,DIV=calc]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[ngerman]{babel}
+\usepackage[hidelinks]{hyperref}
+\usepackage{setspace}
+\usepackage[left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry}
+\usepackage[backend=biber, style=ieee, citestyle=ieee]{biblatex}
+\onehalfspacing
+
+\bibliography{forschungsbericht}
+
+%opening
+\title{Auswirkungen eines Hintergrundes auf die Identifikation von Objekten in Bildern mithilfe eines Convolutional Neural Network}
+\author{Alexandra Zarkh, Sui Yin Zhang,\\ Lennart Leggewie und Alexander Schallenberg}
+
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	\null
+	\vskip 2em%
+	\begin{center}%
+		\let \footnote \thanks
+		{\Huge \textbf{\@title} \par}%
+		\vskip 3em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 2em%
+		{\large Hochschule Bonn-Rhein-Sieg, Fachbereich Informatik, D-53757\par}%
+		\vskip 2em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip 1.5em}
+\makeatother
+
+
+
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+
+\section{Zusammenfassung}
+
+
+\section{Einleitung}
+
+\subsection{Verwendete Literatur}
+
+\subsection{Theorie}
+
+\subsection{Fragestellung}
+
+
+\section{Methoden}
+
+
+\section{Ergebnisse}
+
+
+\section{Grafiken \& Tabellen}
+
+
+\section{Diskussion}
+
+
+\printbibliography[heading=bibnumbered]
+
+
+\section{Anhang}
+
+
+
+\end{document}
