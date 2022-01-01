@@ -1,4 +1,4 @@
-package main.computervision.imageadapter;
+package main.convnet.test;
 
 public enum RoadSignLabel {
 	CROSS(0), 		//Andreas Kreuz 5
@@ -14,5 +14,11 @@ public enum RoadSignLabel {
 
 	RoadSignLabel(int index) {
 		this.index = index;
+	}
+
+	public int[] getTarget() {
+		int[] vec = new int[RoadSignLabel.values().length];
+		vec[index] = 1;
+		return vec;
 	}
 }

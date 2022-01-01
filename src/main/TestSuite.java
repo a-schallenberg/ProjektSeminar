@@ -1,6 +1,6 @@
 package main;
 
-import main.computervision.imageadapter.ImageAdapter;
+import main.convnet.ImageAdapter;
 import main.functions.ActivationFunction;
 import main.functions.Identity;
 import main.functions.Sign;
@@ -12,14 +12,7 @@ import java.util.Arrays;
 
 public class TestSuite {
 
-	public static void main(String[] args) {
-		ImageAdapter.init();
-	}
-
-	@Test
-	public void testImageAdapter() {
-		ImageAdapter.init();
-	}
+	public static void main(String[] args) {}
 
 	@Test
 	public void testSaveLoad() throws IOException {
