@@ -57,6 +57,14 @@ public class ImageAdapter {
 //		addTrainData("road_sign_32.png", RoadSignLabel.MAIN_ROAD);
 //		addTrainData("road_sign_33.png", RoadSignLabel.MAIN_ROAD);
 //		addTrainData("road_sign_34.png", RoadSignLabel.MAIN_ROAD);
+// 		addTrainData("road_sign_35.png", RoadSignLabel.STOP);
+// 		addTrainData("road_sign_36.png", RoadSignLabel.STOP);
+// 		addTrainData("road_sign_37.png", RoadSignLabel.NO_ENTRANCE);
+// 		addTrainData("road_sign_38.png", RoadSignLabel.NO_ENTRANCE);
+// 		addTrainData("road_sign_39_multiple_signs.png", RoadSignLabel.CROSSWALK);
+// 		addTrainData("road_sign_40.png", RoadSignLabel.CROSSWALK);
+// 		addTrainData("road_sign_41.png", RoadSignLabel.CROSSWALK);
+// 		addTrainData("road_sign_42.png", RoadSignLabel.GIVE_WAY);
 //
 //
 //		System.out.println("[ImageAdapter] Finished initializing. " + TRAIN_DATA.size() + " images loaded");
