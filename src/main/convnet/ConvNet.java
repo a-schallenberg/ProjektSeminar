@@ -18,7 +18,7 @@ public class ConvNet extends Network{
 	}
 
 	public void addTrainData(String filename, int[] target) {
-		trainData.add(new TrainData(imageAdapter.getImageARGBs(filename), target));
+		trainData.add(new TrainData(imageAdapter.getImageRGBs(filename), target));
 	}
 
 	private double[][] getImages() {

@@ -11,7 +11,7 @@ public class RoadSignTest {
 	}
 	
 	private static void test() {
-		ConvNet net = new ConvNet("resources/images/", 64, 64, RoadSignLabel.values().length, 16, 16);
+		ConvNet net = new ConvNet("resources/images/", 64, 64, RoadSignLabel.values().length, 32, 32, 32, 32);
 
 		System.out.println("Start loading images");
 		long start = System.currentTimeMillis();
@@ -51,9 +51,17 @@ public class RoadSignTest {
 		net.addTrainData("road_sign_32.png", MAIN_ROAD.getTarget());
 		net.addTrainData("road_sign_33.png", MAIN_ROAD.getTarget());
 		net.addTrainData("road_sign_34.png", MAIN_ROAD.getTarget());
+		net.addTrainData("road_sign_35.png", STOP.getTarget());
+		net.addTrainData("road_sign_36.png", STOP.getTarget());
+		net.addTrainData("road_sign_37.png", NO_ENTRANCE.getTarget());
+		net.addTrainData("road_sign_38.png", NO_ENTRANCE.getTarget());
+		net.addTrainData("road_sign_39_multiple_signs.png", CROSSWALK.getTarget());
+		net.addTrainData("road_sign_40.png", CROSSWALK.getTarget());
+		net.addTrainData("road_sign_41.png", CROSSWALK.getTarget());
+		net.addTrainData("road_sign_42.png", GIVE_WAY.getTarget());
 
 		System.out.println("Finished loading images in " + (System.currentTimeMillis() - start) + "ms");
 
-		net.train(0.2, 1000);
+		net.train(0.12, 10000);
 	}
 }
