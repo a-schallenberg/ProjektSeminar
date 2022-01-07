@@ -19,16 +19,20 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{\numberline {3.2.1}ConvNet}{3}{subsubsection.3.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.2}ImageAdapter}{3}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.2}ImageAdapter}{4}{subsubsection.3.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.3}Testen}{3}{subsubsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.3}TrainData}{4}{subsubsection.3.2.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Ergebnisse}{3}{section.4}%
+\contentsline {subsubsection}{\numberline {3.2.4}Test-Dateien}{4}{subsubsection.3.2.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Grafiken \& Tabellen}{3}{section.5}%
+\contentsline {subsection}{\numberline {3.3}Tests}{4}{subsection.3.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Diskussion}{3}{section.6}%
+\contentsline {section}{\numberline {4}Ergebnisse}{4}{section.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7}Literatur}{3}{section.7}%
+\contentsline {section}{\numberline {5}Grafiken \& Tabellen}{4}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {8}Anhang}{4}{section.8}%
+\contentsline {section}{\numberline {6}Diskussion}{5}{section.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7}Literatur}{5}{section.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {8}Anhang}{5}{section.8}%

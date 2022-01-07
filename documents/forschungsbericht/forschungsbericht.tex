@@ -9,6 +9,7 @@
 \usepackage{setspace}
 \usepackage[left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry}
 \usepackage[backend=biber, style=ieee, citestyle=ieee]{biblatex}
+\usepackage[table]{xcolor}
 \onehalfspacing
 
 \bibliography{forschungsbericht}
@@ -40,6 +41,54 @@
 	\vskip 1.5em}
 \makeatother
 
+
+\setlength{\arrayrulewidth}{0.3mm}
+\setlength{\tabcolsep}{10pt}
+
+\newcommand{\equations}{
+\rowcolors{2}{white}{lightgray}
+\begin{equation}
+	\begin{tabular}{|c|c|}
+		\hline
+		\multicolumn{2}{|c|}{\textbf{Schildbilder im Trainingsdatensatz}}\\ \hline \hline
+		\textbf{Andreaskreuz} & 5 \\ \hline
+		\textbf{Fußgängerüberweg} & 6 \\ \hline
+		\textbf{Gefahrenstelle} & 2 \\ \hline
+		\textbf{Vorfahrt gewähren} & 5 \\ \hline
+		\textbf{Vorfahrtsstraße} & 6 \\ \hline
+		\textbf{Verbot der Einfahrt} & 8 \\ \hline
+		\textbf{Fußgängerweg} & 8 \\ \hline
+		\textbf{Stopp} & 4 \\ \hline
+	\end{tabular}
+\end{equation}
+\vspace{2em}
+\begin{equation}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		\multicolumn{6}{|c|}{\textbf{Anzahl Neuronen im CNN}}\\ \hline \hline
+		\textbf{Input} & \textbf{Hidden 1} & \textbf{Hidden 2} & \textbf{Hidden 3} & \textbf{Hidden 4} & \textbf{Output}\\ \hline
+		4096 & 64 & 64 & 64 & 64 & 8\\ \hline
+	\end{tabular}
+\end{equation}
+\vspace{2em}
+\begin{equation}
+	\begin{tabular}{|c|c|}
+		\hline
+		\multicolumn{2}{|c|}{\textbf{Bildgröße}}\\ \hline \hline
+		\textbf{Höhe} & \textbf{Breite}\\ \hline
+		64 & 64\\ \hline
+	\end{tabular}
+\end{equation}
+\vspace{2em}
+\begin{equation}
+	\begin{tabular}{|c|c|}
+		\hline
+		\multicolumn{2}{|c|}{\textbf{Training}}\\ \hline \hline
+		\textbf{Lernrate} & \textbf{Wiederholungen}\\ \hline
+		0.12 & 100000\\ \hline
+	\end{tabular}
+\end{equation}
+}
 
 
 
@@ -75,19 +124,26 @@ Die Hauptfrage ist nun: Welche Auswirkungen hat ein Hintergrund eines Bildes auf
 %Sui Yin
 
 \subsubsection{ConvNet} %Alex
+Die Klasse \textit{ConvNet} soll ein Convolutional Neural Network darstellen und erbt daher von der im Projektbericht \cite{projektbericht} unter Abschnitt 2 genannten Klasse \textit{Network}, was jener die gleichen Eigenschaften verleiht. Des Weiteren besitzt sie eine \textit{java.util.ArrayList} vom Generic-Typ \textit{TrainData} und einen \textit{ImageAdapter} als private konstante Attribute. Erstere dient dem Speichern von Trainingsdatensätzen, die dann mit dem Aufrufen der überladenen Methode \textit{train(double, int)} benutzt werden. Diese ruft die originale Instanz-Methode \textit{train(double[][], double[][], double, int)} der Klasse \textit{Network} mit den Daten aus der \textit{ArrayList} auf.
+Außerdem bietet die Klasse \textit{ConvNet} die Instanz-Methode \textit{addTrainData(String, int[])} um dieser Trainingsdatensätze hinzuzufügen. Diese nimmt einen Dateinamen von einem Bild und einen ganzzahligen Zielvektor. Zwei private nicht-statische Hilfsmethoden \textit{getImages()} und \textit{getTargets()} dienen der besseren Handhabung der \textit{ArrayList}.\\
+Die Klasse erstellt durch den Konstruktor \textit{ConvNet(String, int, int, int, int...)} (Pfad zum Ordner mit den Bildern, gewünschte Bildweite, -höhe, Anzahl der Output-Neuronen, Anzahl der Hiddenlayers und deren Neuronen) von ihr abgeleitete Objekte.
 
 \subsubsection{ImageAdapter} %Sui Yin
 
-\subsubsection{Testen} %Alex
+\subsubsection{TrainData}
+Das Record \textit{TrainData(int[], int[])} besitzt einen Vektor mit den RGB-Werten eines Bildes und einen Zielvektor. Außerdem hat es zwei Instanz-Methoden \textit{getImageAsDoubleArray()} und \textit{getTargetAsDoubleArray()}, welche die jeweiligen ganzzahligen Vektoren als Gleitkommazahl-Vektoren zurückgibt, und eine private nicht-statische Hilfsmethode \textit{getIntAsDoubleArray(int[])}.
+
+\subsubsection{Test-Dateien} %Alex
+Für das Testen wurden ein Enum \textit{RoadSignLabel} und eine Klasse \textit{RoadSignTest} implementiert. Das Enum zählt die möglichen Ergebnisse des Netzes auf, indiziert sie und kann den jeweils richtigen Zielvektor durch die Instanz-Methode \textit{getTarget()} zurückgeben. In der Klasse befindet sich die für die Forschungsfrage relevante Main-Methode des Programms. Diese ruft eine private statische Methode \textit{test()} in der selben Klasse auf. In dieser wird ein \textit{ConvNet} deklariert und initialisiert, mit Datensätzen bestückt und trainiert. Dabei werden einige hilfreiche Ausgaben gemacht.
+
+\subsection{Tests}
 
 
 \section{Ergebnisse}
 
 
 \section{Grafiken \& Tabellen}
-\begin{equation}
-	(x_1, x_2)
-\end{equation}
+\equations
 
 \section{Diskussion}
 

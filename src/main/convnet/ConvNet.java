@@ -5,7 +5,7 @@ import main.Network;
 import java.util.ArrayList;
 
 public class ConvNet extends Network{
-	public final ArrayList<TrainData> trainData = new ArrayList<>();
+	private final ArrayList<TrainData> trainData = new ArrayList<>();
 	private final ImageAdapter imageAdapter;
 
 	public ConvNet(String path, int imgWidth, int imgHeight, int numOutUnit, int... numHidUnit) {
@@ -36,10 +36,4 @@ public class ConvNet extends Network{
 
 		return matrix;
 	}
-
-//	public static void main(String[] args) {
-//		ImageAdapter.init();
-//		init();
-//		train();
-//	}
 }

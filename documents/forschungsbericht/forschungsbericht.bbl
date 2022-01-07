@@ -19,62 +19,42 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global}
-    \entry{script}{article}{}
-      \name{author}{2}{}{%
-        {{hash=f9c93a3ae820adf897722a2857cb25e4}{%
-           family={Kröse},
-           familyi={K\bibinitperiod},
-           given={Ben},
-           giveni={B\bibinitperiod}}}%
-        {{hash=2118bde20d3b527fd70b3f0c5e339130}{%
-           family={Smagt},
+    \entry{projektbericht}{article}{}
+      \name{author}{4}{}{%
+        {{hash=c74654b662529ce3d5efa30d1e3d6fb0}{%
+           family={Leggewie},
+           familyi={L\bibinitperiod},
+           given={Lennart},
+           giveni={L\bibinitperiod}}}%
+        {{hash=d1632f7dc782cd74b5047a44f39fd6e6}{%
+           family={Schallenberg},
            familyi={S\bibinitperiod},
-           given={Patrick},
-           giveni={P\bibinitperiod},
-           prefix={van\bibnamedelima der},
-           prefixi={v\bibinitperiod\bibinitdelim d\bibinitperiod}}}%
+           given={Alexander},
+           giveni={A\bibinitperiod}}}%
+        {{hash=7e3586f91f3adb83919bc3d41b960bd1}{%
+           family={Zarkh},
+           familyi={Z\bibinitperiod},
+           given={Alexandra},
+           giveni={A\bibinitperiod}}}%
+        {{hash=4d9689c6f11fac40b2e0b26ff79814c7}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Sui\bibnamedelima Yin},
+           giveni={S\bibinitperiod\bibinitdelim Y\bibinitperiod}}}%
       }
-      \strng{namehash}{676559a6d0310bff59015d6c1ff3badb}
-      \strng{fullhash}{676559a6d0310bff59015d6c1ff3badb}
-      \strng{bibnamehash}{676559a6d0310bff59015d6c1ff3badb}
-      \strng{authorbibnamehash}{676559a6d0310bff59015d6c1ff3badb}
-      \strng{authornamehash}{676559a6d0310bff59015d6c1ff3badb}
-      \strng{authorfullhash}{676559a6d0310bff59015d6c1ff3badb}
+      \strng{namehash}{b1911d9b8483f1ec7df6e99029dfddf0}
+      \strng{fullhash}{e97377637b36bbd3f37870a70e981fba}
+      \strng{bibnamehash}{e97377637b36bbd3f37870a70e981fba}
+      \strng{authorbibnamehash}{e97377637b36bbd3f37870a70e981fba}
+      \strng{authornamehash}{b1911d9b8483f1ec7df6e99029dfddf0}
+      \strng{authorfullhash}{e97377637b36bbd3f37870a70e981fba}
       \field{sortinit}{1}
       \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{edition}{8}
-      \field{title}{An Introduction to Neural Networks}
-      \field{year}{1996}
-    \endentry
-    \entry{3b1b}{online}{}
-      \name{author}{1}{}{%
-        {{hash=5dd1de74b15229ad68590a5ce3ade3c5}{%
-           family={Sanderson},
-           familyi={S\bibinitperiod},
-           given={Grant},
-           giveni={G\bibinitperiod}}}%
-      }
-      \strng{namehash}{5dd1de74b15229ad68590a5ce3ade3c5}
-      \strng{fullhash}{5dd1de74b15229ad68590a5ce3ade3c5}
-      \strng{bibnamehash}{5dd1de74b15229ad68590a5ce3ade3c5}
-      \strng{authorbibnamehash}{5dd1de74b15229ad68590a5ce3ade3c5}
-      \strng{authornamehash}{5dd1de74b15229ad68590a5ce3ade3c5}
-      \strng{authorfullhash}{5dd1de74b15229ad68590a5ce3ade3c5}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Neural Networks}
-      \field{year}{2018}
-      \verb{urlraw}
-      \verb https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
-      \endverb
-      \verb{url}
-      \verb https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
-      \endverb
-      \warn{\item Entry '3b1b' (projektbericht.bib): Invalid format '09.12.2021' of date field 'urldate' - ignoring}
+      \field{pubstate}{unpublished}
+      \field{title}{Neuronale Netze Projektbericht}
+      \field{year}{2021}
     \endentry
   \enddatalist
 \endrefsection
