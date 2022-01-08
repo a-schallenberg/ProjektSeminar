@@ -10,6 +10,7 @@
 \usepackage[left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry}
 \usepackage[backend=biber, style=ieee, citestyle=ieee]{biblatex}
 \usepackage[table]{xcolor}
+\usepackage{graphicx}
 \onehalfspacing
 
 \bibliography{forschungsbericht}
@@ -90,6 +91,12 @@
 \end{equation}
 }
 
+\newcommand{\imgcnn}{
+\begin{equation}
+	\includegraphics[width=6cm]{"images/cnn.png"}
+\end{equation}
+}
+
 
 
 \begin{document}
@@ -103,32 +110,74 @@
 
 
 \section{Zusammenfassung}
+Im folgenden Text werden Sie ein Convolutional Neural Network, oder kurz CNN, welches in Java programmiert wurde, im Detail kennenlernen. Außerdem wird diskutiert, inwieweit  sich Hintergründe auf die Identifikation von Objekten in Bildern mithilfe eines Convolutional Neural Networks auswirken.
+Im ersten Teil des Textes wird die verwendete Literatur, die Theorie und die Fragestellung vorgestellt. Anschließend folgen die Methoden. Unter anderem wird hier erklärt, was ein Convolutional Neural Network ist und wie es hier implementiert wurde. Hier werden im Detail dann die Klassen \textit{ConvNet}, \textit{ImageAdapter}, \textit{TrainData} und die genutzten Testdateien vorgestellt. Der letzte Teil des Abschnitts Methoden präsentiert dann die durchgeführten Test.
+Zum Schluss werden die Ergebnisse nochmal aufgeführt und zusammengefasst. Genutzte Grafiken und Tabellen findet man ebenfalls dort wieder. Daraufhin wird die Fragestellung des Berichts nochmal aufgegriffen und diskutiert. In den letzten beiden Abschnitten findet man sowohl die Literatur als auch den Anhang.
 
 
-\section{Einleitung}
-%Alexi
+\section{Einleitung} %Alexi
+Die Gesichtserkennung am Smartphone ermöglicht das Entsperren eines Gerätes und auf verschiedenen Applikationen die Nutzung von Filtern, die das Gesicht und die Umgebung erkennen und entweder die Umgebung oder bestimmte Eigenschaften und Merkmale in Gesichtern selber verändern.
+Das Autofahren wird immer einfacher und komfortabler für die Person am Steuer und das hat man unter anderem der Schilder- und Fahrbahnlinienerkennung zu verdanken. Jetzt stellt sich die Frage: wie funktioniert das? Die Antwort ist ein Convolutional Neural Network.
 
 \subsection{Verwendete Literatur}
 
 \subsection{Theorie} %Alexi
+Bedauerlicherweise treten einige Probleme bei der Verkehrszeichenerkennung auf, die nicht direkt vom Convolutional Neural Network selber ausgehen, sondern von der Umgebung. Wie zum Beispiel Schilder, die schwer zu erkennen sind, weil sie entweder schon sehr alt und dreckig sind oder zugeklebt wurden. Das erschwert dem CNN die Erkennung des Schildes und kann zu Irrtümern führen, die dann im schlimmsten Fall einen Unfall verursachen können. 
+Ein weiteres Problem könnte der Verkehrsschilderwald in der Stadt sein. Dann wird es für das CNN schwerer, sich das gewollte Verkehrsschild auszusuchen, da mittlerweile sehr viele Schilder an einem Ort angebracht sind. Schwieriger wird es auch für das Convolutional Neural Network ein Verkehrsschild zu erkennen, wenn der Hintergrund sehr farbig ist und mit den Farben des Verkehrsschildes ähnelt. Dann könnte es schwierig werden, das Bild zurecht zuschneiden und die Ränder des Schildes zu erkennen.
 
 \subsection{Fragestellung}
-Die Hauptfrage ist nun: Welche Auswirkungen hat ein Hintergrund eines Bildes auf die Kosten der Kalkulation eines Convolutional Neural Network (CNN), welches ein Objekt im Vordergrund des Bildes erkennen und identifizieren soll?
+Die Leitfrage ist nun: Welche Auswirkungen hat ein Hintergrund eines Bildes auf die Kosten der Kalkulation eines Convolutional Neural Network (CNN), welches ein Objekt im Vordergrund des Bildes erkennen und identifizieren soll?
 
 
 \section{Methoden}
+Die Fragestellung wird im Folgenden am Beispiel von acht Verkehrszeichen geklärt.
 
 \subsection{Convolutional Neural Networks} %Lennart
+%\imgcnn
+Ein Convolution Neural Network, auch ConvNet oder CNN genannt, ist ein Deep-Learning-Algorithmus, der ein Bild aufnimmt, verschiedenen Objekten im Bild eine Bedeutung zuweist und diese Objekte voneinander unterscheiden kann \cite{cnn1}. Das CNN ist ein mathematisches Konstrukt das normalerweise aus Schichten oder Bausteinen besteht. Die ersten beiden Schichten, Convolution und Pooling-Schicht, extrahieren bestimmte Merkmale aus einem Bild, während die dritte Schicht, vollständig verknüpfte Schicht, die extrahierten Merkmale in die endgültige Ausgabe umsetzt. Eine typische Architektur besteht aus Wiederholungen eines Stapels von mehreren Convolution-Schichten und einer Pooling-Schicht gefolgt von mehreren vollständig verknüpften Schichten. Der Vorgang, bei dem die Eingabedaten durch diese Schichten in Ausgabedaten umgewandelt werden, wird als Vorwärtspropagation bezeichnet. Die in diesem Abschnitt erläuterten Convolution und Pooling-Operationen beziehen sich jedoch auf ein 2D-CNN, ähnliche Operationen können aber auch für 3D-CNN durchgeführt werden.\cite{cnn2}
 
-\subsection{Implementation}
-%Sui Yin
+\subsubsection{Convolution}
+Convolution ist eine lineare Operation, die für die Merkmalsextraktion verwendet wird. Um bestimmte Merkmale zu extrahieren wird ein Array, der sogenannte Kernel, auf das Eingabe-Bild, das auch zu einem Array umgewandelt wurde, namens Kernel, angewendet. Ein elementweises Produkt zwischen jedem Element des Kernels und dem Eingabetensor wird an jeder Stelle des Tensors kalkuliert und summiert, um den Ausgabewert an der zugehörigen Stelle des Ausgabetensors, einer so genannten Merkmalskarte, zu erhalten. Dieses Verfahren wird unter Anwendung mehrerer Kernel wiederholt, um eine beliebige Anzahl von Merkmalskarten zu erzeugen, die jeweils verschiedene Merkmale des Eingabetensors darstellen.
+Die hier beschriebene Convolution-Operation lässt nicht zu, dass die Mitte eines Kernels das äußerste Element des Eingabetensors überdeckt, und verringert somit die Höhe und Breite der Merkmalskarte. Das Auffüllen mit Nullen ist eine Technik zu Lösung dieses Problems, bei der Zeilen und Spalten mit Nullen auf jeder Seite des Eingabetensors angefügt werden, so dass das Zentrum eines Kernels auf das äußerste Element passt und die gleiche Dimension in der Ebene durch die Convolution-Operation beibehalten wird. Der Abstand zwischen zwei aufeinanderfolgenden Kernelpositionen wird als Stride bezeichnet, der auch die Convolution-Operation definiert. Üblicherweise wird ein Stride der Größe 1 gewählt, jedoch wenn man ein Downsampling  der Merkmalskarten erreichen möchte, wird ein Stride größer als 1 verwendet.
+
+\subsubsection{Pooling-Schicht}
+Eine Pooling-Schicht bietet eine klassische Downsampling-Operation, die die Dimensionalität der Merkmalskarten in der Ebene reduziert, um eine Übersetzungsinvarianz gegenüber kleinen Verschiebungen und Verzerrungen einzuführen und die Anzahl der nachfolgenden lernbaren Parameter zu verringern. Es ist hervorzuheben, dass es in keiner der Pooling-Schichten einen lernbaren Parameter gibt, während Filtergröße, Stride und Padding Hyperparameter bei Pooling-Operationen sind, ähnlich wie bei Convolution-Operationen.\cite{cnn2}
+
+\subsubsection{Max Pooling}
+Die gängigste Form der Pooling-Operation ist das Max-Pooling, bei dem aus den eingegebenen Merkmalskarten Felder extrahiert werden, der maximale Wert in jedem Feld ausgegeben und alle anderen Werte verworfen werden. Üblicherweise wird ein Filter der Größe 2 x 2 mit einem Stride von 2 verwendet. Dadurch wird die In-Plane-Dimension der Merkmalskarte um den Faktor 2 verkleinert.\cite{cnn2}
+
+\subsubsection{Global Average Pooling}
+Eine weitere erwähnenswerte Pooling-Operation ist das Global Average Pooling, dass eine extreme Art des Downsamplings durchführt. Hierbei wird eine Merkmalskarte mit einer Größe von Höhe x Breite in ein 1 x 1 Array verkleinert, indem der Durchschnitt aller Elemente in jeder Merkmalskarte gebildet wird, während die Tiefe der Merkmalskarte erhalten bleibt. In der Regel wird dieser Vorgang nur einmal vor den vollständig verknüpften Schichten durchgeführt. Der erste Vorteil des Global Average Pooling’s ist, dass die Anzahl der lernbaren Parameter reduziert wird und der zweite Vorteil ist, dass das CNN Eingaben variabler Größe akzeptieren kann.\cite{cnn2}
+
+\subsubsection{Vollständig Verknüpfte Schicht}
+Die Ausgangsmerkmalskarten der letzten Convolution oder Pooling-Schicht werden in der Regel abgeflacht, das heißt in ein eindimensionales Zahlenfeld umgewandelt und mit einer oder mehreren vollständig verknüpften Schichten, auch als dichte Schichten bekannt, verbunden, in der jeder Eingang mit jedem Ausgang durch ein lernbares Gewicht verbunden ist. Sobald die von den Convolution-Schichten extrahierten und von den Pooling-Schichten heruntergestuften Merkmale erstellt sind, werden sie von einer Untergruppe vollständig verknüpften Schichten auf die endgültigen Ausgaben des Netzes abgebildet, zum Beispiel die Wahrscheinlichkeiten für jede Klasse bei Klassifizierungsaufgaben. Die letzte vollständig verknüpfte Schicht hat in der Regel die gleiche Anzahl von Ausgangsknoten wie die Anzahl der Klassen.\cite{cnn2}
+
+\subsection{Implementierung} %Sui Yin
+Die Implementierung in Java 17 besteht aus den vier neuen Klassen \textit{ImageAdapter}, \textit{ConvNet}, \textit{RoadSignLabel}, \textit{RoadSignTest} und einem Record \textit{TrainData}. Zum Testen wird eine weitere Klasse und ein Enum verwendet. Diese vier neuen Klassen, das Record sowie die Testdateien werden im Folgenden Absätzen erklärt.
 
 \subsubsection{ConvNet} %Alex
 Die Klasse \textit{ConvNet} soll ein Convolutional Neural Network darstellen und erbt daher von der im Projektbericht \cite{projektbericht} unter Abschnitt 2 genannten Klasse \textit{Network}, was jener die gleichen Eigenschaften verleiht. Des Weiteren besitzt sie eine \textit{java.util.ArrayList} vom Generic-Typ \textit{TrainData} und einen \textit{ImageAdapter} als private konstante Attribute. Erstere dient dem Speichern von Trainingsdatensätzen, die dann mit dem Aufrufen der überladenen Methode \textit{train(double, int)} benutzt werden. Diese ruft die originale Instanz-Methode \textit{train(double[][], double[][], double, int)} der Klasse \textit{Network} mit den Daten aus der \textit{ArrayList} auf.
 Außerdem bietet die Klasse \textit{ConvNet} die Instanz-Methode \textit{addTrainData(String, int[])} um dieser Trainingsdatensätze hinzuzufügen. Diese nimmt einen Dateinamen von einem Bild und einen ganzzahligen Zielvektor. Zwei private nicht-statische Hilfsmethoden \textit{getImages()} und \textit{getTargets()} dienen der besseren Handhabung der \textit{ArrayList}.\\
-Die Klasse erstellt durch den Konstruktor \textit{ConvNet(String, int, int, int, int...)} (Pfad zum Ordner mit den Bildern, gewünschte Bildweite, -höhe, Anzahl der Output-Neuronen, Anzahl der Hiddenlayers und deren Neuronen) von ihr abgeleitete Objekte.
+Die Klasse erstellt durch den Konstruktor \textit{ConvNet(String, int, int, int, int[])} (Pfad zum Ordner mit den Bildern, gewünschte Bildweite, -höhe, Anzahl der Output-Neuronen, Anzahl der Hiddenlayers und deren Neuronen) von ihr abgeleitete Objekte.
 
 \subsubsection{ImageAdapter} %Sui Yin
+Der \textit{ImageAdapter} ist dafür da, um das Bild zu laden und skalieren.
+Die Klasse besteht aus sechs Methoden und einem Konstruktor. 
+Im Konstruktor \textit{ImageAdapter(String path, int imgWidth, int imgHeight)} werden Pfad zu den Bildern, gewünschte Bildhöhe sowie -breite als Parameter übergeben, mit denen dann die jeweiligen Skalierungswerte für das jeweilige Bild initialisiert werden.
+Die Methode \textit{loadImage(String filename)} lädt das \textit{java.awt.image.BufferedImage} mit dem übergebenen Namen und gibt es zurück.
+Falls es keine Datei mit diesem Namen gibt bzw. diese keine Bilddatei ist, wird eine \textit{FileNotFoundException} bzw. \textit{IllegalArgumentException} eine geworfen.
+Als nächstes geht die Methode \textit{getRGBs(BufferedImage img)} alle Pixel durch und gibt deren hexadezimale RGB-Werte als Matrix für das jeweilige Bild zurück.
+Die Methode \textit{squareImage(BufferedImage img)} ist dafür da, um das Bild quadratisch zuzuschneiden. 
+\textit{scaleImage(BufferedImage img)} skaliert ein Bild mit einer beliebigen Höhe oder Breite.
+Um ein java.awt.image.Image in ein java.awt.image.BufferedImage konvertieren, wird die Methode \textit{convertToBufferedImage(Image image)} benutzt.
+In der einzigen öffentlichen Methode des \textit{ImageAdapter}s \textit{getImageRGBs(String filename)} wird mit den genannten Methoden und mithilfe eines übergebenen Dateinamens ein eindimensionales ganzzahliges Array mit allen RGB-Werten des aus dem Dateinamen resultierenden Bildes zurückgegeben.
+\[
+\vec{V_{wh}} = B_{w\times h} \cdot
+\left[ {\begin{array}{cc}
+		a_{11} & a_{12} \\
+		a_{21} & a_{22} \\
+\end{array} } \right]
+\]
 
 \subsubsection{TrainData}
 Das Record \textit{TrainData(int[], int[])} besitzt einen Vektor mit den RGB-Werten eines Bildes und einen Zielvektor. Außerdem hat es zwei Instanz-Methoden \textit{getImageAsDoubleArray()} und \textit{getTargetAsDoubleArray()}, welche die jeweiligen ganzzahligen Vektoren als Gleitkommazahl-Vektoren zurückgibt, und eine private nicht-statische Hilfsmethode \textit{getIntAsDoubleArray(int[])}.
@@ -144,6 +193,7 @@ Für das Testen wurden ein Enum \textit{RoadSignLabel} und eine Klasse \textit{R
 
 \section{Grafiken \& Tabellen}
 \equations
+\imgcnn
 
 \section{Diskussion}
 
