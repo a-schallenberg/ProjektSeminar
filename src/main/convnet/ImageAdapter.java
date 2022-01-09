@@ -25,6 +25,7 @@ public class ImageAdapter {
 		try {
 			return ImageIO.read(new File(path + filename));
 		} catch(IOException e) {
+			System.out.println(path + filename);
 			throw new IllegalArgumentException(e);
 		}
 	}
@@ -63,5 +64,27 @@ public class ImageAdapter {
 		g.drawImage(image, 0, 0, null);
 		g.dispose();
 		return newImage;
+	}
+
+	public static void saveEdited(String filename) {
+		ImageAdapter imgAd = new ImageAdapter("resources/images/original/", 128, 128);
+		BufferedImage img = imgAd.scaleImage(squareImage(imgAd.loadImage(filename + ".png")));
+		File outputfile = new File("resources/images/background/" + filename + ".png");
+		try {
+			ImageIO.write(img, "png", outputfile);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		for(int i = 0; i < 43; i++) {
+			if(i == 11)
+				saveEdited("road_sign_11_hard_to_read");
+			else if(i == 39)
+				saveEdited("road_sign_39_multiple_signs");
+			else
+				saveEdited("road_sign_" + i);
+		}
 	}
 }

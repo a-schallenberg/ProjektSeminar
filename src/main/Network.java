@@ -98,14 +98,9 @@ public class Network {
 			for(int j = 0; j < input.length; j++) {
 				results = forwardPropagation(input[j]);
 				cost += cost(results[results.length - 1], y[j]);
-
-//				System.out.println(Arrays.toString(results[results.length - 1]));
-//				System.out.println(Arrays.toString(y[j]));
-//				System.out.println();
-
 				backpropagation(learnRate, y[j], results);
 			}
-			System.out.println("Cost: " + cost);
+			System.out.println("(" + i + 1 + ") Cost: " + cost);
 		}
 	}
 

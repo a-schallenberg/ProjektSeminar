@@ -2,16 +2,24 @@ package main.convnet.test;
 
 import main.convnet.ConvNet;
 
+import java.util.function.Function;
+
 import static main.convnet.test.RoadSignLabel.*;
 
 public class RoadSignTest {
+	private static final int    IMAGE_SIZE    = 128;
+	private static final int[]  HIDDEN_LAYERS = {32, 32, 32, 32};
+	private static final double LEARN_RATE    = 0.12;
+	private static final int    ITERATIONS    = 10000;
 
 	public static void main(String[] args) {
-		test();
+		testWithBackground();
+		System.out.println("\n");
+		testWithoutBackground();
 	}
-	
-	private static void test() {
-		ConvNet net = new ConvNet("resources/images/", 64, 64, RoadSignLabel.values().length, 32, 32, 32, 32);
+
+	private static void test(String imgFolder) {
+		ConvNet net = new ConvNet("resources/images/" + imgFolder + "/", IMAGE_SIZE, IMAGE_SIZE, RoadSignLabel.values().length, HIDDEN_LAYERS);
 
 		System.out.println("Start loading images");
 		long start = System.currentTimeMillis();
@@ -62,6 +70,16 @@ public class RoadSignTest {
 
 		System.out.println("Finished loading images in " + (System.currentTimeMillis() - start) + "ms");
 
-		net.train(0.12, 10000);
+		net.train(LEARN_RATE, ITERATIONS);
+	}
+
+	private static void testWithBackground() {
+		System.out.println("Test with background:");
+		test("background");
+	}
+
+	private static void testWithoutBackground() {
+		System.out.println("Test without background:");
+		test("nobackground");
 	}
 }
