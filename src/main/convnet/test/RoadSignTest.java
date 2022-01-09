@@ -1,25 +1,45 @@
 package main.convnet.test;
 
+import main.Network;
+import main.NetworkHelper;
 import main.convnet.ConvNet;
 
+import java.io.IOException;
 import java.util.function.Function;
 
 import static main.convnet.test.RoadSignLabel.*;
 
 public class RoadSignTest {
 	private static final int    IMAGE_SIZE    = 128;
-	private static final int[]  HIDDEN_LAYERS = {32, 32, 32, 32};
-	private static final double LEARN_RATE    = 0.12;
-	private static final int    ITERATIONS    = 10000;
+	private static final int[]  HIDDEN_LAYERS = {64, 64, 32, 32};
+	private static final double LEARN_RATE    = 0.111;
+	private static final int    ITERATIONS    = 1000;
 
 	public static void main(String[] args) {
+		//createWeights();
 		testWithBackground();
 		System.out.println("\n");
-		testWithoutBackground();
+		//testWithoutBackground();
+	}
+
+	private static void createWeights() {
+		ConvNet net = new ConvNet("", IMAGE_SIZE, IMAGE_SIZE, RoadSignLabel.values().length, HIDDEN_LAYERS);
+		try {
+			NetworkHelper.save(net, "conv_net");
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void test(String imgFolder) {
-		ConvNet net = new ConvNet("resources/images/" + imgFolder + "/", IMAGE_SIZE, IMAGE_SIZE, RoadSignLabel.values().length, HIDDEN_LAYERS);
+		ConvNet net;
+		try {
+			 Network configNet = NetworkHelper.load("conv_net");
+			 net = new ConvNet("resources/images/" + imgFolder + "/", IMAGE_SIZE, IMAGE_SIZE, configNet.getWeights(), configNet.getBiases(), RoadSignLabel.values().length, HIDDEN_LAYERS);
+		} catch(IOException e) { // If conv_net doesn't exist:
+			//e.printStackTrace();
+			net = new ConvNet("resources/images/" + imgFolder + "/", IMAGE_SIZE, IMAGE_SIZE, RoadSignLabel.values().length, HIDDEN_LAYERS);
+		}
 
 		System.out.println("Start loading images");
 		long start = System.currentTimeMillis();

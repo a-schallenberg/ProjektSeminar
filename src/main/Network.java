@@ -100,7 +100,7 @@ public class Network {
 				cost += cost(results[results.length - 1], y[j]);
 				backpropagation(learnRate, y[j], results);
 			}
-			System.out.println("(" + i + 1 + ") Cost: " + cost);
+			System.out.println("(" + (i + 1) + ") Cost: " + cost);
 		}
 	}
 
@@ -259,5 +259,29 @@ public class Network {
 		layers[layers.length - 1] = outputLayer;
 
 		return layers;
+	}
+
+	public double[][][] getWeights() {
+		Neuron[][] layers = getLayers();
+		double[][][] weights = new double[layers.length][][];
+		for(int i = 0; i < layers.length; i++) {
+			weights[i] = new double[layers[i].length][];
+			for(int j = 0; j < layers[i].length; j++) {
+				weights[i][j] = layers[i][j].getWeights();
+			}
+		}
+		return weights;
+	}
+
+	public double[][] getBiases() {
+		Neuron[][] layers = getLayers();
+		double[][] biases = new double[layers.length][];
+		for(int i = 0; i < layers.length; i++) {
+			biases[i] = new double[layers[i].length];
+			for(int j = 0; j < layers[i].length; j++) {
+				biases[i][j] = layers[i][j].getBias();
+			}
+		}
+		return biases;
 	}
 }

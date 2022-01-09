@@ -7,9 +7,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class ImageAdapter {
-	private final String path; // "resources/images/"
-	public final int imgWidth; // 64
-	public final int imgHeight; // 64
+	private final String path;
+	public final int imgWidth;
+	public final int imgHeight;
 
 	public ImageAdapter(String path, int imgWidth, int imgHeight) {
 		this.path = path;
@@ -17,15 +17,18 @@ public class ImageAdapter {
 		this.imgHeight = imgHeight;
 	}
 
-	public int[] getImageRGBs(String filename) {
-		return getRGBs(scaleImage(squareImage(loadImage(filename))));
+	public int[] getImageRGBs(String filename, boolean convert) {
+		if(convert)
+			return getRGBs(scaleImage(squareImage(loadImage(filename))));
+		else
+			return getRGBs(loadImage(filename));
 	}
 
 	private BufferedImage loadImage(String filename) {
 		try {
 			return ImageIO.read(new File(path + filename));
 		} catch(IOException e) {
-			System.out.println(path + filename);
+			System.err.println(path + filename);
 			throw new IllegalArgumentException(e);
 		}
 	}
@@ -64,27 +67,5 @@ public class ImageAdapter {
 		g.drawImage(image, 0, 0, null);
 		g.dispose();
 		return newImage;
-	}
-
-	public static void saveEdited(String filename) {
-		ImageAdapter imgAd = new ImageAdapter("resources/images/original/", 128, 128);
-		BufferedImage img = imgAd.scaleImage(squareImage(imgAd.loadImage(filename + ".png")));
-		File outputfile = new File("resources/images/background/" + filename + ".png");
-		try {
-			ImageIO.write(img, "png", outputfile);
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void main(String[] args) {
-		for(int i = 0; i < 43; i++) {
-			if(i == 11)
-				saveEdited("road_sign_11_hard_to_read");
-			else if(i == 39)
-				saveEdited("road_sign_39_multiple_signs");
-			else
-				saveEdited("road_sign_" + i);
-		}
 	}
 }

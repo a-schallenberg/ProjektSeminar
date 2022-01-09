@@ -13,12 +13,21 @@ public class ConvNet extends Network{
 		imageAdapter = new ImageAdapter(path, imgWidth, imgHeight);
 	}
 
+	public ConvNet(String path, int imgWidth, int imgHeight, double[][][] weights, double[][] biases, int numOutUnit, int... numHidUnit) {
+		super(imgWidth * imgHeight, numOutUnit, weights, biases, numHidUnit);
+		imageAdapter = new ImageAdapter(path, imgWidth, imgHeight);
+	}
+
 	public void train(double learnRate, int iterations) {
 		super.train(getImages(), getTargets(), learnRate, iterations);
 	}
 
 	public void addTrainData(String filename, int[] target) {
-		trainData.add(new TrainData(imageAdapter.getImageRGBs(filename), target));
+		addTrainData(filename, target, false);
+	}
+
+	public void addTrainData(String filename, int[] target, boolean convert) {
+		trainData.add(new TrainData(imageAdapter.getImageRGBs(filename, convert), target));
 	}
 
 	private double[][] getImages() {
