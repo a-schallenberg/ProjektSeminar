@@ -1,6 +1,5 @@
 package main;
 
-import main.convnet.ImageAdapter;
 import main.functions.ActivationFunction;
 import main.functions.Identity;
 import main.functions.Sign;

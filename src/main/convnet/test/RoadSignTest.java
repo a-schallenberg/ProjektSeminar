@@ -5,7 +5,6 @@ import main.NetworkHelper;
 import main.convnet.ConvNet;
 
 import java.io.IOException;
-import java.util.function.Function;
 
 import static main.convnet.test.RoadSignLabel.*;
 
@@ -17,9 +16,24 @@ public class RoadSignTest {
 
 	public static void main(String[] args) {
 		//createWeights();
+		testing();
+		//threadTesting();
+	}
+
+	private static void testing() {
+		long start = System.currentTimeMillis();
 		testWithBackground();
 		System.out.println("\n");
-		//testWithoutBackground();
+		testWithoutBackground();
+		System.out.println("Done in " + (System.currentTimeMillis() - start) + " ms");
+	}
+
+	private static void threadTesting() {
+		Thread testWithBackground = new Thread(RoadSignTest::testWithBackground, "TestWithBackground");
+		Thread testWithoutBackground = new Thread(RoadSignTest::testWithoutBackground, "TestWithoutBackground");
+
+		testWithBackground.start();
+		testWithoutBackground.start();
 	}
 
 	private static void createWeights() {
@@ -37,7 +51,7 @@ public class RoadSignTest {
 			 Network configNet = NetworkHelper.load("conv_net");
 			 net = new ConvNet("resources/images/" + imgFolder + "/", IMAGE_SIZE, IMAGE_SIZE, configNet.getWeights(), configNet.getBiases(), RoadSignLabel.values().length, HIDDEN_LAYERS);
 		} catch(IOException e) { // If conv_net doesn't exist:
-			//e.printStackTrace();
+			e.printStackTrace();
 			net = new ConvNet("resources/images/" + imgFolder + "/", IMAGE_SIZE, IMAGE_SIZE, RoadSignLabel.values().length, HIDDEN_LAYERS);
 		}
 

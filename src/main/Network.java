@@ -100,7 +100,8 @@ public class Network {
 				cost += cost(results[results.length - 1], y[j]);
 				backpropagation(learnRate, y[j], results);
 			}
-			System.out.println("(" + (i + 1) + ") Cost: " + cost);
+			//System.out.println("(" + (i + 1) + ") ["+Thread.currentThread().getName()+"] Cost: " + cost);
+			System.out.print(cost + ", ");
 		}
 	}
 

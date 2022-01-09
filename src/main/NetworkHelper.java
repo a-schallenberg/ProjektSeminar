@@ -34,7 +34,7 @@ public class NetworkHelper {
 	}
 
 	public static Network load(String filename) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader("resources/networkfiles/" + filename + "_basics.csv"));
+		BufferedReader reader = new BufferedReader(new FileReader("resources/networkfiles/" + filename + ".csv"));
 
 			String[] raw;
 			raw = reader.readLine().split(";");
@@ -82,7 +82,7 @@ public class NetworkHelper {
 	private static ActivationFunction[][] loadFunctions(String filename) throws IOException {
 		Scanner scanner;
 		try {
-			scanner = new Scanner(new File("resources/networkfiles/" + filename + "_functions.csv"));
+			scanner = new Scanner(new File("resources/networkfiles/" + filename + ".fct"));
 		} catch(FileNotFoundException e) {
 			return null;
 		}
