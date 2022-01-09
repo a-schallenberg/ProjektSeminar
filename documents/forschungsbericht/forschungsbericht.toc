@@ -39,10 +39,12 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4}Ergebnisse}{9}{section.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Grafiken \& Tabellen}{9}{section.5}%
+\contentsline {section}{\numberline {5}Diskussion}{9}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Diskussion}{9}{section.6}%
+\contentsline {section}{\numberline {6}Literatur}{9}{section.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7}Literatur}{9}{section.7}%
+\contentsline {section}{\numberline {7}Abbildungsverzeichnis}{9}{section.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {8}Anhang}{10}{section.8}%
+\contentsline {section}{\numberline {8}Tabellenverzeichnis}{9}{section.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {9}Anhang}{9}{section.9}%

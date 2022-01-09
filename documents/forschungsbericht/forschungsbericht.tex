@@ -13,6 +13,7 @@
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage{lipsum}
+\usepackage[nottoc,numbib]{tocbibind}
 \onehalfspacing
 
 \bibliography{forschungsbericht}
@@ -68,7 +69,15 @@
 	\endgroup
 }
 
+\renewcommand{\listoffigures}{\begingroup
+	\tocsection
+	\tocfile{\listfigurename}{lof}
+	\endgroup}
 
+\renewcommand{\listoftables}{\begingroup
+	\tocsection
+	\tocfile{\listtablename}{lot}
+	\endgroup}
 
 \begin{document}
 
@@ -210,15 +219,15 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 \section{Ergebnisse}
 
 
-\section{Grafiken \& Tabellen}
-\listoffigures
-\listoftables
 
 \section{Diskussion}
 
 
 \printbibliography[heading=bibnumbered]
 
+
+\listoffigures
+\listoftables
 
 \section{Anhang}
 

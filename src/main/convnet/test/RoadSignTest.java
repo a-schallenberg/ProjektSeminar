@@ -12,7 +12,7 @@ import static main.convnet.test.RoadSignLabel.*;
 public class RoadSignTest {
 	private static final int    IMAGE_SIZE    = 128;
 	private static final int[]  HIDDEN_LAYERS = {64, 64, 32, 32};
-	private static final double LEARN_RATE    = 0.111;
+	private static final double LEARN_RATE    = 0.1111;
 	private static final int    ITERATIONS    = 1000;
 
 	public static void main(String[] args) {
