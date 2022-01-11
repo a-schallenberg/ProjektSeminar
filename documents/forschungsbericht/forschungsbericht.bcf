@@ -2183,14 +2183,33 @@
     <bcf:datasource type="file" datatype="bibtex">forschungsbericht.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">cnn1</bcf:citekey>
-    <bcf:citekey order="2">cnn2</bcf:citekey>
-    <bcf:citekey order="3">cnn2</bcf:citekey>
-    <bcf:citekey order="4">cnn2</bcf:citekey>
-    <bcf:citekey order="5">cnn2</bcf:citekey>
-    <bcf:citekey order="6">cnn2</bcf:citekey>
-    <bcf:citekey order="7">projektbericht</bcf:citekey>
-    <bcf:citekey order="8">discuss1</bcf:citekey>
+    <bcf:citekey order="1">projektbericht</bcf:citekey>
+    <bcf:citekey order="2">script</bcf:citekey>
+    <bcf:citekey order="3">script</bcf:citekey>
+    <bcf:citekey order="4">script</bcf:citekey>
+    <bcf:citekey order="5">cnn1</bcf:citekey>
+    <bcf:citekey order="6">cnn1</bcf:citekey>
+    <bcf:citekey order="7">cnn1</bcf:citekey>
+    <bcf:citekey order="8">cnn2</bcf:citekey>
+    <bcf:citekey order="9">cnn2</bcf:citekey>
+    <bcf:citekey order="10">cnn2</bcf:citekey>
+    <bcf:citekey order="11">discuss1</bcf:citekey>
+    <bcf:citekey order="12">discuss1</bcf:citekey>
+    <bcf:citekey order="13">discuss1</bcf:citekey>
+    <bcf:citekey order="14">script</bcf:citekey>
+    <bcf:citekey order="15">cnn1</bcf:citekey>
+    <bcf:citekey order="16">cnn2</bcf:citekey>
+    <bcf:citekey order="17">cnn2</bcf:citekey>
+    <bcf:citekey order="18">cnn2</bcf:citekey>
+    <bcf:citekey order="19">cnn2</bcf:citekey>
+    <bcf:citekey order="20">cnn2</bcf:citekey>
+    <bcf:citekey order="21">cnn2</bcf:citekey>
+    <bcf:citekey order="22">cnn1</bcf:citekey>
+    <bcf:citekey order="23">cnn1</bcf:citekey>
+    <bcf:citekey order="24">cnn2</bcf:citekey>
+    <bcf:citekey order="25">projektbericht</bcf:citekey>
+    <bcf:citekey order="26">discuss1</bcf:citekey>
+    <bcf:citekey order="27">projektbericht</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

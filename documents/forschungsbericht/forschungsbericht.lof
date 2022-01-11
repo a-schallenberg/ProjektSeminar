@@ -1,6 +1,8 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \babel@toc {ngerman}{}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {1}{\ignorespaces Benutzung des Kernels}}{5}{figure.1}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Benutzung des Kernels \cite {cnn2}}}{5}{figure.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2}{\ignorespaces Kosten der Datensätze pro Epoche}}{9}{figure.2}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Benutzung des Kernels \cite {cnn1}}}{6}{figure.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3}{\ignorespaces Kosten der Datensätze pro Epoche}}{10}{figure.3}%

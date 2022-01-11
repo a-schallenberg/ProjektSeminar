@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  10 JAN 2022 22:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  11 JAN 2022 22:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -741,40 +741,64 @@ Package tocbibind Info: The document has section divisions on input line 50.
 
 Package tocbibind Note: Using section or other style headings.
 
+) (/usr/share/texlive/texmf-dist/tex/latex/attachfile/attachfile.sty
+Package: attachfile 2016/09/18 v1.9 PDF 1.3+ file attachment
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifpdf.sty
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count404
+\calc@Bcount=\count405
+\calc@Adimen=\dimen163
+\calc@Bdimen=\dimen164
+\calc@Askip=\skip92
+\calc@Bskip=\skip93
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count406
+\calc@Cskip=\skip94
+)
+\c@atfi@tmp=\count407
+\atfi@appearancewidth=\skip95
+\atfi@appearanceheight=\skip96
+\atfi@appearancedepth=\skip97
+\atfi@appearancebox=\box53
 )
 
 Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
 (biblatex)                Loading 'csquotes' recommended.
 
-\@quotelevel=\count404
-\@quotereset=\count405
+\@quotelevel=\count408
+\@quotereset=\count409
 (./forschungsbericht.aux)
 \openout1 = `forschungsbericht.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 82.
-LaTeX Font Info:    ... okay on input line 82.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 82
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 87
 .
  (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Package tocbasic Info: usage of `tocbibind' detected on input line 82.
-\AtBeginShipoutBox=\box53
-Package hyperref Info: Link coloring OFF on input line 82.
+Package tocbasic Info: usage of `tocbibind' detected on input line 87.
+\AtBeginShipoutBox=\box54
+Package hyperref Info: Link coloring OFF on input line 87.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -785,11 +809,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count406
+\c@section@level=\count410
 )
-LaTeX Info: Redefining \ref on input line 82.
-LaTeX Info: Redefining \pageref on input line 82.
-LaTeX Info: Redefining \nameref on input line 82.
+LaTeX Info: Redefining \ref on input line 87.
+LaTeX Info: Redefining \pageref on input line 87.
+LaTeX Info: Redefining \nameref on input line 87.
 
 (./forschungsbericht.out) (./forschungsbericht.out)
 \@outlinefile=\write4
@@ -802,7 +826,7 @@ Class scrartcl Info: loading recommended package `bookmark'.
 (scrartcl)           `bookmarkpackage=false' before \begin{document} and
 (scrartcl)           you can avoid this message adding:
 (scrartcl)             \usepackage{bookmark}
-(scrartcl)           before \begin{document} on input line 82.
+(scrartcl)           before \begin{document} on input line 87.
 
 (/usr/share/texlive/texmf-dist/tex/latex/bookmark/bookmark.sty
 Package: bookmark 2019/12/03 v1.28 PDF bookmarks (HO)
@@ -812,7 +836,7 @@ File: bkm-pdftex.def 2019/12/03 v1.28 bookmark driver for pdfTeX (HO)
 Package auxhook Info: \AddLineBeginMainAux comes a little late,
 (auxhook)             because the main .aux file is already opened on input lin
 e 168.
-\BKM@id=\count407
+\BKM@id=\count411
 ))
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -873,21 +897,21 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'forschungsbericht.bbl' found.
 
 (./forschungsbericht.bbl)
-Package biblatex Info: Reference section=0 on input line 82.
-Package biblatex Info: Reference segment=0 on input line 82.
+Package biblatex Info: Reference section=0 on input line 87.
+Package biblatex Info: Reference segment=0 on input line 87.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count408
-\scratchdimen=\dimen163
-\scratchbox=\box54
-\nofMPsegments=\count409
-\nofMParguments=\count410
+\scratchcounter=\count412
+\scratchdimen=\dimen165
+\scratchbox=\box55
+\nofMPsegments=\count413
+\nofMParguments=\count414
 \everyMPshowfont=\toks26
-\MPscratchCnt=\count411
-\MPscratchDim=\dimen164
-\MPnumerator=\count412
-\makeMPintoPDFobject=\count413
+\MPscratchCnt=\count415
+\MPscratchDim=\dimen166
+\MPnumerator=\count416
+\makeMPintoPDFobject=\count417
 \everyMPtoPDFconversion=\toks27
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -898,42 +922,42 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 8
-6.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 9
+1.
 
 (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 8
-6.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 9
+1.
 
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-86.
+91.
 
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-86.
+91.
 
 (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 86.
+(Font)              <14.4> on input line 91.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 86.
+(Font)              <10> on input line 91.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 86.
+(Font)              <7> on input line 91.
  [1
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 8
-8.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 9
+3.
  (/usr/share/texmf/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -949,178 +973,151 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 \openout5 = `forschungsbericht.toc'.
 
  [2] [3]
-
-LaTeX Warning: Citation 'cnn1' on page 4 undefined on input line 116.
-
-
-LaTeX Warning: Citation 'cnn2' on page 4 undefined on input line 116.
-
-
-Overfull \hbox (2.55432pt too wide) in paragraph at lines 116--117
-\T1/lmr/m/n/12 Ein Con-vo-lu-ti-on Neural Net-work, auch Conv-Net oder CNN ge-n
-annt, ist ein Deep-Learning-
- []
-
-<images/cnn.png, id=67, 687.56876pt x 1436.36626pt>
+<images/cnn.png, id=89, 687.56876pt x 1436.36626pt>
 File: images/cnn.png Graphic file (type png)
 <use images/cnn.png>
-Package pdftex.def Info: images/cnn.png  used on input line 123.
+Package pdftex.def Info: images/cnn.png  used on input line 129.
 (pdftex.def)             Requested size: 170.71652pt x 356.63596pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--126
+Underfull \hbox (badness 10000) in paragraph at lines 125--132
 
  []
 
 [4]
-Overfull \hbox (10.4242pt too wide) in paragraph at lines 126--128
+Overfull \hbox (10.4242pt too wide) in paragraph at lines 132--134
 []\T1/lmr/m/n/12 Die hier be-schrie-be-ne Convolution-Operation
  []
 
-
-LaTeX Warning: Citation 'cnn2' on page 5 undefined on input line 130.
-
-
-LaTeX Warning: Citation 'cnn2' on page 5 undefined on input line 133.
-
-
-LaTeX Warning: Citation 'cnn2' on page 5 undefined on input line 136.
-
 [5 <./images/cnn.png>]
+<images/vollst_verk_schicht.png, id=106, 702.625pt x 408.52625pt>
+File: images/vollst_verk_schicht.png Graphic file (type png)
+<use images/vollst_verk_schicht.png>
+Package pdftex.def Info: images/vollst_verk_schicht.png  used on input line 148
+.
+(pdftex.def)             Requested size: 170.71652pt x 99.25761pt.
 
-LaTeX Warning: Citation 'cnn2' on page 6 undefined on input line 139.
+Underfull \hbox (badness 3439) in paragraph at lines 151--153
+[]\T1/lmr/m/n/12 oder meh-re-ren voll-stän-dig ver-knüpf-ten
+ []
 
+
+Underfull \hbox (badness 2005) in paragraph at lines 151--153
+\T1/lmr/m/n/12 mit je-dem Aus-gang durch ein lern-ba-
+ []
+
+
+Underfull \hbox (badness 1270) in paragraph at lines 151--153
+\T1/lmr/m/n/12 res Ge-wicht ver-bun-den ist. So-bald die
+ []
+
+[6 <./images/vollst_verk_schicht.png>]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-43.
-(/usr/share/texmf/tex/latex/lm/t1lmtt.fd
+56.
+ (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-
-LaTeX Warning: Citation 'projektbericht' on page 6 undefined on input line 146.
-
-
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
-47.
-(/usr/share/texmf/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [6]
-Overfull \hbox (0.20023pt too wide) in paragraph at lines 167--168
+) [7]
+Overfull \hbox (0.20023pt too wide) in paragraph at lines 180--181
 \T1/lmr/m/n/12 Vek-to-ren als Gleitkommazahl-Vektoren zu-rück-gibt, und ei-ne p
 ri-va-te nicht-statische Hilfs-
  []
 
-[7] [8]
-<images/test_plot.png, id=102, 383.4325pt x 279.0425pt>
+[8] [9]
+<images/test_plot.png, id=137, 383.4325pt x 279.0425pt>
 File: images/test_plot.png Graphic file (type png)
 <use images/test_plot.png>
-Package pdftex.def Info: images/test_plot.png  used on input line 226.
+Package pdftex.def Info: images/test_plot.png  used on input line 241.
 (pdftex.def)             Requested size: 284.52756pt x 207.07579pt.
 
-Underfull \hbox (badness 3386) in paragraph at lines 229--233
+Underfull \hbox (badness 3386) in paragraph at lines 244--248
 []\T1/lmr/m/n/12 Danach ist die Stei-
  []
 
 
-Underfull \hbox (badness 4036) in paragraph at lines 229--233
+Underfull \hbox (badness 4036) in paragraph at lines 244--248
 \T1/lmr/m/n/12 wird aber von Epo-
  []
 
 
-Underfull \hbox (badness 4193) in paragraph at lines 229--233
+Underfull \hbox (badness 4193) in paragraph at lines 244--248
 \T1/lmr/m/n/12 che zu Epo-che klei-
  []
 
 
-Underfull \hbox (badness 2035) in paragraph at lines 229--233
+Underfull \hbox (badness 2035) in paragraph at lines 244--248
 \T1/lmr/m/n/12 ner. Dar-auf folgt ein
  []
 
 
-Underfull \hbox (badness 1178) in paragraph at lines 229--233
+Underfull \hbox (badness 1178) in paragraph at lines 244--248
 \T1/lmr/m/n/12 an-nä-hernd ex-po-nen-ti-el-
  []
 
 
-Underfull \hbox (badness 4660) in paragraph at lines 229--233
+Underfull \hbox (badness 4660) in paragraph at lines 244--248
 \T1/lmr/m/n/12 ler Ver-lauf. Wäh-rend
  []
 
 
-Underfull \hbox (badness 6001) in paragraph at lines 229--233
+Underfull \hbox (badness 6001) in paragraph at lines 244--248
 \T1/lmr/m/n/12 bei Da-ten-satz $\OML/lmm/m/it/12 b$ \T1/lmr/m/n/12 im
  []
 
 
-Underfull \hbox (badness 2452) in paragraph at lines 229--233
+Underfull \hbox (badness 2452) in paragraph at lines 244--248
 \T1/lmr/m/n/12 Epochen-Intervall [190,
  []
 
 
-Overfull \hbox (0.58163pt too wide) in paragraph at lines 229--233
+Overfull \hbox (0.58163pt too wide) in paragraph at lines 244--248
 \T1/lmr/m/n/12 260] klei-ne-re Ab-wei-chun-
  []
 
-[9 <./images/test_plot.png>]
-
-LaTeX Warning: Citation 'discuss1' on page 10 undefined on input line 240.
-
-
-LaTeX Warning: Empty bibliography on input line 243.
-
-(./forschungsbericht.lof)
+[10 <./images/test_plot.png>] [11] [12] (./forschungsbericht.lof)
 \tf@lof=\write6
 \openout6 = `forschungsbericht.lof'.
 
- (./forschungsbericht.lot)
+
+(./forschungsbericht.lot)
 \tf@lot=\write7
 \openout7 = `forschungsbericht.lot'.
 
- [10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 253.
- [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 253.
+<<attachments/projektbericht.pdf>>
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 285.
+ [13]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 285.
 
 (./forschungsbericht.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 253.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 253.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 285.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 285.
 Package rerunfilecheck Info: File `forschungsbericht.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-
-
-LaTeX Warning: There were undefined references.
-
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                forschungsbericht
-(biblatex)                and rerun LaTeX afterwards.
-
 Package logreq Info: Writing requests to 'forschungsbericht.run.xml'.
 \openout1 = `forschungsbericht.run.xml'.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 253.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 285.
  ) 
 Here is how much of TeX's memory you used:
- 18694 strings out of 481239
- 337614 string characters out of 5920376
- 1216671 words of memory out of 5000000
- 33616 multiletter control sequences out of 15000+600000
- 586291 words of font info for 57 fonts, out of 8000000 for 9000
+ 18922 strings out of 481239
+ 341353 string characters out of 5920376
+ 1221736 words of memory out of 5000000
+ 33826 multiletter control sequences out of 15000+600000
+ 585916 words of font info for 56 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
- 43i,9n,55p,10112b,2205s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,9n,55p,10112b,2634s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/en
 c/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/s
-hare/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm
--ts1.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/f
-onts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.p
-fb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/ty
-pe1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmri12.pfb></usr
-/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/p
-ublic/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/sha
-re/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/l
-m/lmtt12.pfb>
-Output written on forschungsbericht.pdf (11 pages, 551632 bytes).
+hare/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/public/lm
+/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi12.pfb></usr/share/texm
+f/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12
+.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/t
+ype1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb>
+</usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type
+1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/s
+hare/texmf/fonts/type1/public/lm/lmtt12.pfb>
+Output written on forschungsbericht.pdf (13 pages, 941428 bytes).
 PDF statistics:
- 246 PDF objects out of 1000 (max. 8388607)
- 215 compressed objects within 3 object streams
- 40 named destinations out of 1000 (max. 500000)
- 195 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 315 PDF objects out of 1000 (max. 8388607)
+ 277 compressed objects within 3 object streams
+ 52 named destinations out of 1000 (max. 500000)
+ 242 words of extra memory for PDF output out of 10000 (max. 10000000)
 
