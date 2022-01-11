@@ -4,6 +4,7 @@ import main.functions.ActivationFunction;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.function.BiFunction;
 
@@ -91,6 +92,7 @@ public class Network {
 
 	public void train(double[][] input, double[][] y, double learnRate, int iterations) {
 		if(!trainable) throw new UnsupportedOperationException("Network is not trainable");
+		//double[][] costs = new double[input.length][iterations];
 
 		double[][] results;
 		for(int i = 0; i < iterations; i++) {
@@ -98,11 +100,13 @@ public class Network {
 			for(int j = 0; j < input.length; j++) {
 				results = forwardPropagation(input[j]);
 				cost += cost(results[results.length - 1], y[j]);
+				//costs[j][i] = cost(results[results.length - 1], y[j]);
 				backpropagation(learnRate, y[j], results);
 			}
 			//System.out.println("(" + (i + 1) + ") ["+Thread.currentThread().getName()+"] Cost: " + cost);
 			System.out.print(cost + ", ");
 		}
+		//System.out.println(Arrays.deepToString(costs));
 	}
 
 	private double[][] forwardPropagation(double[] input) {

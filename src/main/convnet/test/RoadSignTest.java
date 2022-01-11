@@ -12,7 +12,7 @@ public class RoadSignTest {
 	private static final int    IMAGE_SIZE    = 128;
 	private static final int[]  HIDDEN_LAYERS = {64, 64, 32, 32};
 	private static final double LEARN_RATE    = 0.1111;
-	private static final int    ITERATIONS    = 1000;
+	private static final int    ITERATIONS    = 10000;
 
 	public static void main(String[] args) {
 		//createWeights();
@@ -25,7 +25,7 @@ public class RoadSignTest {
 		testWithBackground();
 		System.out.println("\n");
 		testWithoutBackground();
-		System.out.println("Done in " + (System.currentTimeMillis() - start) + " ms");
+		System.out.println("\nDone in " + ((System.currentTimeMillis() - start)/1000/60) + " min");
 	}
 
 	private static void threadTesting() {
@@ -69,7 +69,7 @@ public class RoadSignTest {
 		net.addTrainData("road_sign_8.png", SIDE_WALK.getTarget());
 		net.addTrainData("road_sign_9.png", GIVE_WAY.getTarget());
 		net.addTrainData("road_sign_10.png", NO_ENTRANCE.getTarget());
-		net.addTrainData("road_sign_11_hard_to_read.png", SIDE_WALK.getTarget());
+		net.addTrainData("road_sign_11.png", SIDE_WALK.getTarget());
 		net.addTrainData("road_sign_12.png", NO_ENTRANCE.getTarget());
 		net.addTrainData("road_sign_13.png", CROSSWALK.getTarget());
 		net.addTrainData("road_sign_14.png", SIDE_WALK.getTarget());
@@ -97,9 +97,9 @@ public class RoadSignTest {
 		net.addTrainData("road_sign_36.png", STOP.getTarget());
 		net.addTrainData("road_sign_37.png", NO_ENTRANCE.getTarget());
 		net.addTrainData("road_sign_38.png", NO_ENTRANCE.getTarget());
-		net.addTrainData("road_sign_39_multiple_signs.png", CROSSWALK.getTarget());
+		net.addTrainData("road_sign_39.png", getTarget(CROSSWALK, GIVE_WAY));
 		net.addTrainData("road_sign_40.png", CROSSWALK.getTarget());
-		net.addTrainData("road_sign_41.png", CROSSWALK.getTarget());
+		net.addTrainData("road_sign_41.png", getTarget(CROSSWALK, GIVE_WAY));
 		net.addTrainData("road_sign_42.png", GIVE_WAY.getTarget());
 
 		System.out.println("Finished loading images in " + (System.currentTimeMillis() - start) + "ms");

@@ -90,20 +90,20 @@
 
 
 \section{Zusammenfassung}
-Im folgenden Text werden Sie ein Convolutional Neural Network, oder kurz CNN, welches in Java programmiert wurde, im Detail kennenlernen. Außerdem wird diskutiert, inwieweit  sich Hintergründe auf die Identifikation von Objekten in Bildern mithilfe eines Convolutional Neural Networks auswirken.
-Im ersten Teil des Textes wird die verwendete Literatur, die Theorie und die Fragestellung vorgestellt. Anschließend folgen die Methoden. Unter anderem wird hier erklärt, was ein Convolutional Neural Network ist und wie es hier implementiert wurde. Hier werden im Detail dann die Klassen \texttt{ConvNet}, \texttt{ImageAdapter}, \texttt{TrainData} und die genutzten Testdateien vorgestellt. Der letzte Teil des Abschnitts Methoden präsentiert dann die durchgeführten Test.
-Zum Schluss werden die Ergebnisse nochmal aufgeführt und zusammengefasst. Genutzte Grafiken und Tabellen findet man ebenfalls dort wieder. Daraufhin wird die Fragestellung des Berichts nochmal aufgegriffen und diskutiert. In den letzten beiden Abschnitten findet man sowohl die Literatur als auch den Anhang.
+In diesem Forschungsbericht werden Auswirkungen eines Hintergrundes auf die Erkennung und Identifikation von Objekten in Bildern mithilfe eines sogenannten Convolutional Neural Network vorgestellt und diskutiert. Dies geschieht anhand des Beispiels der Erkennung und Identifikation von Verkehrszeichen auf Straßen.
+Im ersten Teil des Textes wird die verwendete Literatur, die Theorie und die Fragestellung präsentiert. Anschließend folgen die Methoden, die zur Klärung der Fragestellung beitragen. Unter anderem wird hier erklärt, was ein Convolutional Neural Network ist und wie es hier implementiert wurde. Dort werden im Detail dann die Java-Dateien und deren Methoden sowie Attribute vorgestellt. Der letzte Teil des Abschnitts Methoden präsentiert dann die durchgeführten Test.
+Zum Schluss werden die Ergebnisse aufgeführt und zusammengefasst. Daraufhin wird die Fragestellung des Berichts nochmal aufgegriffen und diskutiert. In den letzten beiden Abschnitten findet man sowohl die Verzeichnisse als auch den Anhang.
 
 
 \section{Einleitung} %Alexi
 Die Gesichtserkennung am Smartphone ermöglicht das Entsperren eines Gerätes und auf verschiedenen Applikationen die Nutzung von Filtern, die das Gesicht und die Umgebung erkennen und entweder die Umgebung oder bestimmte Eigenschaften und Merkmale in Gesichtern selber verändern.
-Das Autofahren wird immer einfacher und komfortabler für die Person am Steuer und das hat man unter anderem der Schilder- und Fahrbahnlinienerkennung zu verdanken. Jetzt stellt sich die Frage: wie funktioniert das? Die Antwort ist ein Convolutional Neural Network.
+Das Autofahren wird immer einfacher und komfortabler für die Person am Steuer und das hat man unter anderem der Schilder- und Fahrbahnlinienerkennung zu verdanken. Jetzt stellt sich die Frage: wie funktioniert das? Die Antwort ist Computer Vision. Computer Vision kann durch verschiedene Arten umgesetzt werden. Eine davon funktioniert mit künstlichen neuronalen Netzen. Dieses wird dann Convolutional Neural Network (kurz CNN oder ConvNet) genannt.
 
 \subsection{Verwendete Literatur}
 
 \subsection{Theorie} %Alexi
-Bedauerlicherweise treten einige Probleme bei der Verkehrszeichenerkennung auf, die nicht direkt vom Convolutional Neural Network selber ausgehen, sondern von der Umgebung. Wie zum Beispiel Schilder, die schwer zu erkennen sind, weil sie entweder schon sehr alt und dreckig sind oder zugeklebt wurden. Das erschwert dem CNN die Erkennung des Schildes und kann zu Irrtümern führen, die dann im schlimmsten Fall einen Unfall verursachen können. 
-Ein weiteres Problem könnte der Verkehrsschilderwald in der Stadt sein. Dann wird es für das CNN schwerer, sich das gewollte Verkehrsschild auszusuchen, da mittlerweile sehr viele Schilder an einem Ort angebracht sind. Schwieriger wird es auch für das Convolutional Neural Network ein Verkehrsschild zu erkennen, wenn der Hintergrund sehr farbig ist und mit den Farben des Verkehrsschildes ähnelt. Dann könnte es schwierig werden, das Bild zurecht zuschneiden und die Ränder des Schildes zu erkennen.
+Computer Vision kann durch verschiedene Arten umgesetzt werden. Eine davon funktioniert mit künstlichen neuronalen Netzen. Eine fortgeschrittene Version davon wird dann Convolutional Neural Network (kurz CNN oder ConvNet) genannt.\\
+Ein Auto kann dadurch durch ein Video oder ein Bild einer eingebauten Kamera beispielsweise Verkehrszeichen erkennen und auf sie reagieren. Dazu muss in diesem Video oder Bild zunächst ein Schild erkannt werden, es muss identifiziert werden, um welches Schild es sich handelt und es muss reagiert werden. Diese Erkennung und Identifikation ist Aufgabe eines solchen Convolutional Neural Network.
 
 \subsection{Fragestellung}
 Die Leitfrage ist nun: Welche Auswirkungen hat ein Hintergrund eines Bildes auf die Kosten der Kalkulation eines Convolutional Neural Network (CNN), welches ein Objekt im Vordergrund des Bildes erkennen und identifizieren soll?
@@ -116,7 +116,7 @@ Die Fragestellung wird im Folgenden am Beispiel von acht Verkehrszeichen geklär
 Ein Convolution Neural Network, auch ConvNet oder CNN genannt, ist ein Deep-Learning-Algorithmus, der ein Bild aufnimmt, verschiedenen Objekten im Bild eine Bedeutung zuweist und diese Objekte voneinander unterscheiden kann \cite{cnn1}. Das CNN ist ein mathematisches Konstrukt das normalerweise aus Schichten oder Bausteinen besteht. Die ersten beiden Schichten, Convolution und Pooling-Schicht, extrahieren bestimmte Merkmale aus einem Bild, während die dritte Schicht, vollständig verknüpfte Schicht, die extrahierten Merkmale in die endgültige Ausgabe umsetzt. Eine typische Architektur besteht aus Wiederholungen eines Stapels von mehreren Convolution-Schichten und einer Pooling-Schicht gefolgt von mehreren vollständig verknüpften Schichten. Der Vorgang, bei dem die Eingabedaten durch diese Schichten in Ausgabedaten umgewandelt werden, wird als Vorwärtspropagation bezeichnet. Die in diesem Abschnitt erläuterten Convolution und Pooling-Operationen beziehen sich jedoch auf ein 2D-CNN, ähnliche Operationen können aber auch für 3D-CNN durchgeführt werden.\cite{cnn2}
 
 \subsubsection{Convolution}
-Convolution ist eine lineare Operation, die für die Merkmalsextraktion verwendet wird. Um bestimmte Merkmale zu extrahieren wird ein Array, der sogenannte Kernel, auf das Eingabe-Bild, das auch zu einem Array umgewandelt wurde, namens Kernel, angewendet.\\
+Convolution (im CNN auch Convolutional-Schicht) ist eine lineare Operation, die für die Merkmalsextraktion verwendet wird. Um bestimmte Merkmale zu extrahieren wird ein Array, der sogenannte Kernel, auf das Eingabe-Bild, das auch zu einem Array umgewandelt wurde, namens Kernel, angewendet.\\
 Ein elementweises Produkt zwischen jedem Element des Kernels und dem Eingabetensor wird an jeder Stelle des Tensors kalkuliert und summiert, um den Ausgabewert an der zugehörigen Stelle des Ausgabetensors, einer so genannten Merkmalskarte, zu erhalten. Dieses Verfahren wird unter Anwendung mehrerer Kernel wiederholt, um eine beliebige Anzahl von Merkmalskarten zu erzeugen, die jeweils verschiedene Merkmale des Eingabetensors darstellen.\\
 \begin{wrapfigure}{r}{0.5\textwidth}
 	\centering
@@ -144,7 +144,7 @@ Die Implementierung in Java 17 besteht aus den vier neuen Klassen \texttt{ImageA
 
 \subsubsection{ConvNet} %Alex
 Die Klasse \texttt{ConvNet} soll ein Convolutional Neural Network darstellen und erbt daher von der im Projektbericht \cite{projektbericht} unter Abschnitt 2 genannten Klasse \texttt{Network}, was jener die gleichen Eigenschaften verleiht. Des Weiteren besitzt sie eine \texttt{java.util.ArrayList} vom Generic-Typ \texttt{TrainData} und einen \texttt{ImageAdapter} als private konstante Attribute. Erstere dient dem Speichern von Trainingsdatensätzen, die dann mit dem Aufrufen der überladenen Methode \texttt{train(double, int)} benutzt werden. Diese ruft die originale Instanz-Methode \texttt{train(double[][], double[][], double, int)} der Klasse \texttt{Network} mit den Daten aus der \texttt{ArrayList} auf.
-Außerdem bietet die Klasse \texttt{ConvNet} die Instanz-Methode \texttt{addTrainData(String, int[])} um dieser Trainingsdatensätze hinzuzufügen. Diese nimmt einen Dateinamen von einem Bild und einen ganzzahligen Zielvektor. Zwei private nicht-statische Hilfsmethoden \texttt{getImages()} und \texttt{getTargets()} dienen der besseren Handhabung der \texttt{ArrayList}.\\
+Außerdem bietet die Klasse \texttt{ConvNet} die Instanz-Methoden \texttt{addTrainData(String, int[])} und \texttt{addTrainData(String, int[], boolean)} um dieser Trainingsdatensätze hinzuzufügen. Diese nehmen einen Dateinamen von einem Bild und einen ganzzahligen Zielvektor. Zweitere nimmt zusätzlich einen Wahrheitswert, der bestimmt, ob das Bild vor dem B´enutzen bearbeitet werden soll. Erstere Methode ruft die Zweite mit dem Wahrheitswert \texttt{false} auf. Zwei private nicht-statische Hilfsmethoden \texttt{getImages()} und \texttt{getTargets()} dienen der besseren Handhabung der \texttt{ArrayList}.\\
 Die Klasse erstellt durch den Konstruktor \texttt{ConvNet(String, int, int, int, int[])} (Pfad zum Ordner mit den Bildern, gewünschte Bildweite, -höhe, Anzahl der Output-Neuronen, Anzahl der Hiddenlayers und deren Neuronen) von ihr abgeleitete Objekte.
 
 \subsubsection{ImageAdapter} %Sui Yin
@@ -157,11 +157,11 @@ Als nächstes geht die Methode \texttt{getRGBs(BufferedImage)} alle Pixel durch 
 Die Methode \texttt{squareImage(BufferedImage)} ist dafür da, um das Bild quadratisch zuzuschneiden. 
 \texttt{scaleImage(BufferedImage)} skaliert ein Bild mit einer beliebigen Höhe oder Breite.
 Um ein \texttt{java.awt.image.Image} in ein \texttt{java.awt.image.BufferedImage} konvertieren, wird die Methode \texttt{convertToBufferedImage(Image)} benutzt.
-In der einzigen öffentlichen Methode des \texttt{ImageAdapter}s \texttt{getImageRGBs(String)} wird mit den genannten Methoden und mithilfe eines übergebenen Dateinamens ein eindimensionales ganzzahliges Array mit allen RGB-Werten per \textit{row-major order}
+In der einzigen öffentlichen Methode des \texttt{ImageAdapter}s \texttt{getImageRGBs(String, boolean)} wird mit den genannten Methoden und mithilfe eines übergebenen Dateinamens und eines Wahrheitswerts ein eindimensionales ganzzahliges Array mit allen RGB-Werten per \textit{row-major order}
 \begin{equation}
 	\scalebox{1.3}{$m_{ij} \rightarrow a_{64\cdot i + j}$}
 \end{equation}
-des aus dem Dateinamen resultierenden Bildes zurückgegeben.
+des aus dem Dateinamen resultierenden Bildes zurückgegeben. Der Wahrheitswert bestimmt, ob das Bild, welches geladen wird, zugeschnitten und skaliert werden soll, oder nicht.
 
 \subsubsection{TrainData}
 Das Record \texttt{TrainData(int[], int[])} besitzt einen Vektor mit den RGB-Werten eines Bildes und einen Zielvektor. Außerdem hat es zwei Instanz-Methoden \texttt{getImageAs-DoubleArray()} und \texttt{getTargetAsDoubleArray()}, welche die jeweiligen ganzzahligen Vektoren als Gleitkommazahl-Vektoren zurückgibt, und eine private nicht-statische Hilfsmethode \texttt{getIntAsDoubleArray(int[])}.
@@ -171,72 +171,74 @@ Für das Testen wurden ein Enum \texttt{RoadSignLabel} und eine Klasse \texttt{R
 
 \subsection{Tests}
 \rowcolors{2}{white}{lightgray}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+Für das Testen wurden  43 Bilder mit Verkehrszeichen gesammelt, einige gut erkennbar, andere schwieriger. Diese Originalbilder sind dann zu 128x128px-Bildern konvertiert worden, um einen Netzeingabevektor konstanter Größe gewährleisten zu können. Die konvertierten Bilder seien im folgenden der Datensatz $b$. Dieser und ein daraus resultierender Datensatz $b'$, wobei der Hintergrund durch einen weißen (0xFFFFFF) Hintergrund ersetzt wurde, sind nun zum Testen verwendet worden. So ist um ein direkter Vergleich von Datensatz $b$ ``mit Hintergründen'' und Datensatz $b'$ ``ohne Hintergründe'' möglich. Die Bilder sind in acht Gruppen aufgeteilt, zeigen also acht unterschiedliche Verkehrszeichentypen: \textit{Andreaskreuz}, \textit{Fußgängerüberweg}, \textit{Gefahrenstelle}, \textit{Vorfahrt gewähren}, \textit{Vorfahrtstraße}, \textit{Verbot der Einfahrt}, \textit{Fußgängerweg} und \textit{Stopp}. Fast alle Bilder sind genau einer Gruppe zugeordnet. Ausnahmen sind zwei Bilder, die jeweils den beiden Gruppen \textit{Fußgängerüberweg} und \textit{Vorfahrt gewähren} zugeordnet sind. 
 \begin{wraptable}{l}{0.5\textwidth} %l, r, c, i, o
 	\centering
 	\begin{tabular}{|c|c|}
 		\hline
-		\multicolumn{2}{|c|}{\textbf{Schildbilder im Trainingsdatensatz}}\\ \hline \hline
-		\textbf{Andreaskreuz} & 5 \\ \hline
-		\textbf{Fußgängerüberweg} & 6 \\ \hline
-		\textbf{Gefahrenstelle} & 2 \\ \hline
-		\textbf{Vorfahrt gewähren} & 5 \\ \hline
-		\textbf{Vorfahrtsstraße} & 6 \\ \hline
-		\textbf{Verbot der Einfahrt} & 8 \\ \hline
-		\textbf{Fußgängerweg} & 8 \\ \hline
-		\textbf{Stopp} & 4 \\ \hline
+		\multicolumn{2}{|c|}{\textbf{Gruppen der Bilder}}\\ \hline
+		\textbf{Gruppe} & \textbf{Anzahl} \\ \hline \hline
+		Andreaskreuz & 5 \\ \hline
+		Fußgängerüberweg & 6 \\ \hline
+		Gefahrenstelle & 2 \\ \hline
+		Vorfahrt gewähren & 6 \\ \hline
+		Vorfahrtstraße & 6 \\ \hline
+		Verbot der Einfahrt & 8 \\ \hline
+		Fußgängerweg & 8 \\ \hline
+		Stopp & 4 \\ \hline
 	\end{tabular}
-	\caption{Schildbilder im Trainingsdatensatz}
-	\label{trainData}
+	\caption{Anzahl der Bilder pro Gruppe}
+	\label{imagegroups}
 \end{wraptable}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.\\
-\begin{wrapfigure}{c}{0.7\textwidth}
-	\centering
-	\includegraphics[width=10cm]{"images/test_plot.png"}
-	\caption{Kosten der Datensätze pro Epoche}
-	\label{testplot1}
-\end{wrapfigure}
-Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.\\
-
-
-Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\\
-
-
-
+Das Convolutional Neural Network, welches zum Testen verwendet wird, ist auf einen 16384-dimensionalen Eingabevektor konfiguriert. Es besitzt vier versteckte Schichten, wobei die Erste und Zweite jeweils 64 Neuronen und die Dritte und Vierte 32 Neuronen haben. Die Ausgabeschicht besteht aus acht Neuronen. Der acht-dimensionale Ausgabevektor klassifiziert das jeweilige/die jeweiligen Verkehrszeichen in dem eingegebenen Bild.\\
+Nun wurde sich angeschaut wie sich die Kosten nach jeder Epoche des Lernens des CNN abhängig vom verwendeten Datensatz verändern. Dazu wurde durch wiederholtes Anpassen eine Lernrate von 0.1111 gewählt. Das Training ist 1000 mal wiederholt worden, besteht also aus 1000 Epochen. Die Gewichtungen wurden zufällig mit Werten im Intervall [-0.5, 0.5) initialisiert. Das CNN wurde nacheinander mit beiden Datensätzen trainiert. Die Ausgangsgewichtungen waren dabei gleich.\\
+Dieses Training wurde mehrfach wiederholt, um Aussagekraft des Tests zu erhöhen.
 %\vspace{2em}
 \begin{center}
 	\begin{tabular}{|c|c|c|c|c|c|}
 		\hline
 		\multicolumn{6}{|c|}{\textbf{Anzahl Neuronen im CNN}}\\ \hline \hline
 		\textbf{Input} & \textbf{Hidden 1} & \textbf{Hidden 2} & \textbf{Hidden 3} & \textbf{Hidden 4} & \textbf{Output}\\ \hline
-		4096 & 64 & 64 & 64 & 64 & 8\\ \hline
+		16384 & 64 & 64 & 32 & 32 & 8\\ \hline
 	\end{tabular}
 	\vspace{2em}
 	\begin{tabular}{|c|c|}
 		\hline
 		\multicolumn{2}{|c|}{\textbf{Bildgröße}}\\ \hline \hline
 		\textbf{Höhe} & \textbf{Breite}\\ \hline
-		64 & 64\\ \hline
+		128 & 128\\ \hline
 	\end{tabular}
 	\vspace{2em}
 	\begin{tabular}{|c|c|}
 		\hline
 		\multicolumn{2}{|c|}{\textbf{Training}}\\ \hline \hline
 		\textbf{Lernrate} & \textbf{Wiederholungen}\\ \hline
-		0.12 & 100000\\ \hline
+		0.1111 & 1000\\ \hline
 	\end{tabular}
 \end{center}
 
 
 
 \section{Ergebnisse}
+Das Testen ergab, dass die Kosten bei beiden Datensätzen stetig fallen, also die Steigung der Kosten im gesamten Epochen-Intervall [1, 1000] negativ ist. Bei beiden sind die Kosten vor allem zwischen den ersten beiden Epochen sehr stark gesunken. 
+\begin{wrapfigure}{c}{0.7\textwidth}
+	\centering
+	\includegraphics[width=10cm]{"images/test_plot.png"}
+	\caption{Kosten der Datensätze pro Epoche}
+	\label{testplot1}
+\end{wrapfigure}
+Danach ist die Steigung der Kosten für einige Epochen nahe 0, wird aber von Epoche zu Epoche kleiner. Darauf folgt ein annähernd exponentieller Verlauf. Während bei Datensatz $b$ im Epochen-Intervall [190, 260] kleinere Abweichungen einer Exponentialfunktion zu verzeichnen sind, worauf bis Epoche 420 eine größere Abweichung folgt, ist in Datensatz $b'$ nur eine größere Abweichung zu finden, wobei diese bereits im Intervall [100, 250] liegt. Die Kosten beider Datensätze nähern sich bis Epoche 1000 exponentiell der 0. Vergleicht man beide Verläufe, so sinken anfangs die Kosten von $b'$ ($C_{b'}$), also dem Datensatz ``ohne Hintergrund'' schneller als die Kosten von $b$ ($C_{b}$), also dem Datensatz ``mit Hintergrund''. Die Differenz $C_{b}-C_{b'}$ wird zwar nie 0, jedoch sinkt sie ebenfalls exponentiell, da $C_{b}$ und $C_{b'}$ beide exponentielle Verläufe aufweisen. \\
+Wiederholt man das Testen mit verschiedenen Gewichtsmatrizen, so ergeben sich auch hier zu den beschriebenen Entwicklungen ähnliche Verläufe. \\
+Welche Auswirkungen hat nun ein Hintergrund eines Bildes auf die Kosten der Kalkulation eines Convolutional Neural Network (CNN), welches ein Objekt im Vordergrund des Bildes erkennen und identifizieren soll? Den Tests ist zu entnehmen, dass der Hintergrund die Erkennung und Identifikation des Objektes, also in dem getesteten Beispiel des/der Verkehrszeichen, erschwert.
+
 
 
 
 \section{Diskussion}
-
+Die Erschwerung der Erkennung und Identifikation der Verkehrszeichen durch den Hintergrund ist in mehreren Aspekten begründet.
+Viele dieser Aspekte gehen nicht direkt vom Convolutional Neural Network selber aus, sondern von der Umgebung. Wie zum Beispiel Verkehrszeichen, die schwer zu erkennen sind, weil sie entweder schon sehr alt und dreckig sind oder zugeklebt wurden. Das erschwert dem CNN die Erkennung des Verkehrszeichens und kann zu Irrtümern führen, die dann im schlimmsten Fall einen Unfall verursachen können. 
+Ein weiteres Problem könnte der Verkehrszeichenwald in der Stadt sein. Dann wird es für das CNN schwerer, sich das gewollte Verkehrsschild auszusuchen, da mittlerweile sehr viele Verkehrszeichen an einem Ort angebracht sind. Schwieriger wird es auch für das Convolutional Neural Network ein Verkehrszeichen zu erkennen, wenn der Hintergrund sehr farbig ist und den Farben des Verkehrsschildes ähnelt. Dann könnte es schwierig werden, das Bild zurecht zuschneiden und die Ränder des Verkehrszeichens zu erkennen.\cite{discuss1}\\
+Andererseits kann man den Tests entnehmen, dass durch ausreichend Training mit ggf. komplexeren Netzen und/oder größeren Trainingsdatensätzen die Auswirkungen von Hintergründen minimiert werden können.
 
 \printbibliography[heading=bibnumbered]
 

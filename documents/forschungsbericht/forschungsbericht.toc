@@ -37,14 +37,12 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.3}Tests}{8}{subsection.3.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Ergebnisse}{10}{section.4}%
+\contentsline {section}{\numberline {4}Ergebnisse}{9}{section.4}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5}Diskussion}{10}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Literatur}{10}{section.6}%
+\contentsline {section}{\numberline {6}Abbildungsverzeichnis}{10}{section.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7}Abbildungsverzeichnis}{11}{section.7}%
+\contentsline {section}{\numberline {7}Tabellenverzeichnis}{11}{section.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {8}Tabellenverzeichnis}{11}{section.8}%
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {9}Anhang}{11}{section.9}%
+\contentsline {section}{\numberline {8}Anhang}{11}{section.8}%
