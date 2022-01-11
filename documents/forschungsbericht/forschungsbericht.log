@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  11 JAN 2022 22:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  12 JAN 2022 00:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -972,8 +972,8 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 \tf@toc=\write5
 \openout5 = `forschungsbericht.toc'.
 
- [2] [3]
-<images/cnn.png, id=89, 687.56876pt x 1436.36626pt>
+ [2] [3] [4]
+<images/cnn.png, id=93, 687.56876pt x 1436.36626pt>
 File: images/cnn.png Graphic file (type png)
 <use images/cnn.png>
 Package pdftex.def Info: images/cnn.png  used on input line 129.
@@ -983,7 +983,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 125--132
 
  []
 
-[4]
+
 Overfull \hbox (10.4242pt too wide) in paragraph at lines 132--134
 []\T1/lmr/m/n/12 Die hier be-schrie-be-ne Convolution-Operation
  []
@@ -1114,7 +1114,7 @@ ype1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb>
 </usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type
 1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/s
 hare/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on forschungsbericht.pdf (13 pages, 941428 bytes).
+Output written on forschungsbericht.pdf (13 pages, 941776 bytes).
 PDF statistics:
  315 PDF objects out of 1000 (max. 8388607)
  277 compressed objects within 3 object streams
