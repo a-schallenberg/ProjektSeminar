@@ -112,24 +112,26 @@ Computer Vision kann durch verschiedene Arten umgesetzt werden. Eine davon funkt
 Ein Auto kann mithilfe dessen durch ein Video oder ein Bild einer eingebauten Kamera beispielsweise Verkehrszeichen erkennen und auf sie reagieren. Dazu muss in diesem Video oder Bild zunächst ein Verkehrszeichen erkannt werden und es muss identifiziert werden, um welches Verkehrszeichen es sich handelt, damit das Fahrzeug darauf reagieren kann. Allerdings erfasst die Kamera des Autos nicht nur ein Verkehrszeichen. Neben diesem sind noch viele andere Gegenstände in dem Bild oder Video vorhanden, zum Beispiel eine Hausfassade, Bäume oder andere Autos. Trotzdem muss es das Auto bzw. das Convolutional Neural Network, dessen Aufgabe genau das ist, schaffen, das Verkehrszeichen herauszufiltern. Aber ist das wirklich so einfach, wenn jedes Verkehrszeichen aus jedem Blickwinkel einen unterschiedlichen Hintergrund hat?
 
 \subsection{Fragestellung}
-Etwas allgemeiner formuliert lautet die Leitfrage dieses Forschungsprojektes also: Welche Auswirkungen hat ein Hintergrund eines Bildes auf die Kosten der Kalkulation eines Convolutional Neural Network (CNN), welches ein Objekt im Vordergrund des Bildes erkennen und identifizieren soll?
+Etwas allgemeiner formuliert lautet die Frage: Welche Auswirkungen hat ein Hintergrund eines Bildes auf die Kosten der Kalkulation eines Convolutional Neural Network (CNN), welches ein Objekt im Vordergrund des Bildes erkennen und identifizieren soll? Genau mit der Frage befasst sich dieser Forschungsbericht.
 
 \sectionspace
 \section{Methoden}\label{sec:Methoden}
 Wie der Fragestellung zu entnehmen ist, werden als Anhaltspunkte die Kosten der Kalkulation verwendet, da genau diese die Korrektheit des Erkennens und der Identifikation bewerten. Trotz allgemeinerer Fragestellung wird diese Frage am Beispiel von Verkehrszeichen untersucht.
 
 \subsection{Convolutional Neural Networks}\label{subsec:CNN} %Lennart
-Ein Convolution Neural Network, ist ein Deep-Learning-Algorithmus, der ein Bild aufnimmt, verschiedenen Objekten im Bild eine Bedeutung zuweist und diese Objekte voneinander unterscheiden kann \cite{cnn1}. Das Convolutional Neural Network ist ein mathematisches Konstrukt das normalerweise aus Schichten oder Bausteinen besteht. Die ersten beiden Schichten, Convolution und Pooling-Schicht, extrahieren bestimmte Merkmale aus einem Bild, während die dritte Schicht, vollständig verknüpfte Schicht, die extrahierten Merkmale in die endgültige Ausgabe umsetzt. Eine typische Architektur besteht aus Wiederholungen eines Stapels von mehreren Convolution-Schichten und einer Pooling-Schicht gefolgt von mehreren vollständig verknüpften Schichten. Der Vorgang, bei dem die Eingabedaten durch diese Schichten in Ausgabedaten umgewandelt werden, wird als Vorwärtspropagation bezeichnet. Die in diesem Abschnitt erläuterten Convolution und Pooling-Operationen beziehen sich jedoch auf ein 2D-CNN, ähnliche Operationen können aber auch für 3D-CNN durchgeführt werden. \cite{cnn2}
+Ein Convolution Neural Network, ist ein Deep-Learning-Algorithmus, der ein Bild aufnimmt, verschiedenen Objekten im Bild eine Bedeutung zuweist und diese Objekte voneinander unterscheiden kann \cite{cnn1}. Das Convolutional Neural Network ist ein mathematisches Konstrukt das normalerweise aus Schichten oder Bausteinen besteht. Die ersten beiden Schichten, Convolution und Pooling-Schicht, extrahieren bestimmte Merkmale aus einem Bild, während die dritte Schicht, vollständig verknüpfte Schicht, die extrahierten Merkmale in die endgültige Ausgabe umsetzt. Eine typische Architektur besteht aus Wiederholungen eines Stapels von mehreren Convolution-Schichten und einer Pooling-Schicht gefolgt von mehreren vollständig verknüpften Schichten. Der Vorgang, bei dem die Eingabedaten durch diese Schichten in Ausgabedaten umgewandelt werden, wird als Vorwärtspropagation bezeichnet. Die in diesem Abschnitt erläuterten Convolution und Pooling-Operationen beziehen sich jedoch auf ein 2D-CNN, ähnliche Operationen können aber auch für 3D-CNNs durchgeführt werden. \cite{cnn2}
 
 \subsubsection{Convolution}
-Convolution (im CNN auch Convolutional-Schicht) ist eine lineare Operation, die für die Merkmalsextraktion verwendet wird. Um bestimmte Merkmale zu extrahieren wird ein Array, der sogenannte Kernel, auf das Eingabe-Bild, das auch zu einem Array umgewandelt wurde, namens Kernel, angewendet.\\
-Ein elementweises Produkt zwischen jedem Element des Kernels und dem Eingabetensor wird an jeder Stelle des Tensors kalkuliert und summiert, um den Ausgabewert an der zugehörigen Stelle des Ausgabetensors, einer so genannten Merkmalskarte, zu erhalten. Dieses Verfahren wird unter Anwendung mehrerer Kernel wiederholt, um eine beliebige Anzahl von Merkmalskarten zu erzeugen, die jeweils verschiedene Merkmale des Eingabetensors darstellen.\\
+Convolution (im CNN auch Convolution-Schicht) ist eine lineare Operation, die für die Merkmalsextraktion verwendet wird. Um bestimmte Merkmale zu extrahieren wird ein Array, der sogenannte Kernel, auf das Eingabe-Bild, das auch zu einem Array umgewandelt wurde, namens Kernel, angewendet.\\
+Ein elementweises Produkt zwischen jedem Element des Kernels und dem Eingabetensor wird an jeder Stelle des Tensors kalkuliert und summiert, um den Ausgabewert an der  
 \begin{wrapfigure}{r}{0.5\textwidth}
 	\centering
 	\includegraphics[width=6cm]{"images/cnn.png"}
 	\caption{Benutzung des Kernels \cite{cnn2}}
 	\label{useofkernel}
 \end{wrapfigure}
+zugehörigen Stelle des Ausgabetensors, einer so genannten Merkmalskarte, zu erhalten.
+Dieses Verfahren wird unter Anwendung mehrerer Kernel wiederholt, um eine beliebige Anzahl von Merkmalskarten zu erzeugen, die jeweils verschiedene Merkmale des Eingabetensors darstellen.\\
 Die hier beschriebene Convolution-Operation lässt nicht zu, dass die Mitte eines Kernels das äußerste Element des Eingabetensors überdeckt, und verringert somit die Höhe und Breite der Merkmalskarte. Das Auffüllen mit Nullen ist eine Technik zu Lösung dieses Problems, bei der Zeilen und Spalten mit Nullen auf jeder Seite des Eingabetensors angefügt werden, so dass das Zentrum eines Kernels auf das äußerste Element passt und die gleiche Dimension in der Ebene durch die Convolution-Operation beibehalten wird. Der Abstand zwischen zwei aufeinanderfolgenden Kernelpositionen wird als Stride bezeichnet, der auch die Convolution-Operation definiert. Üblicherweise wird ein Stride der Größe 1 gewählt, jedoch wenn man ein Downsampling  der Merkmalskarten erreichen möchte, wird ein Stride größer als 1 verwendet.
 
 \subsubsection{Pooling-Schicht}
@@ -140,20 +142,21 @@ Die gängigste Form der Pooling-Operation ist das Max-Pooling, bei dem aus den e
 
 \subsubsection{Global Average Pooling}
 Eine weitere erwähnenswerte Pooling-Operation ist das Global Average Pooling, dass eine extreme Art des Downsamplings durchführt. Hierbei wird eine Merkmalskarte mit einer Größe von Höhe x Breite in ein 1 x 1 Array verkleinert, indem der Durchschnitt aller Elemente in jeder Merkmalskarte gebildet wird, während die Tiefe der Merkmalskarte erhalten bleibt. In der Regel wird dieser Vorgang nur einmal vor den vollständig verknüpften Schichten durchgeführt. Der erste Vorteil des Global Average Pooling’s ist, dass die Anzahl der lernbaren Parameter reduziert wird und der zweite Vorteil ist, dass das Convolutional Neural Network Eingaben variabler Größe akzeptieren kann. \cite{cnn2}
-
-\subsubsection{Vollständig Verknüpfte Schicht}
-Die Ausgangsmerkmalskarten der letzten Convolution oder Pooling-Schicht werden in der Regel abgeflacht, das heißt in ein eindimensionales Zahlenfeld umgewandelt und mit einer
-\begin{wrapfigure}{r}{0.5\textwidth}
+\vspace{1cm}
+\begin{wrapfigure}{l}{0.5\textwidth}
 	\centering
 	\includegraphics[width=6cm]{"images/vollst_verk_schicht.png"}
 	\caption{Benutzung des Kernels \cite{cnn1}}
 	\label{polyconnected}
 \end{wrapfigure}
+\vspace{-1cm}
+\subsubsection{Vollständig Verknüpfte Schicht}
+Die Ausgangsmerkmalskarten der letzten Convolution oder Pooling-Schicht werden in der Regel abgeflacht, das heißt in ein eindimensionales Zahlenfeld umgewandelt und mit einer
 oder mehreren vollständig verknüpften Schichten, auch als dichte Schichten bekannt, verbunden, in der jeder Eingang mit jedem Ausgang durch ein lernbares Gewicht verbunden ist. Sobald die von den Convolution-Schichten extrahierten und von den Pooling-Schichten heruntergestuften Merkmale erstellt sind, werden sie von einer Untergruppe vollständig verknüpften Schichten auf die endgültigen Ausgaben des Netzes abgebildet, zum Beispiel die Wahrscheinlichkeiten für jede Klasse bei Klassifizierungsaufgaben. Die letzte vollständig verknüpfte Schicht hat in der Regel die gleiche Anzahl von Ausgangsknoten wie die Anzahl der Klassen. \cite{cnn2}
 
 
 \subsection{Implementierung} %Sui Yin
-Die Implementierung in Java 17 besteht aus den vier neuen Klassen \texttt{ImageAdapter}, \texttt{ConvNet}, \texttt{RoadSignLabel}, \texttt{RoadSignTest} und einem Record \texttt{TrainData}. Zum Testen wird eine weitere Klasse und ein Enum verwendet. Diese vier neuen Klassen, das Record sowie die Testdateien werden im Folgenden Absätzen erklärt.
+Die Implementierung in Java 17 besteht aus den vier neuen Klassen \texttt{ImageAdapter}, \texttt{ConvNet}, \texttt{RoadSignLabel}, \texttt{RoadSignTest} und einem Record \texttt{TrainData}. Zum Testen wird eine weitere Klasse und ein Enum verwendet. Diese vier neuen Klassen, das Record sowie die Testdateien werden in den folgenden Absätzen erklärt.
 
 \subsubsection{ConvNet} %Alex
 Die Klasse \texttt{ConvNet} soll ein Convolutional Neural Network darstellen und erbt daher von der im Projektbericht \cite{projektbericht} unter Abschnitt 2 genannten Klasse \texttt{Network}, was jener die gleichen Eigenschaften verleiht. Des Weiteren besitzt sie eine \texttt{java.util.ArrayList} vom Generic-Typ \texttt{TrainData} und einen \texttt{ImageAdapter} als private konstante Attribute. Erstere dient dem Speichern von Trainingsdatensätzen, die dann mit dem Aufrufen der überladenen Methode \texttt{train(double, int)} benutzt werden. Diese ruft die originale Instanz-Methode \texttt{train(double[][], double[][], double, int)} der Klasse \texttt{Network} mit den Daten aus der \texttt{ArrayList} auf.
@@ -161,15 +164,15 @@ Außerdem bietet die Klasse \texttt{ConvNet} die Instanz-Methoden \texttt{addTra
 Die Klasse erstellt durch den Konstruktor \texttt{ConvNet(String, int, int, int, int[])} (Pfad zum Ordner mit den Bildern, gewünschte Bildweite, -höhe, Anzahl der Output-Neuronen, Anzahl der Hiddenlayers und deren Neuronen) von ihr abgeleitete Objekte.
 
 \subsubsection{ImageAdapter} %Sui Yin
-Der \texttt{ImageAdapter} ist dafür da, um das Bild zu laden und skalieren.
+Der \texttt{ImageAdapter} ist dafür da, um das Bild zu laden und zu skalieren.
 Die Klasse besteht aus sechs Methoden und einem Konstruktor. 
 Im Konstruktor \texttt{ImageAdapter(String, int, int)} werden Pfad zu den Bildern, gewünschte Bildhöhe sowie -breite als Parameter übergeben, mit denen dann die jeweiligen Skalierungswerte für das jeweilige Bild initialisiert werden.
 Die Methode \texttt{loadImage(String)} lädt das \texttt{java.awt.image.BufferedImage} mit dem übergebenen Namen und gibt es zurück.
-Falls es keine Datei mit diesem Namen gibt oder diese keine Bilddatei ist, wird eine \justify{\texttt{IllegalArgumentException}} eine geworfen.
+Falls es keine Datei mit diesem Namen gibt oder diese keine Bilddatei ist, wird eine \justify{\texttt{IllegalArgumentException}} geworfen.
 Als nächstes geht die Methode \texttt{getRGBs(BufferedImage)} alle Pixel durch und gibt deren hexadezimale RGB-Werte als Matrix für das jeweilige Bild zurück.
 Die Methode \texttt{squareImage(BufferedImage)} ist dafür da, um das Bild quadratisch zuzuschneiden. 
-\texttt{scaleImage(BufferedImage)} skaliert ein Bild mit einer beliebigen Höhe oder Breite.
-Um ein \texttt{java.awt.image.Image} in ein \texttt{java.awt.image.BufferedImage} konvertieren, wird die Methode \texttt{convertToBufferedImage(Image)} benutzt.
+\texttt{scaleImage(BufferedImage)} skaliert ein Bild mit der in der Instanz gegebenen Höhe und Breite.
+Um ein \texttt{java.awt.image.Image} in ein \texttt{java.awt.image.BufferedImage} konvertieren, wird die Methode \texttt{convertToBufferedImage(Image)} benutzt.\\
 In der einzigen öffentlichen Methode des \texttt{ImageAdapter}s \texttt{getImageRGBs(String, boolean)} wird mit den genannten Methoden und mithilfe eines übergebenen Dateinamens und eines Wahrheitswerts ein eindimensionales ganzzahliges Array mit allen RGB-Werten per \textit{row-major order}
 \begin{equation}
 	\scalebox{1.3}{$m_{ij} \rightarrow a_{64\cdot i + j}$}
@@ -180,12 +183,12 @@ des aus dem Dateinamen resultierenden Bildes zurückgegeben. Der Wahrheitswert b
 Das Record \texttt{TrainData(int[], int[])} besitzt einen Vektor mit den RGB-Werten eines Bildes und einen Zielvektor. Außerdem hat es zwei Instanz-Methoden \texttt{getImageAs-DoubleArray()} und \texttt{getTargetAsDoubleArray()}, welche die jeweiligen ganzzahligen Vektoren als Gleitkommazahl-Vektoren zurückgibt, und eine private nicht-statische Hilfsmethode \texttt{getIntAsDoubleArray(int[])}.
 
 \subsubsection{Test-Dateien} %Alex
-Für das Testen wurden ein Enum \texttt{RoadSignLabel} und eine Klasse \texttt{RoadSignTest} implementiert. Das Enum zählt die möglichen Ergebnisse des Netzes auf, indiziert sie und kann den jeweils richtigen Zielvektor durch die Instanz-Methode \texttt{getTarget()} zurückgeben. In der Klasse befindet sich die für die Forschungsfrage relevante Main-Methode des Programms. Diese ruft eine private statische Methode \texttt{test()} in der selben Klasse auf. In dieser wird ein \texttt{ConvNet} deklariert und initialisiert, mit Datensätzen bestückt und trainiert. Dabei werden einige hilfreiche Ausgaben gemacht.
+Für das Testen wurden ein Enum \texttt{RoadSignLabel} und eine Klasse \texttt{RoadSignTest} implementiert. Das Enum zählt die möglichen Ergebnisse des Netzes auf, indiziert sie und kann den jeweils richtigen Zielvektor durch die Instanz-Methode \texttt{getTarget()} zurückgeben. Ein statisches Äquivalent, welches beliebig viele \texttt{RoadSignLabel}s nimmt, ermöglicht es, einem Bild mehrerer Ergebnisse zuzuordnen. In der oben genannten Klasse befindet sich die für die Forschungsfrage relevante Main-Methode des Programms. Diese ruft eine private statische Methoden auf, welche ein \texttt{ConvNet} deklarieren und initialisieren, es mit Datensätzen bestücken und trainieren. Dabei werden einige hilfreiche Ausgaben gemacht.
 
 \subsection{Tests}
 \rowcolors{2}{white}{lightgray}
-Für das Testen wurden  43 Bilder mit Verkehrszeichen gesammelt, einige gut erkennbar, andere schwieriger. Diese Originalbilder sind dann zu 128x128px-Bildern konvertiert worden, um einen Netzeingabevektor konstanter Größe gewährleisten zu können. 
-Die konvertierten Bilder seien im folgenden der Datensatz $b$. Dieser und ein daraus resultierender Datensatz $b'$, wobei der Hintergrund durch einen weißen (0xFFFFFF) Hintergrund ersetzt wurde, sind nun zum Testen verwendet worden. So ist um ein direkter Vergleich von Datensatz $b$ ``mit Hintergründen'' und Datensatz $b'$ ``ohne Hintergründe'' möglich. Die Bilder sind in acht Gruppen aufgeteilt, zeigen also acht unterschiedliche Verkehrszeichentypen: \textit{Andreaskreuz}, \textit{Fußgängerüberweg}, \textit{Gefahrenstelle}, \textit{Vorfahrt gewähren}, \textit{Vorfahrtstraße}, \textit{Verbot der Einfahrt}, \textit{Fußgängerweg} und \textit{Stopp}. Fast alle Bilder sind genau einer Gruppe zugeordnet. Ausnahmen sind zwei Bilder, die jeweils den beiden Gruppen \textit{Fußgängerüberweg} und \textit{Vorfahrt gewähren} zugeordnet sind. 
+Für das Testen wurden  43 Bilder mit Verkehrszeichen gesammelt, einige gut erkennbar, andere schwieriger. Diese Originalbilder sind dann zu 128 x 128 Pixel großen Bildern konvertiert worden, um einen Netzeingabevektor konstanter Größe gewährleisten zu können. 
+Die konvertierten Bilder seien im folgenden der Datensatz $b$. Dieser und ein daraus resultierender Datensatz $b'$, wobei der Hintergrund durch einen weißen (0xFFFFFF) Hintergrund ersetzt wurde, sind nun zum Testen verwendet worden. So ist um ein direkter Vergleich von Datensatz $b$ ``mit Hintergründen'' und Datensatz $b'$ ``ohne Hintergründe'' möglich. Die Bilder sind in acht Gruppen aufgeteilt, zeigen also acht unterschiedliche Verkehrszeichentypen: \textit{Andreaskreuz}, \textit{Fußgängerüberweg}, \textit{Gefahrenstelle}, \textit{Vorfahrt gewähren}, \textit{Vorfahrtstraße}, \textit{Verbot der Einfahrt}, \textit{Fußgängerweg} und \textit{Stopp}. Fast alle Bilder sind genau einer Gruppe zugeordnet. Ausnahmen stellen zwei Bilder dar, die jeweils den beiden Gruppen \textit{Fußgängerüberweg} und \textit{Vorfahrt gewähren} zugeordnet sind. 
 \begin{wraptable}{l}{0.5\textwidth} %l, r, c, i, o
 	\centering
 	\begin{tabular}{|c|c|}
@@ -205,8 +208,8 @@ Die konvertierten Bilder seien im folgenden der Datensatz $b$. Dieser und ein da
 	\label{imagegroups}
 \end{wraptable}
 Das Convolutional Neural Network, welches zum Testen verwendet wird, ist auf einen 16384-dimensionalen Eingabevektor konfiguriert. Es besitzt vier versteckte Schichten, wobei die Erste und Zweite jeweils 64 Neuronen und die Dritte und Vierte 32 Neuronen haben. Die Ausgabeschicht besteht aus acht Neuronen. Der acht-dimensionale Ausgabevektor klassifiziert das jeweilige/die jeweiligen Verkehrszeichen in dem eingegebenen Bild.\\
-Nun wurde sich angeschaut wie sich die Kosten nach jeder Epoche des Lernens des CNN abhängig vom verwendeten Datensatz verändern. Dazu wurde durch wiederholtes Anpassen eine Lernrate von 0.1111 gewählt. Das Training ist 1000 mal wiederholt worden, besteht also aus 1000 Epochen. Die Gewichtungen wurden zufällig mit Werten im Intervall [-0.5, 0.5) initialisiert. Das Convolutional Neural Network wurde nacheinander mit beiden Datensätzen trainiert. Die Ausgangsgewichtungen waren dabei gleich.\\
-Dieses Training wurde mehrfach wiederholt, um Aussagekraft des Tests zu erhöhen.
+Nun wurde beobachtet wie sich die Kosten nach jeder Epoche des Lernens des CNN abhängig vom verwendeten Datensatz verändern. Dazu wurde durch wiederholtes Anpassen eine Lernrate von 0.1111 gewählt. Das Training ist 1000 mal wiederholt worden, besteht also aus 1000 Epochen. Die Gewichtungen wurden zufällig mit Werten im Intervall [-0.5, 0.5) initialisiert. Das Convolutional Neural Network ist nacheinander mit beiden Datensätzen trainiert worden. Die Ausgangsgewichtungen waren dabei gleich.\\
+Dieses Training wurde mehrfach wiederholt, um die Aussagekraft der Tests zu erhöhen.
 %\vspace{2em}
 %\begin{center}
 %	\begin{tabular}{|c|c|c|c|c|c|}
@@ -242,13 +245,13 @@ Das Testen ergab, dass die Kosten bei beiden Datensätzen stetig fallen, also di
 	\caption{Kosten der Datensätze pro Epoche}
 	\label{testplot1}
 \end{wrapfigure}
-Danach ist die Steigung der Kosten für einige Epochen nahe 0, wird aber von Epoche zu Epoche kleiner. Darauf folgt ein annähernd exponentieller Verlauf. Während bei Datensatz $b$ im Epochen-Intervall [190, 260] kleinere Abweichungen einer Exponentialfunktion zu verzeichnen sind, worauf bis Epoche 420 eine größere Abweichung folgt, ist in Datensatz $b'$ nur eine größere Abweichung zu finden, wobei diese bereits im Intervall [100, 250] liegt. Die Kosten beider Datensätze nähern sich bis Epoche 1000 exponentiell der 0. Vergleicht man beide Verläufe, so sinken anfangs die Kosten von $b'$ ($C_{b'}$), also dem Datensatz ``ohne Hintergrund'' schneller als die Kosten von $b$ ($C_{b}$), also dem Datensatz ``mit Hintergrund''. Die Differenz $C_{b}-C_{b'}$ wird zwar nie 0, jedoch sinkt sie ebenfalls exponentiell, da $C_{b}$ und $C_{b'}$ beide exponentielle Verläufe aufweisen. \\
+Danach ist die Steigung der Kosten für einige Epochen nahe Null, wird aber von Epoche zu Epoche kleiner. Darauf folgt ein annähernd exponentieller Verlauf. Während bei Datensatz $b$ in einem Beispiel im Epochen-Intervall [190, 260] kleinere Abweichungen einer Exponentialfunktion zu verzeichnen sind, worauf bis Epoche 420 eine größere Abweichung folgt, ist in Datensatz $b'$ nur eine größere Abweichung zu finden, wobei diese bereits im Intervall [100, 250] liegt. Die Kosten beider Datensätze nähern sich bis Epoche 1000 exponentiell der Null. Vergleicht man beide Verläufe, so sinken anfangs die Kosten von $b'$ ($C_{b'}$), also dem Datensatz ``ohne Hintergrund'' schneller als die Kosten von $b$ ($C_{b}$), also dem Datensatz ``mit Hintergrund''. Die Differenz $C_{b}-C_{b'}$ wird zwar nie 0, jedoch sinkt sie ebenfalls exponentiell, da $C_{b}$ und $C_{b'}$ beide exponentielle Verläufe aufweisen. \\
 Wiederholt man das Testen mit verschiedenen Gewichtsmatrizen, so ergeben sich auch hier zu den beschriebenen Entwicklungen ähnliche Verläufe. \\
-Welche Auswirkungen hat nun ein Hintergrund eines Bildes auf die Kosten der Kalkulation eines Convolutional Neural Network, welches ein Objekt im Vordergrund des Bildes erkennen und identifizieren soll? Den Tests ist zu entnehmen, dass der Hintergrund die Erkennung und Identifikation des Objektes, also in dem getesteten Beispiel des/der Verkehrszeichen, erschwert.
+Welche Auswirkungen hat nun ein Hintergrund eines Bildes auf die Kosten der Kalkulation eines Convolutional Neural Network, welches ein Objekt im Vordergrund des Bildes erkennen und identifizieren soll? Den Tests ist zu entnehmen, dass der Hintergrund die Erkennung und Identifikation des Objektes (hier Verkehrszeichen) erschwert.
 
 
 
-\sectionspace
+\newpage
 \section{Diskussion}
 Die Erschwerung der Erkennung und Identifikation der Verkehrszeichen durch den Hintergrund ist in mehreren Aspekten begründet.
 Viele dieser Aspekte gehen nicht direkt vom Convolutional Neural Network selber aus, sondern von der Umgebung. Wie zum Beispiel Verkehrszeichen, die schwer zu erkennen sind, weil sie entweder schon sehr alt und dreckig sind oder zugeklebt wurden. Das erschwert dem CNN die Erkennung des Verkehrszeichens und kann zu Irrtümern führen, die dann im schlimmsten Fall einen Unfall verursachen können. 
@@ -256,13 +259,13 @@ Ein weiteres Problem könnte der Verkehrszeichenwald in der Stadt sein. Dann wir
 Andererseits kann man den Tests entnehmen, dass durch ausreichend Training mit ggf. komplexeren Netzen und/oder größeren Trainingsdatensätzen die Auswirkungen von Hintergründen minimiert werden können.
 
 \subsection{Vor- \& Nachteile der gewählten Umsetzung}
-Die Benutzung des Neuronalen Netzes aus dem Projektbericht \cite{projektbericht} hat den Vorteil, das dort schon diverse Perfektionierungsüberlegungen getätigt und teilweise umgesetzt wurden. Das benutzte Netz ist also schon recht performant. Außerdem bewirkt dies zusammen mit der Auslagerung des Handhaben der Bilder in den \texttt{ImageAdapter}s und des ``Test-Frameworks'' übersichtlichen und nachvollziehbaren Java-Quellcode.\\
-Leider ist die Programmiersprache Java durch einige Aspekte eher ungeeignet für eine Performace-orientierte Umsetzung eines künstlichen neuronalen Netzes bzw. eines Convolutional Neural Networks. Eine Alternative wäre, ein solches Netz in der Programiersprache Python zu implementieren, welche dafür bekannt ist, in ihr künstliche neuronale Netze umzusetzen. Die gewählte Umsetzung ist außerdem zu jeglichen Visualisierungen zum Beispiel des Trainings oder der Ergebnisse des Training ungeeignet. 
+Die Benutzung des Neuronalen Netzes aus dem Projektbericht \cite{projektbericht} hat den Vorteil, das dort schon diverse Perfektionierungsüberlegungen getätigt und teilweise umgesetzt wurden. Das benutzte Netz ist also schon recht performant. Außerdem bewirkt dies zusammen mit diversen Auslagerungen  in den \texttt{ImageAdapter} und das ``Test-Framework'' übersichtlichen und nachvollziehbaren Java-Quellcode.\\
+Leider ist beim Testen aufgefallen, dass die Programmiersprache Java durch einige Aspekte eher ungeeignet für eine Performace-orientierte Umsetzung eines künstlichen neuronalen Netzes bzw. eines Convolutional Neural Networks ist. Eine Alternative wäre, ein solches Netz in der Programmiersprache Python zu implementieren, welche dafür bekannt ist, in ihr künstliche neuronale Netze umzusetzen. Die gewählte Umsetzung ist außerdem zu jeglichen Visualisierungen zum Beispiel des Trainings oder der Ergebnisse des Training ungeeignet. 
 
 \newpage
 \sectionspace
 \section{GitHub}
-Unser Projekt inklusive der Datensätze, der Originalbilder und deren Quellen (nur von den nicht Selbstaufgenommenen) und dieses Forschungsberichts steht auf \textbf{GitHub} (\hyperref{https://github.com/Griszder/ProjektSeminar.git}{}{}{\textit{https://github.com/Griszder/ProjektSeminar.git}}) zur Verfügung.
+Dieses Forschungsprojekt inklusive der beiden Trainingsdatensätze und der originalen Bilder sowie die Quellen aller nicht selbst aufgenommenen Bilder steht auf \textbf{GitHub} (\hyperref{https://github.com/Griszder/ProjektSeminar.git}{}{}{\textit{https://github.com/Griszder/ProjektSeminar.git}}) zur Verfügung. Ebenfalls zu finden ist dort dieser Forschungsbericht, der Projektbericht im Anhang und das Projekt, welches Grundlage für den Projektbericht ist.
 
 \sectionspace
 \section{Anteile am Gesamtprojekt}

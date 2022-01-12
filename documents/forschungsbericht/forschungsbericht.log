@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  12 JAN 2022 00:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.10.20)  12 JAN 2022 01:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -979,13 +979,8 @@ File: images/cnn.png Graphic file (type png)
 Package pdftex.def Info: images/cnn.png  used on input line 129.
 (pdftex.def)             Requested size: 170.71652pt x 356.63596pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 125--132
-
- []
-
-
-Overfull \hbox (10.4242pt too wide) in paragraph at lines 132--134
-[]\T1/lmr/m/n/12 Die hier be-schrie-be-ne Convolution-Operation
+Overfull \hbox (10.4242pt too wide) in paragraph at lines 132--136
+\T1/lmr/m/n/12 Die hier be-schrie-be-ne Convolution-Operation
  []
 
 [5 <./images/cnn.png>]
@@ -996,27 +991,17 @@ Package pdftex.def Info: images/vollst_verk_schicht.png  used on input line 148
 .
 (pdftex.def)             Requested size: 170.71652pt x 99.25761pt.
 
-Underfull \hbox (badness 3439) in paragraph at lines 151--153
-[]\T1/lmr/m/n/12 oder meh-re-ren voll-stän-dig ver-knüpf-ten
- []
-
-
-Underfull \hbox (badness 2005) in paragraph at lines 151--153
-\T1/lmr/m/n/12 mit je-dem Aus-gang durch ein lern-ba-
- []
-
-
-Underfull \hbox (badness 1270) in paragraph at lines 151--153
-\T1/lmr/m/n/12 res Ge-wicht ver-bun-den ist. So-bald die
+Underfull \hbox (badness 1137) in paragraph at lines 154--156
+\T1/lmr/m/n/12 und mit ei-ner oder meh-re-ren voll-stän-
  []
 
 [6 <./images/vollst_verk_schicht.png>]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-56.
+59.
  (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [7]
-Overfull \hbox (0.20023pt too wide) in paragraph at lines 180--181
+Overfull \hbox (0.20023pt too wide) in paragraph at lines 183--184
 \T1/lmr/m/n/12 Vek-to-ren als Gleitkommazahl-Vektoren zu-rück-gibt, und ei-ne p
 ri-va-te nicht-statische Hilfs-
  []
@@ -1025,51 +1010,46 @@ ri-va-te nicht-statische Hilfs-
 <images/test_plot.png, id=137, 383.4325pt x 279.0425pt>
 File: images/test_plot.png Graphic file (type png)
 <use images/test_plot.png>
-Package pdftex.def Info: images/test_plot.png  used on input line 241.
+Package pdftex.def Info: images/test_plot.png  used on input line 244.
 (pdftex.def)             Requested size: 284.52756pt x 207.07579pt.
 
-Underfull \hbox (badness 3386) in paragraph at lines 244--248
+Underfull \hbox (badness 3386) in paragraph at lines 247--251
 []\T1/lmr/m/n/12 Danach ist die Stei-
  []
 
 
-Underfull \hbox (badness 4036) in paragraph at lines 244--248
+Underfull \hbox (badness 4036) in paragraph at lines 247--251
 \T1/lmr/m/n/12 wird aber von Epo-
  []
 
 
-Underfull \hbox (badness 4193) in paragraph at lines 244--248
+Underfull \hbox (badness 4193) in paragraph at lines 247--251
 \T1/lmr/m/n/12 che zu Epo-che klei-
  []
 
 
-Underfull \hbox (badness 2035) in paragraph at lines 244--248
+Underfull \hbox (badness 2035) in paragraph at lines 247--251
 \T1/lmr/m/n/12 ner. Dar-auf folgt ein
  []
 
 
-Underfull \hbox (badness 1178) in paragraph at lines 244--248
+Underfull \hbox (badness 1178) in paragraph at lines 247--251
 \T1/lmr/m/n/12 an-nä-hernd ex-po-nen-ti-el-
  []
 
 
-Underfull \hbox (badness 4660) in paragraph at lines 244--248
-\T1/lmr/m/n/12 ler Ver-lauf. Wäh-rend
+Underfull \hbox (badness 1210) in paragraph at lines 247--251
+\T1/lmr/m/n/12 Da-ten-satz $\OML/lmm/m/it/12 b$ \T1/lmr/m/n/12 in ei-nem
  []
 
 
-Underfull \hbox (badness 6001) in paragraph at lines 244--248
-\T1/lmr/m/n/12 bei Da-ten-satz $\OML/lmm/m/it/12 b$ \T1/lmr/m/n/12 im
+Underfull \hbox (badness 4132) in paragraph at lines 247--251
+\T1/lmr/m/n/12 Bei-spiel im Epochen-
  []
 
 
-Underfull \hbox (badness 2452) in paragraph at lines 244--248
-\T1/lmr/m/n/12 Epochen-Intervall [190,
- []
-
-
-Overfull \hbox (0.58163pt too wide) in paragraph at lines 244--248
-\T1/lmr/m/n/12 260] klei-ne-re Ab-wei-chun-
+Underfull \hbox (badness 5817) in paragraph at lines 247--251
+\T1/lmr/m/n/12 ner Ex-po-nen-ti-al-funk-ti-
  []
 
 [10 <./images/test_plot.png>] [11] [12] (./forschungsbericht.lof)
@@ -1082,19 +1062,19 @@ Overfull \hbox (0.58163pt too wide) in paragraph at lines 244--248
 \openout7 = `forschungsbericht.lot'.
 
 <<attachments/projektbericht.pdf>>
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 285.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 288.
  [13]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 285.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 288.
 
 (./forschungsbericht.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 285.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 285.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 288.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 288.
 Package rerunfilecheck Info: File `forschungsbericht.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 Package logreq Info: Writing requests to 'forschungsbericht.run.xml'.
 \openout1 = `forschungsbericht.run.xml'.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 285.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 288.
  ) 
 Here is how much of TeX's memory you used:
  18922 strings out of 481239
@@ -1114,7 +1094,7 @@ ype1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb>
 </usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type
 1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/s
 hare/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on forschungsbericht.pdf (13 pages, 941776 bytes).
+Output written on forschungsbericht.pdf (13 pages, 942228 bytes).
 PDF statistics:
  315 PDF objects out of 1000 (max. 8388607)
  277 compressed objects within 3 object streams
